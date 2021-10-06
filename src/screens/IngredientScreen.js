@@ -1,0 +1,106 @@
+import React from "react";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { COLORS } from "../consts/colors";
+
+const { width } = Dimensions.get("screen");
+const IngredientScreen = () => {
+  return (
+    <View style={{}}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "white",
+          height: 50,
+          justifyContent: "space-around",
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <AntDesign name="clockcircleo" size={15} color="black" />
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}> 35 min</Text>
+        </View>
+        <Text style={{ fontSize: 15, fontWeight: "bold" }}>Crustacés</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>88%</Text>
+          <AntDesign name="like2" size={15} color="black" />
+        </View>
+      </View>
+      <Image
+        style={{ height: 400, width }}
+        source={{
+          uri: "https://cdn-elle.ladmedia.fr/var/plain_site/storage/images/elle-a-table/les-dossiers-de-la-redaction/dossier-de-la-redac/avocado-toast-recette/90714087-1-fre-FR/25-fois-ou-l-avocado-toast-a-remporte-sa-plaidoirie.jpg",
+        }}
+      />
+      <View
+        style={{
+          backgroundColor: COLORS.primary,
+          height: 50,
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "600",
+            fontSize: 20,
+            marginRight: 20,
+          }}
+        >
+          Dèja cuisiné 560 fois
+        </Text>
+      </View>
+      <View style={{ borderBottomWidth: 1, height: 150, flexDirection: "row" }}>
+        <View
+          style={{
+            borderWidth: 1,
+            height: 105,
+            width: 105,
+            marginTop: 15,
+            marginLeft: 20,
+            borderRadius: 52.5,
+          }}
+        >
+          <Image
+            style={{
+              height: 100,
+              width: 100,
+              overflow: "hidden",
+              borderRadius: 50,
+              borderWidth: 1,
+            }}
+            source={{
+              uri: "https://avatoon.me/wp-content/uploads/2020/07/Cartoon-Pic-Ideas-for-DP-Profile-03.png",
+            }}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              height: 30,
+              justifyContent: "space-between",
+              marginHorizontal: 10,
+              marginTop: 20,
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold" }}>Hélène de Pic</Text>
+            <View style={{ flexDirection: "row" }}>
+              <AntDesign name="star" size={24} color="gold" />
+              <AntDesign name="star" size={24} color="gold" />
+            </View>
+          </View>
+          <Text style={{ color: "grey", marginLeft: 12, marginTop: -10 }}>
+            @picpic
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default IngredientScreen;
+
+const styles = StyleSheet.create({});

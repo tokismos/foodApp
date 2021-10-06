@@ -1,5 +1,8 @@
 {
   "expo": {
+    "facebookScheme": "fb593620908653647",
+    "facebookAppId": "593620908653647",
+    "facebookDisplayName": "Helllo",
     "name": "foodApp",
     "slug": "foodApp",
     "version": "1.0.0",
@@ -13,13 +16,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.foodApp.test",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

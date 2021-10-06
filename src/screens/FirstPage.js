@@ -8,6 +8,8 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import GradientImage from "../components/GradientImage";
+import { COLORS } from "../consts/colors";
 
 const { width } = Dimensions.get("window");
 const FirstPage = ({ navigation }) => {
@@ -17,27 +19,14 @@ const FirstPage = ({ navigation }) => {
         <Text style={styles.headerText}>Food Avenue</Text>
       </View>
       <View style={styles.container}>
-        <ImageBackground
-          style={styles.firstImage}
+        <GradientImage
           source={require("../assets/firstImage.jpg")}
-        >
-          <LinearGradient
-            colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.9)"]}
-            style={{
-              height: 200,
-            }}
-          >
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "flex-end",
-                flex: 1,
-              }}
-            >
-              <Text style={styles.imgText}>Partager vos meilleurs repas</Text>
-            </View>
-          </LinearGradient>
-        </ImageBackground>
+          height={200}
+          width={300}
+          style={{ marginTop: 30 }}
+          text={"Partagez vos meilleurs repas"}
+        />
+
         <View style={{ marginBottom: 50 }}>
           <TouchableOpacity
             style={[styles.button, { activeOpacity: 0.8 }]}
@@ -72,7 +61,7 @@ export default FirstPage;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#ffc700",
+    backgroundColor: COLORS.primary,
     height: 150,
     width,
     justifyContent: "center",
@@ -84,28 +73,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   container: {
-    backgroundColor: "#ffeaa0",
+    backgroundColor: COLORS.secondary,
     flex: 1,
     width,
     alignItems: "center",
     justifyContent: "flex-end",
   },
-  firstImage: {
-    height: 200,
-    width: 300,
-    flexGrow: 1,
-    marginTop: 80,
-  },
-  imgText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: 10,
-  },
   button: {
     marginBottom: 20,
-    backgroundColor: "#ffc700",
+    backgroundColor: COLORS.primary,
     height: 50,
     width: 250,
     borderRadius: 25,
