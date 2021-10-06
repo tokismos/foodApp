@@ -1601,6 +1601,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-12.9.0.tgz#b4d1026ae390a52687f9a9c7defd8343818c5229"
   integrity sha512-B2iX/pkml+KBFr/vjuuYyxyode6zGGcb9v/U7bBG6Uex23noTKuKA08X/vgdi8uTh3rQRxGs8tIabue2uKdWeg==
 
+"@react-native-google-signin/google-signin@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-7.0.1.tgz#a03f1a3e43ddb1bb092679bfdd6e38ff6ed819a1"
+  integrity sha512-iG1OkFx1ohSupofWnlbV+Re74L2HF823SOL1KNl1gGDiVxzNKJTZm/wuaPuujzci4kr8GuwR9PRgxLShiAZwlg==
+
 "@react-navigation/bottom-tabs@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-6.0.7.tgz#3a0772f57b588d10853d05407fc3c0c48c6bb8ba"

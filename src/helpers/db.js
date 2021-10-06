@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import database from "@react-native-firebase/database";
 import auth from "@react-native-firebase/auth";
 import { LoginManager, AccessToken } from "react-native-fbsdk-next";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEDrHAl6QWafSMu9MFVbIj2Z2Fr5cr6Og",
@@ -13,14 +14,16 @@ const firebaseConfig = {
   appId: "1:954088809444:web:0714e4191f1876959a1df1",
 };
 
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
+const LoginWithGoogle = async () => {
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
 
-// const db = firebase.database();
-// // const auth = firebase.auth();
-
-const FbLogin = async () => {
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+};
+const LoginWithFb = async () => {
   // Attempt login with permissions
   const result = await LoginManager.logInWithPermissions([
     "public_profile",
@@ -47,16 +50,6 @@ const FbLogin = async () => {
   return auth().signInWithCredential(facebookCredential);
 };
 
-const test = async () => {
-  database()
-    .ref("/users/123")
-    .set({
-      name: "Ada Lovelace",
-      age: 31,
-    })
-    .then(() => console.log("Data set."));
-};
-
 const signUp = async (email, password) => {
   try {
     await auth().createUserWithEmailAndPassword(email, password);
@@ -78,6 +71,7 @@ const signIn = async (email, password) => {
 
 const signOut = async () => {
   try {
+    await GoogleSignin.revokeAccess();
     await auth().signOut();
     console.log("signed out");
   } catch (e) {
@@ -116,4 +110,4 @@ const signOut = async () => {
 // //     });
 // // };
 
-export { test, signIn, signUp, signOut, FbLogin };
+export { signIn, signUp, signOut, LoginWithFb, LoginWithGoogle };

@@ -13,7 +13,7 @@ import FbIcon from "../assets/fbIcon.svg";
 import GoogleIcon from "../assets/GoogleIcon.svg";
 import PhoneIcon from "../assets/phoneIcon.svg";
 import { NavigationContainer } from "@react-navigation/native";
-import { FbLogin, signIn, test } from "../helpers/db";
+import { LoginWithFb, LoginWithGoogle, signIn, test } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState("hello@gmail.com");
@@ -67,6 +67,11 @@ const LoginScreen = ({ navigation }) => {
             marginHorizontal: 20,
           }}
         />
+        <TouchableOpacity
+          style={{ alignItems: "flex-end", marginTop: 10, marginRight: 20 }}
+        >
+          <Text style={{ color: "grey" }}>Forgot your password ?</Text>
+        </TouchableOpacity>
         <Button
           mode="contained"
           onPress={() => {
@@ -97,7 +102,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <TouchableOpacity onPress={() => FbLogin()}>
+          <TouchableOpacity onPress={() => LoginWithFb()}>
             <FbIcon
               width={40}
               height={40}
@@ -105,7 +110,9 @@ const LoginScreen = ({ navigation }) => {
               style={{ marginHorizontal: 20 }}
             />
           </TouchableOpacity>
-          <GoogleIcon width={40} height={40} fill={COLORS.primary} />
+          <TouchableOpacity onPress={() => LoginWithGoogle()}>
+            <GoogleIcon width={40} height={40} fill={COLORS.primary} />
+          </TouchableOpacity>
         </View>
         <View
           style={{ flexDirection: "row", justifyContent: "center", margin: 20 }}

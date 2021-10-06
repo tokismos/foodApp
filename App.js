@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import Navigator, { TabScreen } from "./src/navigation/Navigator";
 import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
@@ -12,9 +13,14 @@ export default function App() {
   const [splash, setSplash] = useState(true);
 
   useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "954088809444-g38fi65a2f6eotu2o57gekojchbv2d0l.apps.googleusercontent.com",
+    });
     const subscriber = auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        console.log(user);
         setSplash(false);
         if (initializing) setInitializing(false);
       } else {
