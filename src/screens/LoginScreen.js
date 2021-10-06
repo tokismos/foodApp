@@ -13,11 +13,11 @@ import FbIcon from "../assets/fbIcon.svg";
 import GoogleIcon from "../assets/GoogleIcon.svg";
 import PhoneIcon from "../assets/phoneIcon.svg";
 import { NavigationContainer } from "@react-navigation/native";
-import { logInWithFb, signIn } from "../helpers/db";
+import { FbLogin, signIn, test } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = React.useState("test@gmail.com");
-  const [password, setPassword] = React.useState("testtest");
+  const [email, setEmail] = React.useState("hello@gmail.com");
+  const [password, setPassword] = React.useState("testest");
   const [visible, setVisible] = React.useState(true);
   const [isLoading, setLoading] = React.useState(false);
   return (
@@ -97,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <TouchableOpacity onPress={() => logInWithFb()}>
+          <TouchableOpacity onPress={() => FbLogin()}>
             <FbIcon
               width={40}
               height={40}

@@ -4,42 +4,39 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import Navigator, { TabScreen } from "./src/navigation/Navigator";
-import FirstPage from "./src/screens/FirstPage";
-import OnBoardingScreen from "./src/screens/OnBoardingScreen";
-import {
-  getAuth,
-  onAuthStateChanged,
-  FacebookAuthProvider,
-  signInWithCredential,
-} from "firebase/auth";
-import { auth } from "./src/helpers/db";
+import auth from "@react-native-firebase/auth";
 
 export default function App() {
+  const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [splash, setSplash] = useState(true);
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log("user connected", user);
 
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged((user) => {
+      if (user) {
         setUser(user);
         setSplash(false);
+        if (initializing) setInitializing(false);
       } else {
         setUser();
-        setSplash(false);
+        setInitializing(false);
       }
     });
+    return subscriber; // unsubscribe on unmount
   }, []);
-  const SplashScreen = () => {
-    return (
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  };
+
+  if (initializing) return null;
+
+  // const SplashScreen = () => {
+  //   return (
+  //     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+  //       <ActivityIndicator size="large" color="#0000ff" />
+  //     </View>
+  //   );
+  // };
   return (
     <NavigationContainer>
-      {splash ? <SplashScreen /> : user ? <TabScreen /> : <Navigator />}
+      {user ? <TabScreen /> : <Navigator />}
     </NavigationContainer>
   );
 }

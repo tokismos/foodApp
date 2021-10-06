@@ -9,8 +9,8 @@ import {
 import { Button } from "react-native-elements/dist/buttons/Button";
 import HorizontalList from "../components/HorizontalList";
 import { COLORS } from "../consts/colors";
-import { DATA1, DATA2 } from "../helpers/dummyData";
 import { signOut } from "../helpers/db";
+import { DATA1, DATA2 } from "../helpers/dummyData";
 const MainScreen = () => {
   return (
     <>
