@@ -19,6 +19,7 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import CheckBox from "@react-native-community/checkbox";
 import TextInputColored from "../components/TextInputColored";
 import { StackActions } from "@react-navigation/native";
+import ContinueButton from "../components/ContinueButton";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [fullName, setFullName] = React.useState("");
@@ -26,103 +27,95 @@ const LoginScreen = ({ navigation }) => {
   const [isLoading, setLoading] = React.useState(false);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <ScrollView style={{}}>
-        <View style={{ flex: 1, backgroundColor: "white", width }}>
-          <View style={styles.topContainer}>
-            <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-              <View style={styles.returnButton}>
-                <MaterialIcons name="arrow-back" size={40} color="white" />
-              </View>
-            </TouchableWithoutFeedback>
+    <ScrollView style={{ flex: 1, backgroundColor: "white", width }}>
+      <StatusBar backgroundColor={COLORS.secondary} />
+
+      <View style={styles.topContainer}>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <View style={styles.returnButton}>
+            <MaterialIcons name="arrow-back" size={40} color="white" />
           </View>
-          {/* start of mid container */}
+        </TouchableWithoutFeedback>
+      </View>
+      {/* start of mid container */}
 
-          <View style={styles.midContainer}>
-            <View style={styles.headerMidContainer}>
-              <Text style={{ fontSize: 40, fontWeight: "bold" }}>
-                Create Account
-              </Text>
-              <Text style={{ color: "gray", marginLeft: 20, fontSize: 18 }}>
-                Sign Up to get started !
-              </Text>
-            </View>
+      <View style={styles.midContainer}>
+        <View style={styles.headerMidContainer}>
+          <Text style={{ fontSize: 40, fontWeight: "bold" }}>
+            Create Account
+          </Text>
+          <Text style={{ color: "gray", marginLeft: 20, fontSize: 18 }}>
+            Sign Up to get started !
+          </Text>
+        </View>
 
-            {/* to add margin to mid container in secondary color */}
-            <View style={{ backgroundColor: "white", height: "70%" }}>
-              <View
-                style={{
-                  backgroundColor: COLORS.secondary,
-                  paddingTop: 20,
-                  flex: 1,
-                }}
-              >
-                <TextInputColored
-                  label="Email"
-                  value={email}
-                  setChangeText={setEmail}
-                  leftIcon="email"
-                />
-
-                <TextInputColored
-                  label="Full Name"
-                  value={fullName}
-                  setChangeText={setFullName}
-                  leftIcon="card-account-details"
-                />
-                <TextInputColored
-                  label="Password"
-                  value={password}
-                  setChangeText={setPassword}
-                  leftIcon="lock"
-                  secured
-                />
-                <View style={styles.textMidContainer}>
-                  <Text style={{ fontSize: 16 }}>
-                    Already have an account?{" "}
-                  </Text>
-                  <TouchableOpacity>
-                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                      Sign IN !
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-          {/* End of mid container */}
-          {/* START of bottom Container */}
-
+        {/* to add margin to mid container in secondary color */}
+        <View style={{ backgroundColor: "white", height: "70%" }}>
           <View
-            style={{ height: height * 0.3, justifyContent: "space-between" }}
+            style={{
+              backgroundColor: COLORS.secondary,
+              paddingTop: 20,
+              flex: 1,
+            }}
           >
-            <View style={styles.policyContainer}>
-              <Text style={{ textAlign: "center" }}>
-                By signing up you agree to{" "}
-                <Text style={styles.linkText}>Privacy Policy</Text> and{" "}
-                <Text style={styles.linkText}>Terms {"&"} Conditions.</Text>
-              </Text>
-            </View>
-            <View
-              style={{
-                height: "50%",
-                backgroundColor: COLORS.secondary,
-                alignItems: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              <TouchableOpacity style={styles.bottomButton}>
-                <Text style={{ color: "white", fontSize: 18 }}>Continue</Text>
+            <TextInputColored
+              label="Email"
+              value={email}
+              setChangeText={setEmail}
+              leftIcon="email"
+            />
+
+            <TextInputColored
+              label="Full Name"
+              value={fullName}
+              setChangeText={setFullName}
+              leftIcon="card-account-details"
+            />
+            <TextInputColored
+              label="Password"
+              value={password}
+              setChangeText={setPassword}
+              leftIcon="lock"
+              secured
+            />
+            <View style={styles.textMidContainer}>
+              <Text style={{ fontSize: 16 }}>Already have an account? </Text>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  Sign IN !
+                </Text>
               </TouchableOpacity>
             </View>
-            {/* END of Bottom Container */}
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+      {/* End of mid container */}
+      {/* START of bottom Container */}
+
+      <View style={{ height: height * 0.3, justifyContent: "space-between" }}>
+        <View style={styles.policyContainer}>
+          <Text style={{ textAlign: "center" }}>
+            By signing up you agree to{" "}
+            <Text style={styles.linkText}>Privacy Policy</Text> and{" "}
+            <Text style={styles.linkText}>Terms {"&"} Conditions.</Text>
+          </Text>
+        </View>
+        <View
+          style={{
+            height: "50%",
+            backgroundColor: COLORS.secondary,
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <ContinueButton
+            onPress={() => navigation.navigate("PhoneVerificationScreen")}
+          />
+        </View>
+
+        {/* END of Bottom Container */}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -169,15 +162,5 @@ const styles = StyleSheet.create({
   linkText: {
     textDecorationLine: "underline",
     fontWeight: "bold",
-  },
-  bottomButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 15,
-    backgroundColor: COLORS.primary,
-    width: width - 60,
-    height: 70,
-    marginBottom: 20,
-    elevation: 3,
   },
 });
