@@ -20,12 +20,13 @@ export default function App() {
     const subscriber = auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
-        console.log(user);
+        console.log("Connecte2d", user);
         setSplash(false);
         if (initializing) setInitializing(false);
       } else {
         setUser();
         setInitializing(false);
+        console.log("Disconnected", user);
       }
     });
     return subscriber; // unsubscribe on unmount

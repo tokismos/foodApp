@@ -11,6 +11,7 @@ import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +48,10 @@ const Navigator = () => {
       <Stack.Screen options={{}} name="HomeScreen" component={LoginScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen
+        name="PhoneVerificationScreen"
+        component={PhoneVerificationScreen}
+      />
     </Stack.Navigator>
   );
 };

@@ -14,6 +14,7 @@ import GoogleIcon from "../assets/GoogleIcon.svg";
 import PhoneIcon from "../assets/phoneIcon.svg";
 import { NavigationContainer } from "@react-navigation/native";
 import { LoginWithFb, LoginWithGoogle, signIn, test } from "../helpers/db";
+import TextInputColored from "../components/TextInputColored";
 const { width, height } = Dimensions.get("screen");
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState("hello@gmail.com");
@@ -39,33 +40,18 @@ const LoginScreen = ({ navigation }) => {
         }}
       >
         <Text style={{ fontSize: 40, textAlign: "center" }}>Sign In</Text>
-        <TextInput
-          theme={{ colors: { primary: COLORS.primary } }}
-          mode="outlined"
+        <TextInputColored
           label="Email"
           value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={{
-            marginHorizontal: 20,
-            marginVertical: 10,
-          }}
+          setChangeText={setEmail}
+          leftIcon="email"
         />
-        <TextInput
-          theme={{ colors: { primary: COLORS.primary } }}
-          mode="outlined"
+        <TextInputColored
           label="Password"
           value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry={visible}
-          right={
-            <TextInput.Icon
-              name={visible ? "eye" : "eye-off"}
-              onPress={() => setVisible(!visible)}
-            />
-          }
-          style={{
-            marginHorizontal: 20,
-          }}
+          setChangeText={setPassword}
+          leftIcon="lock"
+          secured
         />
         <TouchableOpacity
           style={{ alignItems: "flex-end", marginTop: 10, marginRight: 20 }}
@@ -118,7 +104,7 @@ const LoginScreen = ({ navigation }) => {
           style={{ flexDirection: "row", justifyContent: "center", margin: 20 }}
         >
           <Text>Don't have an account ? </Text>
-          <TouchableOpacity onPress={() => navigation.replace("SignUpScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUpScreen")}>
             <Text style={{ fontWeight: "bold" }}>Sign Up !</Text>
           </TouchableOpacity>
         </View>

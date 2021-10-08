@@ -1,97 +1,189 @@
 import React from "react";
 import {
   Dimensions,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { COLORS } from "../consts/colors";
-import FbIcon from "../assets/fbIcon.svg";
-import GoogleIcon from "../assets/GoogleIcon.svg";
-import PhoneIcon from "../assets/phoneIcon.svg";
 import { signUp } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import CheckBox from "@react-native-community/checkbox";
+import TextInputColored from "../components/TextInputColored";
+import { StackActions } from "@react-navigation/native";
+
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = React.useState("hello@gmail.com");
-  const [password, setPassword] = React.useState("testest");
-  const [visible, setVisible] = React.useState(true);
+  const [email, setEmail] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [isLoading, setLoading] = React.useState(false);
+
   return (
-    <View
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1,
-        backgroundColor: "#CDCDCD",
-      }}
-    >
+    <>
+      <StatusBar backgroundColor={COLORS.secondary} />
+
       <View
         style={{
+          alignItems: "center",
+          flex: 1,
           backgroundColor: "white",
-          borderWidth: 1,
-          width: width - 30,
-          borderTopRightRadius: 50,
-          marginTop: 100,
         }}
       >
-        <Text style={{ fontSize: 40, textAlign: "center" }}>Sign UP</Text>
-        <TextInput
-          theme={{ colors: { primary: COLORS.primary } }}
-          mode="outlined"
-          label="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={{
-            marginHorizontal: 20,
-          }}
-        />
-        <TextInput
-          theme={{ colors: { primary: COLORS.primary } }}
-          mode="outlined"
-          label="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry={visible}
-          right={
-            <TextInput.Icon
-              name={visible ? "eye" : "eye-off"}
-              onPress={() => setVisible(!visible)}
-            />
-          }
-          style={{
-            marginHorizontal: 20,
-          }}
-        />
-        <Button
-          mode="contained"
-          onPress={() => {
-            setLoading(!isLoading);
-            signUp(email, password);
-          }}
-          style={{
-            width: 250,
-            alignSelf: "center",
-            marginTop: 20,
-            backgroundColor: COLORS.primary,
-          }}
-          color="red"
-          loading={isLoading}
-        >
-          Sign Up
-        </Button>
         <View
-          style={{ flexDirection: "row", justifyContent: "center", margin: 20 }}
+          style={{
+            height: 80,
+            backgroundColor: COLORS.secondary,
+            width,
+            borderBottomLeftRadius: 40,
+            justifyContent: "center",
+          }}
         >
-          <Text>Already have an account ? </Text>
-          <TouchableOpacity onPress={() => navigation.replace("HomeScreen")}>
-            <Text style={{ fontWeight: "bold" }}>Sign In !</Text>
+          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+            <View
+              style={{
+                height: 60,
+                width: 60,
+                borderRadius: 30,
+                backgroundColor: COLORS.primary,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 20,
+                elevation: 3,
+              }}
+            >
+              <MaterialIcons name="arrow-back" size={40} color="white" />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        <View
+          style={{
+            backgroundColor: COLORS.secondary,
+            flex: 1,
+          }}
+        >
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: COLORS.secondary,
+              bottom: 0,
+              width,
+              height: 50,
+            }}
+          />
+          <TouchableOpacity
+            disabled
+            style={{
+              backgroundColor: COLORS.primary,
+              height: 70,
+              borderRadius: 15,
+              position: "absolute",
+              bottom: 20,
+              left: 20,
+
+              right: 20,
+              alignItems: "center",
+              justifyContent: "center",
+              elevation: 3,
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 20 }}>Continue</Text>
           </TouchableOpacity>
+
+          <View
+            style={{
+              backgroundColor: "white",
+              borderTopRightRadius: 40,
+              borderBottomRightRadius: 40,
+              alignItems: "center",
+            }}
+          >
+            <View style={{ margin: 30 }}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 40,
+                }}
+              >
+                Create Account
+              </Text>
+              <Text style={{ color: "grey", fontSize: 20, marginLeft: 20 }}>
+                Sign Up to get started !
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: COLORS.secondary,
+                width: width - 30,
+                elevation: 1,
+              }}
+            >
+              <TextInputColored
+                label="Email"
+                value={email}
+                setChangeText={setEmail}
+                leftIcon="email"
+              />
+
+              <TextInputColored
+                label="Full Name"
+                value={fullName}
+                setChangeText={setFullName}
+                leftIcon="card-account-details"
+              />
+              <TextInputColored
+                label="Password"
+                value={password}
+                setChangeText={setPassword}
+                leftIcon="lock"
+                secured
+              />
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  margin: 20,
+                }}
+              >
+                <Text>Already have an account ? </Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("HomeScreen")}
+                >
+                  <Text style={{ fontWeight: "bold" }}>Sign In !</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{ marginVertical: 20 }}>
+              <Text style={{ fontSize: 15, textAlign: "center" }}>
+                By signing up, you agree to our{" "}
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Privacy Policy
+                </Text>{" "}
+                and{" "}
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Terms {"&"} Conditions.
+                </Text>
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 

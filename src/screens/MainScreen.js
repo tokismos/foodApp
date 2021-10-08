@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -6,12 +6,16 @@ import {
   View,
   Button as But,
 } from "react-native";
-import { Button } from "react-native-elements/dist/buttons/Button";
+import auth from "@react-native-firebase/auth";
+
 import HorizontalList from "../components/HorizontalList";
 import { COLORS } from "../consts/colors";
 import { signOut } from "../helpers/db";
 import { DATA1, DATA2 } from "../helpers/dummyData";
 const MainScreen = () => {
+  useEffect(() => {
+    console.log(auth().currentUser);
+  }, []);
   return (
     <>
       <View

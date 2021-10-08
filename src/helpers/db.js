@@ -23,6 +23,7 @@ const LoginWithGoogle = async () => {
   // Sign-in the user with the credential
   return auth().signInWithCredential(googleCredential);
 };
+
 const LoginWithFb = async () => {
   // Attempt login with permissions
   const result = await LoginManager.logInWithPermissions([
@@ -71,12 +72,17 @@ const signIn = async (email, password) => {
 
 const signOut = async () => {
   try {
-    await GoogleSignin.revokeAccess();
+    if (auth().currentUser.providerData[0].providerId === "google.com")
+      await GoogleSignin.revokeAccess();
     await auth().signOut();
     console.log("signed out");
   } catch (e) {
     alert(e);
   }
+};
+const signInWithPhoneNumber = async (phoneNumber, setConfirm) => {
+  const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+  setConfirm(confirmation);
 };
 
 // const logInWithFb = async () => {
@@ -110,4 +116,11 @@ const signOut = async () => {
 // //     });
 // // };
 
-export { signIn, signUp, signOut, LoginWithFb, LoginWithGoogle };
+export {
+  signIn,
+  signUp,
+  signOut,
+  LoginWithFb,
+  LoginWithGoogle,
+  signInWithPhoneNumber,
+};
