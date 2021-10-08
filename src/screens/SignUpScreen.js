@@ -1,6 +1,9 @@
 import React from "react";
 import {
   Dimensions,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -11,12 +14,11 @@ import {
 import { TextInput, Button } from "react-native-paper";
 import { COLORS } from "../consts/colors";
 import { signUp } from "../helpers/db";
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import CheckBox from "@react-native-community/checkbox";
 import TextInputColored from "../components/TextInputColored";
 import { StackActions } from "@react-navigation/native";
-
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [fullName, setFullName] = React.useState("");
@@ -24,169 +26,158 @@ const LoginScreen = ({ navigation }) => {
   const [isLoading, setLoading] = React.useState(false);
 
   return (
-    <>
-      <StatusBar backgroundColor={COLORS.secondary} />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ScrollView style={{}}>
+        <View style={{ flex: 1, backgroundColor: "white", width }}>
+          <View style={styles.topContainer}>
+            <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+              <View style={styles.returnButton}>
+                <MaterialIcons name="arrow-back" size={40} color="white" />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          {/* start of mid container */}
 
-      <View
-        style={{
-          alignItems: "center",
-          flex: 1,
-          backgroundColor: "white",
-        }}
-      >
-        <View
-          style={{
-            height: 80,
-            backgroundColor: COLORS.secondary,
-            width,
-            borderBottomLeftRadius: 40,
-            justifyContent: "center",
-          }}
-        >
-          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-            <View
-              style={{
-                height: 60,
-                width: 60,
-                borderRadius: 30,
-                backgroundColor: COLORS.primary,
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 20,
-                elevation: 3,
-              }}
-            >
-              <MaterialIcons name="arrow-back" size={40} color="white" />
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <View
-          style={{
-            backgroundColor: COLORS.secondary,
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              position: "absolute",
-              backgroundColor: COLORS.secondary,
-              bottom: 0,
-              width,
-              height: 50,
-            }}
-          />
-          <TouchableOpacity
-            disabled
-            style={{
-              backgroundColor: COLORS.primary,
-              height: 70,
-              borderRadius: 15,
-              position: "absolute",
-              bottom: 20,
-              left: 20,
-
-              right: 20,
-              alignItems: "center",
-              justifyContent: "center",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 20 }}>Continue</Text>
-          </TouchableOpacity>
-
-          <View
-            style={{
-              backgroundColor: "white",
-              borderTopRightRadius: 40,
-              borderBottomRightRadius: 40,
-              alignItems: "center",
-            }}
-          >
-            <View style={{ margin: 30 }}>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 40,
-                }}
-              >
+          <View style={styles.midContainer}>
+            <View style={styles.headerMidContainer}>
+              <Text style={{ fontSize: 40, fontWeight: "bold" }}>
                 Create Account
               </Text>
-              <Text style={{ color: "grey", fontSize: 20, marginLeft: 20 }}>
+              <Text style={{ color: "gray", marginLeft: 20, fontSize: 18 }}>
                 Sign Up to get started !
               </Text>
             </View>
-            <View
-              style={{
-                backgroundColor: COLORS.secondary,
-                width: width - 30,
-                elevation: 1,
-              }}
-            >
-              <TextInputColored
-                label="Email"
-                value={email}
-                setChangeText={setEmail}
-                leftIcon="email"
-              />
 
-              <TextInputColored
-                label="Full Name"
-                value={fullName}
-                setChangeText={setFullName}
-                leftIcon="card-account-details"
-              />
-              <TextInputColored
-                label="Password"
-                value={password}
-                setChangeText={setPassword}
-                leftIcon="lock"
-                secured
-              />
-
+            {/* to add margin to mid container in secondary color */}
+            <View style={{ backgroundColor: "white", height: "70%" }}>
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  margin: 20,
+                  backgroundColor: COLORS.secondary,
+                  paddingTop: 20,
+                  flex: 1,
                 }}
               >
-                <Text>Already have an account ? </Text>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("HomeScreen")}
-                >
-                  <Text style={{ fontWeight: "bold" }}>Sign In !</Text>
-                </TouchableOpacity>
+                <TextInputColored
+                  label="Email"
+                  value={email}
+                  setChangeText={setEmail}
+                  leftIcon="email"
+                />
+
+                <TextInputColored
+                  label="Full Name"
+                  value={fullName}
+                  setChangeText={setFullName}
+                  leftIcon="card-account-details"
+                />
+                <TextInputColored
+                  label="Password"
+                  value={password}
+                  setChangeText={setPassword}
+                  leftIcon="lock"
+                  secured
+                />
+                <View style={styles.textMidContainer}>
+                  <Text style={{ fontSize: 16 }}>
+                    Already have an account?{" "}
+                  </Text>
+                  <TouchableOpacity>
+                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                      Sign IN !
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-            <View style={{ marginVertical: 20 }}>
-              <Text style={{ fontSize: 15, textAlign: "center" }}>
-                By signing up, you agree to our{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Privacy Policy
-                </Text>{" "}
-                and{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Terms {"&"} Conditions.
-                </Text>
+          </View>
+          {/* End of mid container */}
+          {/* START of bottom Container */}
+
+          <View
+            style={{ height: height * 0.3, justifyContent: "space-between" }}
+          >
+            <View style={styles.policyContainer}>
+              <Text style={{ textAlign: "center" }}>
+                By signing up you agree to{" "}
+                <Text style={styles.linkText}>Privacy Policy</Text> and{" "}
+                <Text style={styles.linkText}>Terms {"&"} Conditions.</Text>
               </Text>
             </View>
+            <View
+              style={{
+                height: "50%",
+                backgroundColor: COLORS.secondary,
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <TouchableOpacity style={styles.bottomButton}>
+                <Text style={{ color: "white", fontSize: 18 }}>Continue</Text>
+              </TouchableOpacity>
+            </View>
+            {/* END of Bottom Container */}
           </View>
         </View>
-      </View>
-    </>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  topContainer: {
+    height: height * 0.1,
+    backgroundColor: COLORS.secondary,
+    borderBottomLeftRadius: 30,
+    justifyContent: "center",
+  },
+  returnButton: {
+    width: 60,
+    borderRadius: 30,
+    backgroundColor: COLORS.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 20,
+    elevation: 3,
+  },
+  midContainer: {
+    backgroundColor: COLORS.secondary,
+    height: height * 0.6,
+  },
+  headerMidContainer: {
+    backgroundColor: "white",
+    height: "30%",
+    padding: 30,
+    borderTopRightRadius: 30,
+  },
+  textMidContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  policyContainer: {
+    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    fontWeight: "bold",
+  },
+  bottomButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+    backgroundColor: COLORS.primary,
+    width: width - 60,
+    height: 70,
+    marginBottom: 20,
+    elevation: 3,
+  },
+});
