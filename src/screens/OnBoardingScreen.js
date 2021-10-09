@@ -53,7 +53,7 @@ const Next = ({ isLight, ...props }) => {
 const Skip = ({ isLight, ...props }) => {
   return (
     <TouchableOpacity {...props}>
-        <Text style={{ color: "white", fontSize: 20, marginLeft: 15 }}>
+      <Text style={{ color: "white", fontSize: 20, marginLeft: 15 }}>
         Passer
       </Text>
     </TouchableOpacity>
@@ -82,10 +82,10 @@ const OnBoardingScreen = ({ navigation }) => {
   return (
     <Onboarding
       onSkip={() => {
-        navigation.navigate("Main");
+        navigation.replace("LoginScreen");
       }}
       onDone={() => {
-        navigation.navigate("Main");
+        navigation.replace("LoginScreen");
       }}
       DotComponent={Square}
       NextButtonComponent={Next}

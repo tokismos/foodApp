@@ -1,6 +1,11 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+  TransitionPresets,
+  TransitionSpecs,
+} from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,7 +18,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const TabScreen = () => {
@@ -43,13 +48,67 @@ export const TabScreen = () => {
   );
 };
 const Navigator = () => {
+  // to add transition effect
+  const horizontalAnimation = {
+    cardStyleInterpolator: ({
+      current,
+      layouts: { screen },
+      next,
+      inverted,
+    }) => {
+      const progress = Animated.add(
+        current.progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+          extrapolate: "clamp",
+        }),
+        next
+          ? next.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1],
+              extrapolate: "clamp",
+            })
+          : 0
+      );
+      return {
+        cardStyle: {
+          transform: [
+            {
+              translateX: Animated.multiply(
+                progress.interpolate({
+                  inputRange: [0, 1, 2],
+                  outputRange: [
+                    screen.width, // Focused, but offscreen in the beginning
+                    0, // Fully focused
+                    -screen.width, // Fully unfocused
+                  ],
+                  extrapolate: "clamp",
+                }),
+                inverted
+              ),
+            },
+          ],
+        },
+      };
+    },
+  };
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen options={{}} name="HomeScreen" component={LoginScreen} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
+        options={{}}
+        name="OnBoardingScreen"
+        component={OnBoardingScreen}
+      />
+      <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen
         name="PhoneVerificationScreen"
+        options={{ ...horizontalAnimation }}
         component={PhoneVerificationScreen}
       />
     </Stack.Navigator>

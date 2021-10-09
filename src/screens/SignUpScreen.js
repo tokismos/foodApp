@@ -20,6 +20,7 @@ import CheckBox from "@react-native-community/checkbox";
 import TextInputColored from "../components/TextInputColored";
 import { StackActions } from "@react-navigation/native";
 import ContinueButton from "../components/ContinueButton";
+import HeaderComponent from "../components/HeaderComponent";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [fullName, setFullName] = React.useState("");
@@ -27,16 +28,10 @@ const LoginScreen = ({ navigation }) => {
   const [isLoading, setLoading] = React.useState(false);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "white", width }}>
+    <ScrollView style={{ flex: 1, backgroundColor: COLORS.lightGrey, width }}>
       <StatusBar backgroundColor={COLORS.secondary} />
 
-      <View style={styles.topContainer}>
-        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-          <View style={styles.returnButton}>
-            <MaterialIcons name="arrow-back" size={40} color="white" />
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+      <HeaderComponent signUpScreen />
       {/* start of mid container */}
 
       <View style={styles.midContainer}>
@@ -50,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         {/* to add margin to mid container in secondary color */}
-        <View style={{ backgroundColor: "white", height: "70%" }}>
+        <View style={{ height: "70%" }}>
           <View
             style={{
               backgroundColor: COLORS.secondary,
@@ -103,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
         <View
           style={{
             height: "50%",
-            backgroundColor: COLORS.secondary,
+            backgroundColor: COLORS.lightGrey,
             alignItems: "center",
             justifyContent: "flex-end",
           }}
@@ -125,7 +120,7 @@ const styles = StyleSheet.create({
   topContainer: {
     height: height * 0.1,
     backgroundColor: COLORS.secondary,
-    borderBottomLeftRadius: 30,
+    borderBottomLeftRadius: 25,
     justifyContent: "center",
   },
   returnButton: {
@@ -142,10 +137,10 @@ const styles = StyleSheet.create({
     height: height * 0.6,
   },
   headerMidContainer: {
-    backgroundColor: "white",
+    backgroundColor: COLORS.lightGrey,
     height: "30%",
     padding: 30,
-    borderTopRightRadius: 30,
+    borderTopRightRadius: 25,
   },
   textMidContainer: {
     flexDirection: "row",
@@ -154,7 +149,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   policyContainer: {
-    backgroundColor: "white",
+    backgroundColor: COLORS.lightGrey,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

@@ -888,6 +888,15 @@
     "@babel/helper-plugin-utils" "^7.14.5"
     "@babel/plugin-syntax-typescript" "^7.14.5"
 
+"@babel/plugin-transform-typescript@^7.15.0":
+  version "7.15.8"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.15.8.tgz#ff0e6a47de9b2d58652123ab5a879b2ff20665d8"
+  integrity sha512-ZXIkJpbaf6/EsmjeTbiJN/yMxWPFWvlr7sEG1P95Xb4S4IBcrf2n7s/fItIhsAmOf8oSh3VJPDppO6ExfAfKRQ==
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.15.4"
+    "@babel/helper-plugin-utils" "^7.14.5"
+    "@babel/plugin-syntax-typescript" "^7.14.5"
+
 "@babel/plugin-transform-unicode-escapes@^7.12.13", "@babel/plugin-transform-unicode-escapes@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.14.5.tgz#9d4bd2a681e3c5d7acf4f57fa9e51175d91d0c6b"
@@ -1064,6 +1073,15 @@
     "@babel/plugin-transform-dotall-regex" "^7.4.4"
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
+
+"@babel/preset-typescript@^7.15.0":
+  version "7.15.0"
+  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.15.0.tgz#e8fca638a1a0f64f14e1119f7fe4500277840945"
+  integrity sha512-lt0Y/8V3y06Wq/8H/u0WakrqciZ7Fz7mwPDHWUJAXlABL5hiUG42BNlRXiELNjeWjO5rWmnNKlx+yzJvxezHow==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.14.5"
+    "@babel/helper-validator-option" "^7.14.5"
+    "@babel/plugin-transform-typescript" "^7.15.0"
 
 "@babel/preset-typescript@~7.12.13":
   version "7.12.17"
@@ -1668,6 +1686,15 @@
   integrity sha512-5ctB49rmtTRQuTSBVgqMsEzBUjPP2ByUzBjNivA7jmvk+PDCl4oZsiR8KAm/twhxe215GYThfi2vUWXKAg6EEQ==
   dependencies:
     nanoid "^3.1.23"
+
+"@react-navigation/stack@^6.0.9":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-6.0.9.tgz#a4c38df732d6dfefc39d8c80411aa066fcaeb358"
+  integrity sha512-LV9MlxqOH6+wgU7LxhaTRSY+WTuzNa2NnOCji9nyAA4Xohp9tpuLhYJRYdNRWXBcfseBqz1o4L0LAxRMv+CXYQ==
+  dependencies:
+    "@react-navigation/elements" "^1.1.2"
+    color "^3.1.3"
+    warn-once "^0.1.0"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
@@ -5563,6 +5590,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-countdown-circle-timer@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-2.5.4.tgz#9e6ff6b2ee22e2025fcd9a845d9ee7f48cdb3cec"
+  integrity sha512-wiO+s8EwEMfPt4G16zBWGpIiMwEQQRtSv8shgr7m7QkV69tmKlLrHquesYZjGvLNOQhYRAIZPJSf1ZJNZi1FDA==
+
 react-native-country-picker-modal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-2.0.0.tgz#005421303349a81fedf5975e465405bb4b7312d5"
@@ -5647,14 +5679,16 @@ react-native-ratings@8.0.4:
   dependencies:
     lodash "^4.17.15"
 
-react-native-reanimated@~2.2.0:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.2.2.tgz#8bc81c7ee93d599991507bb826050a5eeee1e7f2"
-  integrity sha512-Lfv4ogbNLU9x3DqhXUFza9pnzyTvPrw5xGC1wWA6aGXqZgyaikNLgC5dNWzxVbfEwRdOuLPFsai3LAcIM92TCg==
+react-native-reanimated@^2.3.0-beta.1:
+  version "2.3.0-beta.1"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.3.0-beta.1.tgz#29deb1fe66db02b431f85b4afd5ba77d689554e6"
+  integrity sha512-scO945EqhQxbNox4GxY+NX0fsPNG7YheYnJTVs/u7XJ0+NuMeuSlUt9Yi89Q161hs2RpY7xAvYpQSU7PQXCeow==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.10.4"
-    fbjs "^3.0.0"
+    invariant "^2.2.4"
+    lodash.isequal "^4.5.0"
     mockdate "^3.0.2"
+    react-native-screens "^3.4.0"
     string-hash-64 "^1.0.3"
 
 react-native-safe-area-context@3.2.0:
@@ -5675,6 +5709,13 @@ react-native-screen-keyboard@^1.2.2:
   integrity sha512-KQ7Spy/Q8xAOhnR2k10iTEnb4jJ/SqmPJOfPtN/8EjP+6nZk/Rg2p4Sp7MYJ+txnHnp/6HiTJhVV57vWlRX2Wg==
   dependencies:
     react-native-material-ripple "git+https://github.com/aspect-apps/react-native-material-ripple.git"
+
+react-native-screens@^3.4.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.8.0.tgz#4ec84c55a7b4a4aa9405c812978ca2ba5c0242a4"
+  integrity sha512-lHrnB/elAoMJKv8O12U6BLgeup4lB6ZKJHEOVuG/D72nv/OE9wUusbou6YCB5tp3YbaSpHflPnkFmHA/vCejpw==
+  dependencies:
+    warn-once "^0.1.0"
 
 react-native-screens@~3.4.0:
   version "3.4.0"
@@ -5722,11 +5763,6 @@ react-native-unimodules@0.14.10:
     find-up "~5.0.0"
     unimodules-app-loader "~2.2.0"
     unimodules-task-manager-interface "~6.2.0"
-
-react-native-virtual-keyboard@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-virtual-keyboard/-/react-native-virtual-keyboard-1.1.0.tgz#a484fd1a4effcd588eed539abb9c57a6fd7e0a7c"
-  integrity sha512-qcFzumzKdbu1iVtvQpYW4WTwTVljon9RRLbgFF6idWbq9Ez+tCVw/MMl1LcOffpCNJVY/bg2PsOqmFUNDa/eRA==
 
 react-native-web@~0.13.12:
   version "0.13.18"

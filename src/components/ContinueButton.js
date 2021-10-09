@@ -7,6 +7,8 @@ import {
   View,
 } from "react-native";
 import { COLORS } from "../consts/colors";
+import LottieView from "lottie-react-native";
+
 const { width, height } = Dimensions.get("window");
 
 const ContinueButton = ({ onPress, style }) => {
@@ -23,10 +25,11 @@ const styles = StyleSheet.create({
   bottomButton: {
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
     borderRadius: 15,
     backgroundColor: COLORS.primary,
     width: width - 60,
-    height: 70,
+    height: 60,
     marginBottom: 20,
     elevation: 3,
   },

@@ -81,8 +81,8 @@ const signOut = async () => {
   }
 };
 const signInWithPhoneNumber = async (phoneNumber, setConfirm) => {
-  const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-  setConfirm(confirmation);
+  const confirmation = await auth().signInWithPhoneNumber(phoneNumber, true);
+  //setConfirm(confirmation);
 };
 
 // const logInWithFb = async () => {
