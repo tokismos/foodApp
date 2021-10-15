@@ -17,6 +17,7 @@ import IngredientScreen from "../screens/IngredientScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
+import FirstScreen from "../screens/FirstScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +41,7 @@ export const TabScreen = () => {
           ),
         }}
         name="Home"
-        component={MainScreen}
+        component={FirstScreen}
       />
       <Tab.Screen name="Settings" component={FirstPage} />
       <Tab.Screen name="test" component={IngredientScreen} />
@@ -101,7 +102,7 @@ const Navigator = () => {
       <Stack.Screen
         options={{}}
         name="OnBoardingScreen"
-        component={OnBoardingScreen}
+        component={TabScreen}
       />
       <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
