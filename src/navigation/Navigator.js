@@ -7,7 +7,12 @@ import {
 import React from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import FirstPage from "../screens/FirstPage";
 import MainScreen from "../screens/MainScreen";
@@ -18,33 +23,77 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
 import FirstScreen from "../screens/FirstScreen";
-
+import CartScreen from "../screens/CartScreen";
+import ResultCart from "../screens/ResultCart";
+import RecetteSVG from "../assets/recette.svg";
+import { color } from "react-native-reanimated";
+import RecipeScreen from "../screens/RecipeScreen";
+import TinderScreen from "../screens/TinderScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
-export const TabScreen = () => {
+const TopTabScreen = () => {
+  return (
+    <TopTab.Navigator>
+      <TopTab.Screen name="Recipe Screen" component={RecipeScreen} />
+      <TopTab.Screen name="Recipe Screesn" component={FirstScreen} />
+    </TopTab.Navigator>
+  );
+};
+
+const TabScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarOptions: { activeTintColor: "red" },
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: "black",
         tabBarStyle: {
-          backgroundColor: COLORS.primary,
-          height: 60,
+          height: 50,
+        },
+        tabBarLabelStyle: {
+          // color: "black",
         },
       }}
     >
       <Tab.Screen
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="fast-food" size={30} color="white" />
+            <MaterialCommunityIcons name="silverware-fork-knife" size={30} />
           ),
         }}
-        name="Home"
-        component={FirstScreen}
+        name="TopTabScreen"
+        component={TinderScreen}
       />
-      <Tab.Screen name="Settings" component={FirstPage} />
-      <Tab.Screen name="test" component={IngredientScreen} />
+
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="search" size={24} />
+          ),
+        }}
+        name="Recherche"
+        component={FirstPage}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="heart" size={24} />
+          ),
+        }}
+        name="Favoris"
+        component={IngredientScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="shopping-cart" size={24} />
+          ),
+        }}
+        name="Panier"
+        component={IngredientScreen}
+      />
     </Tab.Navigator>
   );
 };
@@ -107,6 +156,8 @@ const Navigator = () => {
       <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="ResultCartScreen" component={ResultCart} />
       <Stack.Screen
         name="PhoneVerificationScreen"
         options={{ ...horizontalAnimation }}

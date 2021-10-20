@@ -10,13 +10,14 @@ import {
   ScrollView,
   FlatList,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS } from "../consts/colors";
 import { getAllRecipes } from "../axios";
 import LoadingComponent from "../components/LoadingComponent";
+import { NavigationContainer } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
 
@@ -39,7 +40,7 @@ const TestImg = ({ item }) => {
   );
 };
 
-const FirstScreen = () => {
+const FirstScreen = ({ navigation }) => {
   const [searchText, setSearch] = useState("");
   const [DATA, setDATA] = useState("");
   useEffect(() => {
@@ -130,7 +131,16 @@ const FirstScreen = () => {
         {DATA ? (
           <FlatList
             data={DATA}
-            renderItem={({ item }) => <TestImg item={item.imgURL} />}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={{ flex: 1 }}
+                onPress={() =>
+                  navigation.navigate("IngredientScreen", { item })
+                }
+              >
+                <TestImg item={item.imgURL} />
+              </TouchableOpacity>
+            )}
             keyExtractor={(item) => item._id}
             numColumns={3}
           />

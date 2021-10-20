@@ -1,21 +1,59 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Dimensions,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
+import { Checkbox } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
 
-const IngredientItem = () => {
-  return (
-    <View style={{ backgroundColor: "red", flexDirection: "row" }}>
-      <Text>Creme freche</Text>
-    </View>
-  );
-};
+const CartScreen = ({ route, navigation }) => {
+  const { ingredients } = route.params;
+  let cart = [...ingredients];
 
-const CartScreen = () => {
+  console.log("this is caert", cart);
+  const IngredientItem = ({ ingredient }) => {
+    const [checked, setChecked] = React.useState(true);
+
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          width: width - 50,
+          alignSelf: "center",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottomWidth: 0.3,
+        }}
+      >
+        <Text style={{ fontSize: 18, width: "80%" }}>{ingredient}</Text>
+        <Checkbox
+          status={checked ? "checked" : "unchecked"}
+          onPress={() => {
+            setChecked(!checked);
+            if (checked) {
+              const newCart = cart.filter((item) => item !== ingredient);
+              cart = newCart;
+              console.log("this isss new caar t", cart);
+            } else {
+              cart.push(ingredient);
+              console.log("cart", cart);
+            }
+          }}
+        />
+      </View>
+    );
+  };
+
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
+    <ScrollView style={{ flex: 1, backgroundColor: COLORS.secondary }}>
       <View style={{ height: height * 0.15 }}>
         <View
           style={{
@@ -66,9 +104,19 @@ const CartScreen = () => {
           Si vous vous trompez, vous pourrez rajouter ou enlever un ingrédient
           sur le site de votre supermarché
         </Text>
-        <IngredientItem />
+
+        {ingredients.map((text) => (
+          <IngredientItem ingredient={text} key={text} />
+        ))}
+        <View style={{ width: "50%", alignSelf: "center", margin: 20 }}>
+          <Button
+            title="Continue"
+            color={COLORS.primary}
+            onPress={() => navigation.navigate("ResultCartScreen", { cart })}
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import {
   Button,
   Dimensions,
+  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -10,28 +11,14 @@ import {
 } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
+import { NavigationContainer } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
-const ingredients = [
-  "1 kg de palourdes",
-  "1	oignon",
-  "5 dl	d’ eau",
-  "4	gousses d’ail",
-  "2 bouquets	de persil plat",
-  "500 g	de spaghettis",
-  "4 c.s.	d’ huile d’olive",
-];
 
-const ShowIngredients = () => {
-  return ingredients.map((text) => {
-    return (
-      <Text style={{ marginVertical: 10, marginHorizontal: 30, fontSize: 18 }}>
-        {text}
-      </Text>
-    );
-  });
-};
-const IngredientScreen = () => {
+const IngredientScreen = ({ route, navigation }) => {
+  const { item } = route.params;
+  console.log(item.ingredients);
+
   return (
     <ScrollView style={{}}>
       <View style={styles.topBar}>
@@ -48,7 +35,7 @@ const IngredientScreen = () => {
       <Image
         style={{ height: 400, width }}
         source={{
-          uri: "https://cdn-elle.ladmedia.fr/var/plain_site/storage/images/elle-a-table/les-dossiers-de-la-redaction/dossier-de-la-redac/avocado-toast-recette/90714087-1-fre-FR/25-fois-ou-l-avocado-toast-a-remporte-sa-plaidoirie.jpg",
+          uri: item.imgURL,
         }}
       />
       <View style={styles.bottomBar}>
@@ -82,7 +69,6 @@ const IngredientScreen = () => {
             flexDirection: "row",
             justifyContent: "flex-end",
             alignItems: "center",
-            backgroundColor: "blue",
           }}
         >
           <Text style={{ fontSize: 20, marginHorizontal: 20 }}>
@@ -114,7 +100,20 @@ const IngredientScreen = () => {
           >
             Les ingredients:
           </Text>
-          <ShowIngredients />
+          {item.ingredients?.map((text) => {
+            return (
+              <Text
+                key={text}
+                style={{
+                  marginVertical: 10,
+                  marginHorizontal: 30,
+                  fontSize: 18,
+                }}
+              >
+                {text}
+              </Text>
+            );
+          })}
         </View>
       </View>
       <View
@@ -125,7 +124,14 @@ const IngredientScreen = () => {
           flex: 1,
         }}
       >
-        <Button title="Add to cart" color={COLORS.primary} width={400} />
+        <Button
+          title="Add to cart"
+          color={COLORS.primary}
+          width={400}
+          onPress={() =>
+            navigation.navigate("CartScreen", { ingredients: item.ingredients })
+          }
+        />
       </View>
     </ScrollView>
   );

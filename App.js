@@ -6,6 +6,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import Navigator, { TabScreen } from "./src/navigation/Navigator";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { COLORS } from "./src/consts/colors";
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
