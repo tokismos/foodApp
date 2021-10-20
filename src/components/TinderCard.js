@@ -1,73 +1,171 @@
-import React from "react";
-import { Text, ImageBackground, View, StyleSheet } from "react-native";
-import GradientImage from "./GradientImage";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useState } from "react";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { COLORS } from "../consts/colors";
+import { useSelector, useDispatch } from "react-redux";
+import { addMatch } from "../redux/slicer/MatchSlicer";
+const Card = ({ user, swipe }) => {
+  const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
+  const ProgressView = () => {
+    return Array.apply(null, Array(nbrOfRecipes)).map((item, index) => {
+      return (
+        <View
+          key={index}
+          style={{
+            backgroundColor: index < matches.length ? COLORS.primary : "white",
+            height: 10,
+            flexGrow: 1 / nbrOfRecipes,
+            marginHorizontal: 1,
+          }}
+        />
+      );
+    });
+  };
 
-const Card = (props) => {
-  const { name, image, bio } = props.user;
+  useEffect(() => {
+    if (matches.length == nbrOfRecipes) {
+      Alert.alert("You completed your matches", matches.toString(), [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+    }
+  }, [matches]);
+  useEffect(() => {
+    console.log("math", matches);
+  }, [matches]);
   return (
-    <View style={styles.card}>
-      {/* <ImageBackground
-        source={{
-          uri: image,
+    <ImageBackground
+      style={{
+        height: "100%",
+        width: "100%",
+
+        overflow: "hidden",
+        justifyContent: "space-between",
+        borderRadius: 15,
+      }}
+      source={{ uri: user?.image }}
+    >
+      <LinearGradient
+        colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0.7 }}
+        style={{
+          height: "30%",
         }}
-        style={styles.image}
       >
-        <View style={styles.cardInner}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.bio}>{bio}</Text>
+        <View
+          style={{
+            height: "70%",
+            justifyContent: "space-between",
+            paddingTop: 20,
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 20, alignSelf: "center" }}>
+            {user?.name}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              marginHorizontal: 20,
+            }}
+          >
+            <Text style={{ color: "white", textAlign: "center", flex: 1 / 3 }}>
+              15 min de preparation
+            </Text>
+            <Text style={{ color: "white", textAlign: "center", flex: 1 / 3 }}>
+              634 kcal
+            </Text>
+            <Text style={{ color: "white", textAlign: "center", flex: 1 / 3 }}>
+              95% ont aime la recette
+            </Text>
+          </View>
         </View>
-      </ImageBackground> */}
-      <GradientImage
-        source={{
-          uri: image,
+      </LinearGradient>
+      <LinearGradient
+        colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 0.3 }}
+        style={{
+          height: "30%",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          paddingBottom: 10,
         }}
-        height="100%"
-        width="100%"
       >
-        <Text>uihhhh</Text>
-      </GradientImage>
-    </View>
+        {
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              marginVertical: 10,
+            }}
+          >
+            <ProgressView />
+          </View>
+        }
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            width: "90%",
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              height: 80,
+              width: 80,
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 2,
+              borderColor: "#EF5454",
+            }}
+          >
+            <FontAwesome name="close" size={50} color="#EF5454" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => swipe}
+            style={{
+              height: 80,
+              width: 80,
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 2,
+              borderColor: COLORS.primary,
+            }}
+          >
+            <FontAwesome name="heart" size={45} color={COLORS.primary} />
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
+export default Card;
+
 const styles = StyleSheet.create({
-  card: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 10,
-    backgroundColor: "#fefefe",
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-
-    elevation: 11,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 10,
-    overflow: "hidden",
-
-    justifyContent: "flex-end",
-  },
-  cardInner: {
-    padding: 10,
-  },
-  name: {
-    fontSize: 30,
+  imgText: {
     color: "white",
     fontWeight: "bold",
-  },
-  bio: {
-    fontSize: 18,
-    color: "white",
-    lineHeight: 25,
+    fontSize: 24,
+    textAlign: "center",
+    marginBottom: 10,
   },
 });
-
-export default Card;

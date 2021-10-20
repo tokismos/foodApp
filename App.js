@@ -7,7 +7,8 @@ import Navigator, { TabScreen } from "./src/navigation/Navigator";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { COLORS } from "./src/consts/colors";
-
+import { store } from "./src/redux/store";
+import { Provider, useSelector } from "react-redux";
 export default function App() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -43,9 +44,11 @@ export default function App() {
   //   );
   // };
   return (
-    <NavigationContainer>
-      {user ? <TabScreen /> : <Navigator />}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        {user ? <TabScreen /> : <Navigator />}
+      </NavigationContainer>
+    </Provider>
   );
 }
 

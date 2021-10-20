@@ -66,11 +66,15 @@ const AnimatedStack = (props) => {
   }));
 
   const likeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(translateX.value, [0, hiddenTranslateX / 5], [0, 1]),
+    opacity: interpolate(translateX.value, [50, hiddenTranslateX / 10], [0, 1]),
   }));
 
   const nopeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(translateX.value, [0, -hiddenTranslateX / 5], [0, 1]),
+    opacity: interpolate(
+      translateX.value,
+      [-50, -hiddenTranslateX / 10],
+      [0, 1]
+    ),
   }));
 
   const gestureHandler = useAnimatedGestureHandler({
@@ -107,7 +111,12 @@ const AnimatedStack = (props) => {
       {nextProfile && (
         <View style={styles.nextCardContainer}>
           <Animated.View style={[styles.animatedCard, nextCardStyle]}>
-            {renderItem({ item: nextProfile })}
+            {renderItem({
+              item: nextProfile,
+              swipe: () => {
+                translateX.value = 2;
+              },
+            })}
           </Animated.View>
         </View>
       )}
@@ -122,10 +131,14 @@ const AnimatedStack = (props) => {
             />
             <Animated.Image
               source={Nope}
-              style={[styles.like, { right: 10 }, nopeStyle]}
+              style={[
+                styles.like,
+                { right: 5, width: 200, height: 200 },
+                nopeStyle,
+              ]}
               resizeMode="contain"
             />
-            {renderItem({ item: currentProfile })}
+            {renderItem({ item: currentProfile, swipe: translateX.value })}
           </Animated.View>
         </PanGestureHandler>
       )}
@@ -135,14 +148,14 @@ const AnimatedStack = (props) => {
 
 const styles = StyleSheet.create({
   root: {
-    justifyContent: "center",
     alignItems: "center",
     flex: 1,
     width: "100%",
+    backgroundColor: "blue",
   },
   animatedCard: {
     width: "90%",
-    height: "70%",
+    height: "90%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -153,11 +166,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   like: {
-    width: 150,
-    height: 150,
+    width: 170,
+    height: 170,
     position: "absolute",
-    top: 10,
-    zIndex: 1,
+    top: 100,
+    zIndex: 100,
   },
 });
 

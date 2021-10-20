@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import GradientImage from "./GradientImage";
+import Card from "./TinderCard";
 import { BottomSheet, Button } from "react-native-elements";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -20,7 +20,7 @@ const { width } = Dimensions.get("screen");
 const List = ({ item }) => {
   return (
     <View style={{ marginLeft: 10, marginRight: 5 }}>
-      <GradientImage
+      <Card
         height={200}
         width={150}
         source={{
@@ -29,7 +29,7 @@ const List = ({ item }) => {
         style={{ borderRadius: 5, overflow: "hidden" }}
         text={item.title}
         titleStyle={{ fontSize: 18 }}
-      ></GradientImage>
+      ></Card>
     </View>
   );
 };

@@ -8,7 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import GradientImage from "../components/GradientImage";
+import Card from "../components/TinderCard";
 import { COLORS } from "../consts/colors";
 
 const { width } = Dimensions.get("window");
@@ -19,7 +19,7 @@ const FirstPage = ({ navigation }) => {
         <Text style={styles.headerText}>Food Avenue</Text>
       </View>
       <View style={styles.container}>
-        <GradientImage
+        <Card
           source={require("../assets/firstImage.jpg")}
           height={200}
           width={300}

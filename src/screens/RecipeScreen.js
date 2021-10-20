@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import GradientImage from "../components/GradientImage";
+import Card from "../components/TinderCard";
 import { COLORS } from "../consts/colors";
 import axios from "axios";
 const { width, height } = Dimensions.get("screen");
@@ -22,7 +22,7 @@ const RecipeScreen = () => {
   const RecipeComponent = () => {
     return (
       data && (
-        <GradientImage
+        <Card
           source={{
             uri: data.image,
           }}
