@@ -46,6 +46,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
+        <StatusBar translucent />
         {user ? <TabScreen /> : <Navigator />}
       </NavigationContainer>
     </Provider>

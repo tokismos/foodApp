@@ -43,7 +43,7 @@ const Card = ({ user, swipe }) => {
     }
   }, [matches]);
   useEffect(() => {
-    console.log("math", matches);
+    console.log("nbrOfRecipes", nbrOfRecipes);
   }, [matches]);
   return (
     <ImageBackground

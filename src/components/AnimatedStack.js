@@ -151,11 +151,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
-    backgroundColor: "blue",
+    marginVertical: 20,
   },
   animatedCard: {
     width: "90%",
-    height: "90%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },

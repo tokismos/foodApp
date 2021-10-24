@@ -29,6 +29,7 @@ import RecetteSVG from "../assets/recette.svg";
 import { color } from "react-native-reanimated";
 import RecipeScreen from "../screens/RecipeScreen";
 import TinderScreen from "../screens/TinderScreen";
+import filterScreen from "../screens/filterScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -155,6 +156,11 @@ const Navigator = () => {
       />
       <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
+      <Stack.Screen
+        name="filterScreen"
+        options={{ ...horizontalAnimation }}
+        component={filterScreen}
+      />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="ResultCartScreen" component={ResultCart} />
