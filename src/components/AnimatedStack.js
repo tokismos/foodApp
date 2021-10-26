@@ -29,6 +29,7 @@ const AnimatedStack = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [swiped, setSwipe] = useState();
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
+  const [show, setShow] = useState(false);
 
   const currentProfile = data[currentIndex];
   const nextProfile = data[nextIndex];
@@ -110,6 +111,10 @@ const AnimatedStack = (props) => {
   });
 
   useEffect(() => {
+    console.log("set to 0");
+    setCurrentIndex(0);
+  }, [data]);
+  useEffect(() => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
@@ -121,7 +126,16 @@ const AnimatedStack = (props) => {
     }
   }, [swiped]);
 
-  return data.length != currentIndex ? (
+  //   To show or not the oops view if theres no data or end of list
+  useEffect(() => {
+    if (data.length == currentIndex || data == "") {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  }, [data, currentIndex]);
+
+  return show ? (
     <View style={styles.root}>
       {nextProfile && (
         <View style={styles.nextCardContainer}>
