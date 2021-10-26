@@ -12,7 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { addMatch } from "../redux/slicer/MatchSlicer";
-const Card = ({ user, swipe }) => {
+const Card = ({ recipe, swipe }) => {
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const ProgressView = () => {
     return Array.apply(null, Array(nbrOfRecipes)).map((item, index) => {
@@ -55,7 +55,7 @@ const Card = ({ user, swipe }) => {
         justifyContent: "space-between",
         borderRadius: 15,
       }}
-      source={{ uri: user?.image }}
+      source={{ uri: recipe?.imgURL }}
     >
       <LinearGradient
         colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
@@ -73,7 +73,7 @@ const Card = ({ user, swipe }) => {
           }}
         >
           <Text style={{ color: "white", fontSize: 20, alignSelf: "center" }}>
-            {user?.name}
+            {recipe?.name}
           </Text>
           <View
             style={{

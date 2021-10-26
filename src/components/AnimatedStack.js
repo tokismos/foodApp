@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, useWindowDimensions, Text } from "react-native";
 
 import Animated, {
   useSharedValue,
@@ -9,18 +9,25 @@ import Animated, {
   interpolate,
   withSpring,
   runOnJS,
+  FadeInUp,
+  FadeIn,
 } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Like from "../assets/LIKE.png";
 import Nope from "../assets/nope.png";
+import { useDispatch, useSelector } from "react-redux";
+import { addMatch } from "../redux/slicer/MatchSlicer";
+import { current } from "immer";
+import LottieView from "lottie-react-native";
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
 
 const AnimatedStack = (props) => {
+  const dispatch = useDispatch();
   const { data, renderItem, onSwipeRight, onSwipeLeft } = props;
-
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [swiped, setSwipe] = useState();
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
 
   const currentProfile = data[currentIndex];
@@ -96,8 +103,9 @@ const AnimatedStack = (props) => {
         () => runOnJS(setCurrentIndex)(currentIndex + 1)
       );
 
-      const onSwipe = event.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-      onSwipe && runOnJS(onSwipe)(currentProfile);
+      event.velocityX > 0
+        ? runOnJS(setSwipe)("right")
+        : runOnJS(setSwipe)("left");
     },
   });
 
@@ -105,17 +113,21 @@ const AnimatedStack = (props) => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
   }, [currentIndex, translateX]);
+  useEffect(() => {
+    if (swiped == "right") {
+      onSwipeRight(currentProfile);
+      console.log("swiped right");
+      setSwipe("");
+    }
+  }, [swiped]);
 
-  return (
+  return data.length != currentIndex ? (
     <View style={styles.root}>
       {nextProfile && (
         <View style={styles.nextCardContainer}>
           <Animated.View style={[styles.animatedCard, nextCardStyle]}>
             {renderItem({
               item: nextProfile,
-              swipe: () => {
-                translateX.value = 2;
-              },
             })}
           </Animated.View>
         </View>
@@ -138,11 +150,21 @@ const AnimatedStack = (props) => {
               ]}
               resizeMode="contain"
             />
-            {renderItem({ item: currentProfile, swipe: translateX.value })}
+            {renderItem({ item: currentProfile })}
           </Animated.View>
         </PanGestureHandler>
       )}
     </View>
+  ) : (
+    <Animated.View
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      entering={FadeIn}
+    >
+      <LottieView source={require("../assets/oops.json")} autoPlay />
+      <Text style={{ fontSize: 20, textAlign: "center", marginTop: 100 }}>
+        OOPS y'a plus de recette !
+      </Text>
+    </Animated.View>
   );
 };
 

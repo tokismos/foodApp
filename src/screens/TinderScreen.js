@@ -1,25 +1,7 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Button,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Card from "../components/TinderCard";
 import users from "../helpers/data/";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
 
 import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,27 +9,19 @@ import { addMatch, changeNumberOfRecipes } from "../redux/slicer/MatchSlicer";
 import { COLORS } from "../consts/colors";
 import { TextInput } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { getAllRecipes } from "../axios";
+import { setRecipes } from "../redux/slicer/recipeSlicer";
+import data from "../helpers/data";
+import LoadingComponent from "../components/LoadingComponent";
+import { LoginWithFb } from "../helpers/db";
 
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [nbrRecipe, setNbrReciepe] = useState(0);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
-
+  const { recipes, activeFilters } = useSelector((state) => state.recipeStore);
   const NbrMatchComponent = () => {
     return (
-      <View
-        style={{
-          backgroundColor: COLORS.primary,
-          height: "15%",
-          width: "90%",
-          flexDirection: "row",
-          borderRadius: 20,
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
-        }}
-      >
+      <View style={styles.nbrContainer}>
         <Text style={{ width: "50%" }}>
           Combien de repas voulez vous cuisiner cette semaine
         </Text>
@@ -58,25 +32,13 @@ const TinderScreen = ({ navigation }) => {
           }}
         >
           <TextInput
-            style={{
-              borderWidth: 1,
-              backgroundColor: "white",
-              borderRadius: 5,
-              padding: 3,
-            }}
+            style={styles.TextInput}
             placeholder="Number"
             onChangeText={setNbrReciepe}
           />
           <TouchableOpacity
             onPress={() => dispatch(changeNumberOfRecipes(+nbrRecipe))}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#EF5454",
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              borderRadius: 5,
-            }}
+            style={styles.buttonContainer}
           >
             <Text>Valider</Text>
           </TouchableOpacity>
@@ -84,52 +46,58 @@ const TinderScreen = ({ navigation }) => {
       </View>
     );
   };
+
+  const loadData = async (item) => {
+    const recipesData = await getAllRecipes(item);
+    dispatch(setRecipes(recipesData));
+  };
   useEffect(() => {
-    console.log("nbr", nbrRecipe);
-    console.log("nbr recipessss", nbrOfRecipes);
-  }, [nbrRecipe, nbrOfRecipes]);
-  const onSwipeLeft = (user) => {
+    loadData();
+  }, []);
+  useEffect(() => {
+    loadData(activeFilters[0]);
+    console.log("data changed");
+  }, [activeFilters]);
+
+  const onSwipeLeft = (item) => {
     // console.warn("swipe left", user.name);
+    console.log("swiped left", item);
   };
 
-  const onSwipeRight = (user) => {
-    dispatch(addMatch(user.name));
+  const onSwipeRight = (item) => {
+    dispatch(addMatch(item.name));
     // console.warn("swipe right: ", user.name);
+    console.log("swiped right", item);
   };
-  const bottomSheetModalRef = useRef(null);
 
   return (
     <View style={styles.pageContainer}>
       {/* <NbrMatchComponent /> */}
-      <View
-        style={{
-          backgroundColor: COLORS.primary,
-          height: "10%",
-          width: "100%",
-          alignItems: "flex-end",
-          justifyContent: "center",
-          paddingRight: 20,
-        }}
-      >
+      <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("filterScreen")}>
           <FontAwesome5 name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <AnimatedStack
-        data={users}
-        renderItem={({ item, swipe }) => (
-          <Card height="100%" width="100%" user={item} swipe={swipe} />
+      <View style={{ flex: 1, width: "100%" }}>
+        {recipes == null ? (
+          <LoadingComponent />
+        ) : (
+          <AnimatedStack
+            data={recipes}
+            renderItem={({ item }) => (
+              <Card height="100%" width="100%" recipe={item} />
+            )}
+            onSwipeLeft={onSwipeLeft}
+            onSwipeRight={onSwipeRight}
+          />
         )}
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-      />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   pageContainer: {
-    justifyContent: "center",
     alignItems: "center",
     flex: 1,
     width: "100%",
@@ -143,6 +111,38 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
+  },
+  nbrContainer: {
+    backgroundColor: COLORS.primary,
+    height: "15%",
+    width: "90%",
+    flexDirection: "row",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+  },
+  TextInput: {
+    borderWidth: 1,
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 3,
+  },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#EF5454",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
+  headerContainer: {
+    backgroundColor: COLORS.primary,
+    height: "10%",
+    width: "100%",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 20,
   },
 });
 
