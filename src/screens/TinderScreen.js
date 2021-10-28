@@ -52,8 +52,8 @@ const TinderScreen = ({ navigation }) => {
     dispatch(setRecipes(recipesData));
   };
   useEffect(() => {
-    loadData();
-  }, []);
+    loadData(activeFilters);
+  }, [activeFilters]);
 
   const onSwipeLeft = (item) => {
     // console.warn("swipe left", user.name);
