@@ -54,10 +54,6 @@ const TinderScreen = ({ navigation }) => {
   useEffect(() => {
     loadData();
   }, []);
-  useEffect(() => {
-    loadData(activeFilters[0]);
-    console.log("data changed");
-  }, [activeFilters]);
 
   const onSwipeLeft = (item) => {
     // console.warn("swipe left", user.name);
@@ -84,8 +80,14 @@ const TinderScreen = ({ navigation }) => {
         ) : (
           <AnimatedStack
             data={recipes}
-            renderItem={({ item }) => (
-              <Card height="100%" width="100%" recipe={item} />
+            renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
+              <Card
+                height="100%"
+                width="100%"
+                recipe={item}
+                onSwipeRight={onSwipeRight}
+                onSwipeLeft={onSwipeLeft}
+              />
             )}
             onSwipeLeft={onSwipeLeft}
             onSwipeRight={onSwipeRight}
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "center",
     paddingRight: 20,
+    marginTop: 40,
   },
 });
 

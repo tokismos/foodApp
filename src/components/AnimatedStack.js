@@ -11,6 +11,7 @@ import Animated, {
   runOnJS,
   FadeInUp,
   FadeIn,
+  withTiming,
 } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Like from "../assets/LIKE.png";
@@ -114,6 +115,7 @@ const AnimatedStack = (props) => {
     console.log("set to 0");
     setCurrentIndex(0);
   }, [data]);
+
   useEffect(() => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
@@ -164,19 +166,35 @@ const AnimatedStack = (props) => {
               ]}
               resizeMode="contain"
             />
-            {renderItem({ item: currentProfile })}
+            {/* We added the onwspLeft and Right in render to make the current index change,there's no way to send it outside  */}
+            {renderItem({
+              item: currentProfile,
+              onSwipeRight: () => {
+                setCurrentIndex(currentIndex + 1);
+                onSwipeRight(currentProfile);
+              },
+              onSwipeLeft: () => {
+                setCurrentIndex(currentIndex + 1);
+                onSwipeLeft(currentProfile);
+              },
+            })}
           </Animated.View>
         </PanGestureHandler>
       )}
     </View>
   ) : (
+    //The oops View
     <Animated.View
       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       entering={FadeIn}
     >
-      <LottieView source={require("../assets/oops.json")} autoPlay />
+      <LottieView
+        source={require("../assets/oops.json")}
+        autoPlay
+        loop={false}
+      />
       <Text style={{ fontSize: 20, textAlign: "center", marginTop: 100 }}>
-        OOPS y'a plus de recette !
+        OOPS y'a plus de recette !Veuillez changer vos filtres si activés
       </Text>
     </Animated.View>
   );

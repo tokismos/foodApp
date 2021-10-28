@@ -12,7 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { addMatch } from "../redux/slicer/MatchSlicer";
-const Card = ({ recipe, swipe }) => {
+const Card = ({ recipe, onSwipeRight, onSwipeLeft }) => {
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const ProgressView = () => {
     return Array.apply(null, Array(nbrOfRecipes)).map((item, index) => {
@@ -126,6 +126,7 @@ const Card = ({ recipe, swipe }) => {
           }}
         >
           <TouchableOpacity
+            onPress={onSwipeLeft}
             style={{
               height: 80,
               width: 80,
@@ -139,7 +140,7 @@ const Card = ({ recipe, swipe }) => {
             <FontAwesome name="close" size={50} color="#EF5454" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => swipe}
+            onPress={onSwipeRight}
             style={{
               height: 80,
               width: 80,

@@ -1,14 +1,13 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://000f-41-142-41-33.ngrok.io",
+  baseURL: "http://5d1a-196-217-64-175.ngrok.io",
 });
 
-const getAllRecipes = async (item) => {
-  console.log("this is item", item);
+const getAllRecipes = async () => {
   let data;
   await api
-    .get(`/recipes/?categorie=${item}`)
+    .get(`/recipes?categorie=dejeuner&difficulte=facile`)
     .then((res) => {
       data = res.data;
       console.log("DATA FETCHED CORRECTLY", data);
