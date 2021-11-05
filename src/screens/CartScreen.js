@@ -23,27 +23,22 @@ const CartScreen = ({ route, navigation }) => {
     const [checked, setChecked] = React.useState(true);
 
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          width: width - 50,
-          alignSelf: "center",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottomWidth: 0.3,
-        }}
-      >
-        <Text style={{ fontSize: 18, width: "80%" }}>{ingredient}</Text>
+      <View style={styles.ingredientsContainer}>
+        <Text style={{ fontSize: 18, width: "80%" }}>
+          {ingredient.quantity} {ingredient.name}
+        </Text>
         <Checkbox
           status={checked ? "checked" : "unchecked"}
           onPress={() => {
             setChecked(!checked);
             if (checked) {
-              const newCart = cart.filter((item) => item !== ingredient);
+              const newCart = cart.filter(
+                (item) => item.name !== ingredient.name
+              );
               cart = newCart;
               console.log("this isss new caar t", cart);
             } else {
-              cart.push(ingredient);
+              cart.push(ingredient.name);
               console.log("cart", cart);
             }
           }}
@@ -105,8 +100,8 @@ const CartScreen = ({ route, navigation }) => {
           sur le site de votre supermarché
         </Text>
 
-        {ingredients.map((text) => (
-          <IngredientItem ingredient={text} key={text} />
+        {ingredients.map((item) => (
+          <IngredientItem ingredient={item} key={item.name} />
         ))}
         <View style={{ width: "50%", alignSelf: "center", margin: 20 }}>
           <Button
@@ -122,4 +117,13 @@ const CartScreen = ({ route, navigation }) => {
 
 export default CartScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  ingredientsContainer: {
+    flexDirection: "row",
+    width: width - 50,
+    alignSelf: "center",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 0.3,
+  },
+});

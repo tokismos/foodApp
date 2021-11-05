@@ -11,13 +11,40 @@ import {
 } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
-import { NavigationContainer } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 
 const IngredientScreen = ({ route, navigation }) => {
-  const { item } = route.params;
-  console.log(item.ingredients);
+  const { recipe } = route.params;
+  console.log("iten", recipe);
+  //container of each step
+  const StepContainer = ({ item, index }) => {
+    return (
+      <View style={styles.stepContainer}>
+        <Text style={{ fontSize: 25, color: "gray" }}>{index + 1}.</Text>
+        <Text>{item}</Text>
+      </View>
+    );
+  };
+  //The view wich contain all steps
+  const StepsView = () => {
+    return (
+      <View>
+        <View style={styles.stepHeaderContainer}>
+          <View style={styles.lineHeader}></View>
+          <View style={styles.stepsTitle}>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              Etapes de preparation
+            </Text>
+          </View>
+          <View style={styles.lineHeader}></View>
+        </View>
+        {recipe.steps.map((item, index) => (
+          <StepContainer item={item} index={index} />
+        ))}
+      </View>
+    );
+  };
 
   return (
     <ScrollView style={{}}>
@@ -35,7 +62,7 @@ const IngredientScreen = ({ route, navigation }) => {
       <Image
         style={{ height: 400, width }}
         source={{
-          uri: item.imgURL,
+          uri: recipe.imgURL,
         }}
       />
       <View style={styles.bottomBar}>
@@ -74,54 +101,29 @@ const IngredientScreen = ({ route, navigation }) => {
           <Text style={{ fontSize: 20, marginHorizontal: 20 }}>
             Recette pour
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              width: 100,
-              height: 30,
-            }}
-          >
+          <View style={styles.nbrContainer}>
             <Text style={{ fontSize: 35 }}>-</Text>
             <Text style={{ marginHorizontal: 10 }}>4</Text>
             <Text style={{ fontSize: 24 }}>+</Text>
           </View>
         </View>
         <View>
-          <Text
-            style={{
-              fontSize: 20,
-              marginHorizontal: 20,
-              marginTop: 30,
-              fontWeight: "bold",
-            }}
-          >
-            Les ingredients:
-          </Text>
-          {item.ingredients?.map((text) => {
+          <Text style={styles.ingredientTitle}>Les ingredients:</Text>
+          {recipe.ingredients?.map((text) => {
             return (
-              <Text
-                key={text}
-                style={{
-                  marginVertical: 10,
-                  marginHorizontal: 30,
-                  fontSize: 18,
-                }}
-              >
-                {text}
+              <Text key={text.name} style={styles.ingredientText}>
+                {text.quantity} {text.name}
               </Text>
             );
           })}
         </View>
       </View>
+      <StepsView steps={recipe.steps} />
       <View
         style={{
           alignItems: "center",
           marginBottom: 50,
           justifyContent: "center",
-          flex: 1,
         }}
       >
         <Button
@@ -129,7 +131,9 @@ const IngredientScreen = ({ route, navigation }) => {
           color={COLORS.primary}
           width={400}
           onPress={() =>
-            navigation.navigate("CartScreen", { ingredients: item.ingredients })
+            navigation.navigate("CartScreen", {
+              ingredients: recipe.ingredients,
+            })
           }
         />
       </View>
@@ -181,5 +185,48 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 20,
     alignItems: "center",
+  },
+  stepContainer: {
+    backgroundColor: "white",
+    padding: 10,
+    margin: 10,
+    width: "90%",
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  stepHeaderContainer: {
+    flexDirection: "row",
+    height: 50,
+
+    alignItems: "center",
+  },
+  lineHeader: {
+    height: 10,
+    width: "20%",
+    backgroundColor: COLORS.primary,
+  },
+  stepsTitle: {
+    width: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  nbrContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    width: 100,
+    height: 30,
+  },
+  ingredientTitle: {
+    fontSize: 20,
+    marginHorizontal: 20,
+    marginTop: 30,
+    fontWeight: "bold",
+  },
+  ingredientText: {
+    marginVertical: 10,
+    marginHorizontal: 30,
+    fontSize: 18,
   },
 });

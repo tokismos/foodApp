@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Button } from "react-native";
 import Card from "../components/TinderCard";
 import users from "../helpers/data/";
 
@@ -13,7 +13,7 @@ import { getAllRecipes } from "../axios";
 import { setRecipes } from "../redux/slicer/recipeSlicer";
 import data from "../helpers/data";
 import LoadingComponent from "../components/LoadingComponent";
-import { LoginWithFb } from "../helpers/db";
+import { LoginWithFb, signOut } from "../helpers/db";
 
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ const TinderScreen = ({ navigation }) => {
     <View style={styles.pageContainer}>
       {/* <NbrMatchComponent /> */}
       <View style={styles.headerContainer}>
+        <Button title="Sign Out" onPress={signOut} />
         <TouchableOpacity onPress={() => navigation.navigate("filterScreen")}>
           <FontAwesome5 name="filter" size={24} color="white" />
         </TouchableOpacity>

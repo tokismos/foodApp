@@ -77,6 +77,7 @@ const PhoneVerificationScreen = ({ navigation }) => {
   };
   const connectWithNum = () => {
     auth.PhoneAuthProvider.credential(verificationId, code);
+    confirmCode(code);
     console.log("LOOOOGed");
   };
   const returnToInputNumber = () => {

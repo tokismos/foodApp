@@ -3,7 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import Navigator, { TabScreen } from "./src/navigation/Navigator";
+import Navigator, {
+  SignNavigator,
+  TabScreen,
+} from "./src/navigation/Navigator";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { COLORS } from "./src/consts/colors";
@@ -47,7 +50,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar translucent />
-        {user ? <TabScreen /> : <Navigator />}
+        {user ? <Navigator /> : <SignNavigator />}
       </NavigationContainer>
     </Provider>
   );

@@ -14,36 +14,23 @@ import {
 } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-import FirstPage from "../screens/FirstPage";
-import MainScreen from "../screens/MainScreen";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
-import FirstScreen from "../screens/FirstScreen";
 import CartScreen from "../screens/CartScreen";
-import ResultCart from "../screens/ResultCart";
+import ResultCartScreen from "../screens/ResultCartScreen";
 import RecetteSVG from "../assets/recette.svg";
 import { color } from "react-native-reanimated";
-import RecipeScreen from "../screens/RecipeScreen";
 import TinderScreen from "../screens/TinderScreen";
 import filterScreen from "../screens/filterScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const TopTabScreen = () => {
-  return (
-    <TopTab.Navigator>
-      <TopTab.Screen name="Recipe Screen" component={RecipeScreen} />
-      <TopTab.Screen name="Recipe Screesn" component={FirstScreen} />
-    </TopTab.Navigator>
-  );
-};
-
-const TabScreen = () => {
+export const TabScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -64,19 +51,10 @@ const TabScreen = () => {
             <MaterialCommunityIcons name="silverware-fork-knife" size={30} />
           ),
         }}
-        name="TopTabScreen"
-        component={TinderScreen}
+        name="TinderNavigator"
+        component={TinderNavigator}
       />
 
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="search" size={24} />
-          ),
-        }}
-        name="Recherche"
-        component={FirstPage}
-      />
       <Tab.Screen
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -98,77 +76,102 @@ const TabScreen = () => {
     </Tab.Navigator>
   );
 };
-const Navigator = () => {
-  // to add transition effect
-  const horizontalAnimation = {
-    cardStyleInterpolator: ({
-      current,
-      layouts: { screen },
-      next,
-      inverted,
-    }) => {
-      const progress = Animated.add(
-        current.progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 1],
-          extrapolate: "clamp",
-        }),
-        next
-          ? next.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 1],
-              extrapolate: "clamp",
-            })
-          : 0
-      );
-      return {
-        cardStyle: {
-          transform: [
-            {
-              translateX: Animated.multiply(
-                progress.interpolate({
-                  inputRange: [0, 1, 2],
-                  outputRange: [
-                    screen.width, // Focused, but offscreen in the beginning
-                    0, // Fully focused
-                    -screen.width, // Fully unfocused
-                  ],
-                  extrapolate: "clamp",
-                }),
-                inverted
-              ),
-            },
-          ],
-        },
-      };
-    },
-  };
+const horizontalAnimation = {
+  cardStyleInterpolator: ({ current, layouts: { screen }, next, inverted }) => {
+    const progress = Animated.add(
+      current.progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1],
+        extrapolate: "clamp",
+      }),
+      next
+        ? next.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+            extrapolate: "clamp",
+          })
+        : 0
+    );
+    return {
+      cardStyle: {
+        transform: [
+          {
+            translateX: Animated.multiply(
+              progress.interpolate({
+                inputRange: [0, 1, 2],
+                outputRange: [
+                  screen.width, // Focused, but offscreen in the beginning
+                  0, // Fully focused
+                  -screen.width, // Fully unfocused
+                ],
+                extrapolate: "clamp",
+              }),
+              inverted
+            ),
+          },
+        ],
+      },
+    };
+  },
+};
+export const SignNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        options={{}}
-        name="OnBoardingScreen"
-        component={TabScreen}
-      />
       <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen options={{}} name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen
+        name="PhoneVerificationScreen"
+        options={{ ...horizontalAnimation }}
+        component={PhoneVerificationScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+export const TinderNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen options={{}} name="TinderScreen" component={TinderScreen} />
+
+      <Stack.Screen
+        name="CartScreen"
+        options={{ ...horizontalAnimation }}
+        component={CartScreen}
+      />
+      <Stack.Screen
+        name="ResultCartScreen"
+        options={{ ...horizontalAnimation }}
+        component={ResultCartScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Navigator = () => {
+  // to add transition effect
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen options={{}} name="LoginScreen" component={TabScreen} />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
       <Stack.Screen
         name="filterScreen"
         options={{ ...horizontalAnimation }}
         component={filterScreen}
       />
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
-      <Stack.Screen name="ResultCartScreen" component={ResultCart} />
-      <Stack.Screen
-        name="PhoneVerificationScreen"
-        options={{ ...horizontalAnimation }}
-        component={PhoneVerificationScreen}
-      />
+      <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
     </Stack.Navigator>
   );
 };
