@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://backend-yuzi.herokuapp.com",
+  baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 
 const getAllRecipes = async (item) => {
@@ -12,13 +12,14 @@ const getAllRecipes = async (item) => {
   });
   let data;
   console.log("daaaaata", url);
-  await api
-    .get(`/recipes${url}`)
-    .then((res) => {
-      data = res.data;
-      console.log("DATA FETCHED CORRECTLY", data);
-    })
-    .catch((err) => console.log("EROR", err));
+  try {
+    const res = await api.get(`/recipes`);
+    console.log("thid id resssq", res);
+    data = res.data;
+    console.log("DATA FETCHED CORRECTLY", data);
+  } catch (e) {
+    console.log("EROR", e);
+  }
   return data;
 };
 

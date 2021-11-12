@@ -61,7 +61,8 @@ const TinderScreen = ({ navigation }) => {
   };
 
   const onSwipeRight = (item) => {
-    dispatch(addMatch(item.name));
+    dispatch(addMatch(item));
+    console.log("thiiis is item", item);
     // console.warn("swipe right: ", user.name);
     console.log("swiped right", item);
   };
@@ -69,32 +70,48 @@ const TinderScreen = ({ navigation }) => {
   return (
     <View style={styles.pageContainer}>
       {/* <NbrMatchComponent /> */}
-      <View style={styles.headerContainer}>
-        <Button title="Sign Out" onPress={signOut} />
+      <View style={[styles.headerContainer, { height: "10%" }]}>
         <TouchableOpacity onPress={() => navigation.navigate("filterScreen")}>
           <FontAwesome5 name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1, width: "100%" }}>
-        {recipes == null ? (
-          <LoadingComponent />
-        ) : (
-          <AnimatedStack
-            data={recipes}
-            renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
-              <Card
-                height="100%"
-                width="100%"
-                recipe={item}
-                onSwipeRight={onSwipeRight}
-                onSwipeLeft={onSwipeLeft}
-              />
-            )}
-            onSwipeLeft={onSwipeLeft}
-            onSwipeRight={onSwipeRight}
-          />
-        )}
-      </View>
+      {recipes == null ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <View style={{ height: "75%", width: "100%" }}>
+            <AnimatedStack
+              data={recipes}
+              renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
+                <Card
+                  height="100%"
+                  width="100%"
+                  recipe={item}
+                  onSwipeRight={onSwipeRight}
+                  onSwipeLeft={onSwipeLeft}
+                />
+              )}
+              onSwipeLeft={onSwipeLeft}
+              onSwipeRight={onSwipeRight}
+            />
+          </View>
+          {matches.length > 1 && (
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("PanierScreen")}
+              >
+                <Text
+                  style={{ fontSize: 20, color: "white", fontWeight: "bold" }}
+                >
+                  Voir le panier{" "}
+                  {matches.length != 0 ? `(${matches.length})` : null}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </>
+      )}
     </View>
   );
 };
@@ -132,12 +149,10 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   buttonContainer: {
+    height: "10%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#EF5454",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
   },
   headerContainer: {
     backgroundColor: COLORS.primary,
@@ -147,6 +162,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 20,
     marginTop: 40,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    width: "70%",
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

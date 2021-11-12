@@ -66,7 +66,7 @@ const ActiveFilterComponent = ({ activeFilters, setActiveFilters }) => {
   );
 };
 //Create the accordeon item
-const AccordeonItem = ({ setActiveFilters, activeFilters }) => {
+const AccordeonItem = ({ setActiveFilters, activeFilters, name, data }) => {
   return CATEGORIES.map((item) => {
     const [isExpanded, setIsExpanded] = useState(false);
     //To know how many filters are activated (number in header)

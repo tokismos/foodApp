@@ -48,7 +48,9 @@ const CartScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: COLORS.secondary }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: COLORS.secondary, marginTop: 40 }}
+    >
       <View style={{ height: height * 0.15 }}>
         <View
           style={{

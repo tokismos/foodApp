@@ -26,7 +26,11 @@ import RecetteSVG from "../assets/recette.svg";
 import { color } from "react-native-reanimated";
 import TinderScreen from "../screens/TinderScreen";
 import filterScreen from "../screens/filterScreen";
+import LogOutScreen from "../screens/LogOutScreen";
+import PanierScreen from "../screens/PanierScreen";
+import IngredientCartScreen from "../screens/IngredientCartScreen";
 const Stack = createStackNavigator();
+const CartStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
@@ -61,8 +65,8 @@ export const TabScreen = () => {
             <FontAwesome name="heart" size={24} />
           ),
         }}
-        name="Favoris"
-        component={IngredientScreen}
+        name="CartScreen"
+        component={PanierScreen}
       />
       <Tab.Screen
         options={{
@@ -71,7 +75,7 @@ export const TabScreen = () => {
           ),
         }}
         name="Panier"
-        component={IngredientScreen}
+        component={LogOutScreen}
       />
     </Tab.Navigator>
   );
@@ -121,6 +125,11 @@ export const SignNavigator = () => {
         headerShown: false,
       }}
     >
+      <Stack.Screen
+        options={{}}
+        name="OnBoardingScreen"
+        component={OnBoardingScreen}
+      />
       <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen options={{}} name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen
@@ -131,7 +140,23 @@ export const SignNavigator = () => {
     </Stack.Navigator>
   );
 };
-export const TinderNavigator = () => {
+const TinderNavigator = () => {
+  return (
+    <CartStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <CartStack.Screen name="TinderScreen" component={TinderScreen} />
+      <CartStack.Screen name="PanierScreen" component={PanierScreen} />
+      <CartStack.Screen
+        name="IngredientCartScreen"
+        component={IngredientCartScreen}
+      />
+    </CartStack.Navigator>
+  );
+};
+export const TinderNavigator2 = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -163,13 +188,13 @@ const Navigator = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen options={{}} name="LoginScreen" component={TabScreen} />
-      <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
+      <Stack.Screen options={{}} name="TinderScreen" component={TinderScreen} />
       <Stack.Screen
-        name="filterScreen"
         options={{ ...horizontalAnimation }}
-        component={filterScreen}
+        name="IngredientsCartScreen"
+        component={IngredientCartScreen}
       />
+      <Stack.Screen name="PanierScreen" component={PanierScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
     </Stack.Navigator>

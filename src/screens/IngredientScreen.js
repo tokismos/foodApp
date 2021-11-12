@@ -47,7 +47,7 @@ const IngredientScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={{}}>
+    <ScrollView style={{ marginTop: 40 }}>
       <View style={styles.topBar}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <AntDesign name="clockcircleo" size={15} color="black" />
@@ -60,7 +60,8 @@ const IngredientScreen = ({ route, navigation }) => {
         </View>
       </View>
       <Image
-        style={{ height: 400, width }}
+        resizeMode="contain"
+        style={{ aspectRatio: 1 }}
         source={{
           uri: recipe.imgURL,
         }}
@@ -68,6 +69,9 @@ const IngredientScreen = ({ route, navigation }) => {
       <View style={styles.bottomBar}>
         <Text style={styles.textBottomBar}>Dèja cuisiné 560 fois</Text>
       </View>
+      <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center" }}>
+        {recipe.name}
+      </Text>
       <View style={{ borderBottomWidth: 1, height: 150, flexDirection: "row" }}>
         <View style={styles.profileImg}>
           <Image
