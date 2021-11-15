@@ -11,7 +11,7 @@ const HeaderComponent = ({ page }) => {
       <View
         style={{
           backgroundColor: "#C4C4C4",
-          height: 12,
+          height: 10,
           borderRadius: 10,
           width: "100%",
           ...style,
@@ -38,28 +38,27 @@ const HeaderComponent = ({ page }) => {
           justifyContent: "center",
         }}
       >
+        <BarComponent long="20%" title="Choisir vos recettes" style={first} />
+        <BarComponent long="20%" title="Valider les recettes" style={second} />
         <BarComponent
-          long="23%"
-          title="Choisir vos recettes"
-          style={{ backgroundColor: COLORS.primary }}
+          long="22%"
+          title="Selection des ingrédients"
+          style={third}
         />
-        <BarComponent long="23%" title="Valider les recettes" style={second} />
-        <BarComponent long="23%" title="Selection des recettes" style={third} />
         <BarComponent long="5%" title="" style={fourth} />
 
         <View
           style={{
-            width: "20%",
+            width: "25%",
           }}
         >
           <View
             style={{
               marginHorizontal: 3,
               flexDirection: "row",
-              justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "45%" }}>
+            <View style={{ width: "45%", marginRight: 3 }}>
               <Bar style={last} />
             </View>
             <View style={{ width: "45%" }}>
@@ -73,6 +72,7 @@ const HeaderComponent = ({ page }) => {
       </View>
     );
   };
+  const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
@@ -81,59 +81,85 @@ const HeaderComponent = ({ page }) => {
   //To change the color for every page with this header
   useEffect(() => {
     //The obj of each style to add it to the setter
+    let style1 = {};
     let style2 = {};
     let style3 = {};
     let style4 = {};
     let style5 = {};
     const borderWidth = 4;
     switch (page) {
+      case "1":
+        style1 = {
+          borderWidth,
+          borderColor: COLORS.primary,
+          backgroundColor: "white",
+          height: 15,
+        };
+        break;
       case "2":
+        style1 = { backgroundColor: COLORS.primary, height: 10 };
         style2 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
+          height: 15,
         };
         break;
       case "3":
+        style1 = { backgroundColor: COLORS.primary, height: 10 };
         style2 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style3 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
+          height: 15,
         };
         break;
       case "4":
+        style1 = { backgroundColor: COLORS.primary, height: 10 };
+
         style2 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style3 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style4 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
+          height: 15,
         };
         break;
       case "5":
+        style1 = { backgroundColor: COLORS.primary, height: 10 };
+
         style2 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style3 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style4 = {
           backgroundColor: COLORS.primary,
+          height: 10,
         };
         style5 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
+          height: 15,
         };
         break;
     }
+    setFirst(style1);
     setSecond(style2);
     setThird(style3);
     setFourth(style4);
@@ -142,7 +168,7 @@ const HeaderComponent = ({ page }) => {
   return (
     <View
       style={{
-        height: height * 0.15,
+        height: height * 0.1,
         // paddingTop: StatusBar.currentHeight,
         backgroundColor: "#E8E8E8",
         width,
@@ -150,19 +176,7 @@ const HeaderComponent = ({ page }) => {
         paddingTop: 20,
       }}
     >
-      <View
-        style={{
-          padding: 5,
-          backgroundColor: "white",
-          width: "95%",
-          alignSelf: "center",
-          height: "70%",
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-          flexDirection: "row",
-          paddingTop: 15,
-        }}
-      >
+      <View style={styles.container}>
         <BarContainer />
       </View>
     </View>
@@ -171,4 +185,16 @@ const HeaderComponent = ({ page }) => {
 
 export default HeaderComponent;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    padding: 5,
+    backgroundColor: "white",
+    width: "95%",
+    alignSelf: "center",
+    height: "70%",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    flexDirection: "row",
+    paddingTop: 15,
+  },
+});

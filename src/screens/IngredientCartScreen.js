@@ -74,7 +74,7 @@ const IngredientCartScreen = ({ route }) => {
   //     console.log("this is fiiiinal", finalCart);
   //   }, [finalCart]);
   return (
-    <View style={{ alignItems: "center", flex: 1 }}>
+    <View style={{ alignItems: "center", flex: 1, backgroundColor: "white" }}>
       <ScrollView style={{ flex: 1 }}>
         <View style={{ width: "100%" }}>
           <Text

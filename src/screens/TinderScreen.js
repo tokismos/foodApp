@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Button } from "react-native";
-import Card from "../components/TinderCard";
+import TinderCard from "../components/TinderCard";
 import users from "../helpers/data/";
 
 import AnimatedStack from "../components/AnimatedStack";
@@ -83,7 +83,7 @@ const TinderScreen = ({ navigation }) => {
             <AnimatedStack
               data={recipes}
               renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
-                <Card
+                <TinderCard
                   height="100%"
                   width="100%"
                   recipe={item}
@@ -121,6 +121,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
+    backgroundColor: "white",
+    paddingTop: 10,
   },
   container: {
     flex: 1,
