@@ -25,10 +25,11 @@ import ResultCartScreen from "../screens/ResultCartScreen";
 import RecetteSVG from "../assets/recette.svg";
 import { color } from "react-native-reanimated";
 import TinderScreen from "../screens/TinderScreen";
-import filterScreen from "../screens/filterScreen";
+import FilterScreen from "../screens/FilterScreen";
 import LogOutScreen from "../screens/LogOutScreen";
 import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
+import HeaderComponent from "../components/HeaderComponent";
 const Stack = createStackNavigator();
 const CartStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -160,7 +161,7 @@ export const TinderNavigator2 = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}
     >
       <Stack.Screen options={{}} name="TinderScreen" component={TinderScreen} />
@@ -183,18 +184,32 @@ const Navigator = () => {
   // to add transition effect
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen options={{}} name="TinderScreen" component={TinderScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen
-        options={{ ...horizontalAnimation }}
+        options={{
+          header: () => <HeaderComponent page="1" />,
+        }}
+        name="TinderScreen"
+        component={TinderScreen}
+      />
+      <Stack.Screen
+        options={{
+          header: () => <HeaderComponent page="2" />,
+          headerLeft: null,
+        }}
+        name="PanierScreen"
+        component={PanierScreen}
+      />
+      <Stack.Screen
+        options={{
+          ...horizontalAnimation,
+          header: () => <HeaderComponent page="3" />,
+        }}
         name="IngredientsCartScreen"
         component={IngredientCartScreen}
       />
-      <Stack.Screen name="PanierScreen" component={PanierScreen} />
+      <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
+      <Stack.Screen name="FilterScreen" component={FilterScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
     </Stack.Navigator>

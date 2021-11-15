@@ -8,14 +8,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
+import { COLORS } from "../consts/colors";
 
 const { width, height } = Dimensions.get("screen");
-const CartComponent = ({ item }) => {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+const CartComponent = ({ item, onPress }) => {
+  const [toggle, setToggle] = useState(true);
 
   return (
     <>
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.container}
+        onPress={() => {
+          onPress(item);
+          setToggle((prev) => !prev);
+        }}
+      >
         <View style={styles.imgContainer}>
           <Image
             source={{ uri: item.imgURL }}
@@ -23,7 +31,7 @@ const CartComponent = ({ item }) => {
           />
         </View>
         <View style={styles.midContainer}>
-          <View style={{ flexShrink: 1, marginLeft: -5 }}>
+          <View style={{ flexShrink: 1, marginLeft: 0 }}>
             <Text
               style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}
               numberOfLines={1}
@@ -53,7 +61,13 @@ const CartComponent = ({ item }) => {
             justifyContent: "center",
           }}
         >
-          <CheckBox disabled={false} value={true} onValueChange={{}} />
+          <CheckBox
+            value={toggle}
+            onValueChange={(newValue) => setToggle(newValue)}
+            size={30}
+            disabled
+            tintColors={{ true: COLORS.primary, false: "gray" }}
+          />
         </View>
       </TouchableOpacity>
       <View
@@ -87,5 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
 });

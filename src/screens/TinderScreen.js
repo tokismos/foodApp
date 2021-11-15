@@ -70,16 +70,16 @@ const TinderScreen = ({ navigation }) => {
   return (
     <View style={styles.pageContainer}>
       {/* <NbrMatchComponent /> */}
-      <View style={[styles.headerContainer, { height: "10%" }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("filterScreen")}>
+      {/* <View style={[styles.headerContainer, { height: "10%" }]}>
+        <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
           <FontAwesome5 name="filter" size={24} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
       {recipes == null ? (
         <LoadingComponent />
       ) : (
         <>
-          <View style={{ height: "75%", width: "100%" }}>
+          <View style={{ height: "85%", width: "100%" }}>
             <AnimatedStack
               data={recipes}
               renderItem={({ item, onSwipeRight, onSwipeLeft }) => (

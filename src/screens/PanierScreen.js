@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dimensions,
@@ -10,38 +10,65 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import CartComponent from "../components/CartComponent";
+import HeaderComponent from "../components/HeaderComponent";
 import { COLORS } from "../consts/colors";
 const { width, height } = Dimensions.get("screen");
 
 const PanierScreen = ({ navigation }) => {
   const { matches } = useSelector((state) => state.matchStore);
-  const [finalCart, setFinalCart] = useState([]);
-  console.log("thiiiiis matches", matches);
+  //   console.log("thiiiiis matches", matches);
+  const [finalCart, setFinalCart] = useState([...matches]);
+
   const validate = () => {
     console.log("hiii");
-    navigation.navigate("IngredientsCartScreen");
+    navigation.navigate("IngredientsCartScreen", { cart: finalCart });
   };
-
+  //when click on recipe we check if it exist to remove it or if not to add id
+  const onPress = (item) => {
+    console.log("pressed");
+    const res = finalCart.includes(item);
+    // console.log("res", item.name);
+    if (!res) {
+      setFinalCart((prev) => [...prev, item]);
+      console.log("wasnt there");
+    } else {
+      setFinalCart(finalCart.filter((elmt) => elmt != item));
+      //   setFinalCart(tmpCart);
+      console.log("elemt was there");
+    }
+  };
+  //   useEffect(() => {
+  //     console.log("tjosooo cart", finalCart);
+  //   }, [finalCart]);
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.headerContainer}></View>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={{ height: "65%", width: "100%" }}>
-          <Text style={styles.title}>Les recettes selectionnes:</Text>
-          <View style={{ flexGrow: 1 }}>
+      <ScrollView>
+        <View style={{ width: "100%" }}>
+          <Text style={styles.title}>Les recettes séléctionnées:</Text>
+          <View style={{}}>
             {matches.map((item) => (
-              <CartComponent item={item} key={item.name} />
+              <CartComponent item={item} key={item.name} onPress={onPress} />
             ))}
           </View>
         </View>
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text>Ajouter d'autres recettes</Text>
+        <TouchableOpacity
+          style={{ ...styles.buttonContainer, backgroundColor: "#E3E3E3" }}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={{ fontWeight: "800", fontSize: 18, color: "black" }}>
+            Ajouter d'autres recettes
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={validate}>
-          <Text>Valider les recettes</Text>
+        <TouchableOpacity
+          style={{ ...styles.buttonContainer, backgroundColor: COLORS.primary }}
+          onPress={validate}
+        >
+          <Text style={{ fontWeight: "bold", color: "white", fontSize: 18 }}>
+            Valider les recettes
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -60,9 +87,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mainContainer: {
-    height,
-    alignItems: "center",
-    justifyContent: "center",
+    height: "100%",
+    backgroundColor: "white",
   },
   title: {
     fontSize: 22,
@@ -71,10 +97,10 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   bottomContainer: {
-    height: "20%",
     width: "100%",
     justifyContent: "space-evenly",
     alignItems: "center",
+    height: "20%",
   },
   headerContainer: { backgroundColor: "red", height: "15%", width: "100%" },
 });
