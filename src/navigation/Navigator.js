@@ -188,7 +188,8 @@ const Navigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen
         options={{
-          header: () => <HeaderComponent page="1" />,
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
         }}
         name="TinderScreen"
         component={TinderScreen}

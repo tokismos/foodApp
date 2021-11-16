@@ -203,9 +203,8 @@ const AnimatedStack = (props) => {
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
-    flex: 1,
+    height: "105%",
     width: "100%",
-    marginVertical: 20,
   },
   animatedCard: {
     width: "90%",

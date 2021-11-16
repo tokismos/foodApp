@@ -4,6 +4,7 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
+  Image,
   View,
   TouchableOpacity,
   Alert,
@@ -19,21 +20,6 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
 
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   //The progress bar
-  const ProgressView = () => {
-    return Array.apply(null, Array(nbrOfRecipes)).map((item, index) => {
-      return (
-        <View
-          key={index}
-          style={{
-            backgroundColor: index < matches.length ? COLORS.primary : "white",
-            height: 10,
-            flexGrow: 1 / nbrOfRecipes,
-            marginHorizontal: 1,
-          }}
-        />
-      );
-    });
-  };
 
   return (
     <>
@@ -43,16 +29,64 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
           navigation.navigate("IngredientScreen", { recipe: recipe })
         }
       >
-        <ImageBackground style={styles.image} source={{ uri: recipe?.imgURL }}>
-          <LinearGradient
-            colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
-            start={{ x: 0, y: 1 }}
-            end={{ x: 0, y: 0.7 }}
+        {/* <ImageBackground style={styles.image} source={{ uri: recipe?.imgURL }}> */}
+        <View
+          // colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
+          // start={{ x: 0, y: 1 }}
+          // end={{ x: 0, y: 1 }}
+          style={{
+            height: "20%",
+            width: "100%",
+            borderTopRightRadius: 20,
+
+            borderTopLeftRadius: 20,
+            backgroundColor: "black",
+            // position: "absolute",
+            // top: 10,
+            // left: 0,
+            // right: 0,
+          }}
+        >
+          <View
             style={{
-              height: "30%",
+              height: "50%",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: 15,
             }}
           >
-            <View style={styles.headerContainer}>
+            <Text
+              style={{
+                fontSize: 22,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: "white",
+              }}
+            >
+              {recipe?.name}
+            </Text>
+          </View>
+          <View
+            style={{
+              height: "50%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignSelf: "center",
+              paddingTop: 10,
+            }}
+          >
+            <Text style={{ width: "30%", textAlign: "center", color: "white" }}>
+              {recipe.tempsPreparation} min de préparation
+            </Text>
+            <Text style={{ width: "40%", textAlign: "center", color: "white" }}>
+              {" "}
+              $
+            </Text>
+            <Text style={{ width: "30%", textAlign: "center", color: "white" }}>
+              92% ont aimé cette recette
+            </Text>
+          </View>
+          {/* <View style={styles.headerContainer}>
               <Text style={styles.title}>{recipe?.name}</Text>
               <View style={styles.descriptionContainer}>
                 <Text
@@ -71,32 +105,41 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
                   95% ont aime la recette
                 </Text>
               </View>
-            </View>
-          </LinearGradient>
-          <LinearGradient
-            colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 0.3 }}
-            style={styles.gradient}
-          >
-            {/* {
+            </View> */}
+        </View>
+        <Image style={{ ...styles.image }} source={{ uri: recipe?.imgURL }} />
+        <LinearGradient
+          colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 0.3 }}
+          style={{
+            ...styles.gradient,
+            position: "absolute",
+            bottom: 35,
+            right: 0,
+            left: 0,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          }}
+        >
+          {/* {
               <View style={styles.progressContainer}>
                 <ProgressView />
               </View>
             } */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={onSwipeLeft} style={styles.leftButton}>
-                <FontAwesome name="close" size={50} color="#EF5454" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onSwipeRight}
-                style={[styles.leftButton, { borderColor: COLORS.primary }]}
-              >
-                <FontAwesome name="heart" size={45} color={COLORS.primary} />
-              </TouchableOpacity>
-            </View>
-          </LinearGradient>
-        </ImageBackground>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={onSwipeLeft} style={styles.leftButton}>
+              <FontAwesome name="close" size={50} color="#EF5454" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onSwipeRight}
+              style={[styles.leftButton, { borderColor: COLORS.primary }]}
+            >
+              <FontAwesome name="heart" size={45} color={COLORS.primary} />
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+        {/* </ImageBackground> */}
       </Pressable>
     </>
   );
@@ -113,12 +156,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
-    height: "100%",
+    height: "60%",
     width: "100%",
 
-    overflow: "hidden",
-    justifyContent: "space-between",
-    borderRadius: 15,
+    resizeMode: "stretch",
   },
   headerContainer: {
     height: "70%",
@@ -132,7 +173,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   gradient: {
-    height: "30%",
+    height: "20%",
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 10,

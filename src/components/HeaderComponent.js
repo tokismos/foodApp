@@ -4,7 +4,7 @@ import { COLORS } from "../consts/colors";
 
 const { height, width } = Dimensions.get("screen");
 
-const HeaderComponent = ({ page }) => {
+const HeaderComponent = ({ page, style, yes }) => {
   //The bar with color take the whole width
   const Bar = ({ style }) => {
     return (
@@ -159,13 +159,23 @@ const HeaderComponent = ({ page }) => {
       style={{
         height: height * 0.1,
         // paddingTop: StatusBar.currentHeight,
-        backgroundColor: "#E8E8E8",
+        backgroundColor: yes ? "#f5f4f4" : "#E8E8E8",
         width,
         justifyContent: "flex-end",
-        paddingTop: 20,
+        paddingTop: yes ? 0 : 30,
+        ...style,
       }}
     >
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            borderRadius: yes ? 10 : 0,
+            borderTopLeftRadius: yes ? 10 : 25,
+            borderTopRightRadius: yes ? 10 : 25,
+          },
+        ]}
+      >
         <BarContainer />
       </View>
     </View>
@@ -180,7 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "95%",
     alignSelf: "center",
-    height: "70%",
+    height: "80%",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     flexDirection: "row",

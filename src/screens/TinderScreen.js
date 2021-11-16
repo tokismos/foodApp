@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Button } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Button,
+  Image,
+} from "react-native";
 import TinderCard from "../components/TinderCard";
 import users from "../helpers/data/";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,38 +22,135 @@ import { setRecipes } from "../redux/slicer/recipeSlicer";
 import data from "../helpers/data";
 import LoadingComponent from "../components/LoadingComponent";
 import { LoginWithFb, signOut } from "../helpers/db";
+import HeaderComponent from "../components/HeaderComponent";
 
+const Header = () => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        height: "10%",
+        width: "100%",
+        marginTop: 10,
+      }}
+    >
+      <View
+        style={{
+          width: "30%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image
+          source={require("../assets/avatar.png")}
+          style={{
+            height: "80%",
+            width: "100%",
+            resizeMode: "contain",
+            padding: 20,
+          }}
+        />
+      </View>
+      <View style={{ width: "40%" }}>
+        <Image
+          source={require("../assets/logo.png")}
+          style={{
+            height: "100%",
+            width: "100%",
+            resizeMode: "contain",
+            marginLeft: -10,
+          }}
+        />
+      </View>
+      <View
+        style={{
+          width: "30%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: COLORS.primary,
+            width: "80%",
+            height: "80%",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 10,
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+          >
+            FeedBack Nous
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+const BarHeader = () => {
+  return (
+    <View
+      style={{
+        height: "5%",
+        width: "100%",
+        flexDirection: "row",
+        backgroundColor: "#f5f4f4",
+      }}
+    >
+      <View
+        style={{
+          width: "75%",
+          height: "100%",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingHorizontal: 10,
+          borderBottomRightRadius: 10,
+          borderBottomLeftRadius: 10,
+          backgroundColor: "white",
+        }}
+      >
+        <Entypo name="home" size={24} color="black" />
+        <Text>Avenue Jomini 5,Lausagne,1004</Text>
+        <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
+      </View>
+      <View
+        style={{
+          width: "25%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          backgroundColor: "white",
+          marginLeft: 1,
+          borderBottomLeftRadius: 10,
+        }}
+      >
+        <Image
+          source={require("../assets/marcher.png")}
+          style={{
+            resizeMode: "contain",
+            aspectRatio: 1,
+            height: "30%",
+            width: "30%",
+          }}
+        />
+        <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
+      </View>
+    </View>
+  );
+};
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { recipes, activeFilters } = useSelector((state) => state.recipeStore);
-  const NbrMatchComponent = () => {
-    return (
-      <View style={styles.nbrContainer}>
-        <Text style={{ width: "50%" }}>
-          Combien de repas voulez vous cuisiner cette semaine
-        </Text>
-        <View
-          style={{
-            height: "60%",
-            justifyContent: "space-between",
-          }}
-        >
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Number"
-            onChangeText={setNbrReciepe}
-          />
-          <TouchableOpacity
-            onPress={() => dispatch(changeNumberOfRecipes(+nbrRecipe))}
-            style={styles.buttonContainer}
-          >
-            <Text>Valider</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
 
   const loadData = async (item) => {
     const recipesData = await getAllRecipes(item);
@@ -66,9 +171,46 @@ const TinderScreen = ({ navigation }) => {
     // console.warn("swipe right: ", user.name);
     console.log("swiped right", item);
   };
+  const BottomContainer = () => {
+    return (
+      <View
+        style={{
+          width: "100%",
+          height: "10%",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            width: "80%",
+            alignSelf: "center",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <Image source={require("../assets/recette.png")} />
+            <Text style={{ color: "#cccccc" }}>Recettes</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <Image source={require("../assets/cuisine.png")} />
+            <Text style={{ color: "#cccccc" }}>Cuisine</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <AntDesign name="pluscircle" size={50} color="#cccccc" />
+            <Text style={{ color: "#cccccc" }}>Ajouter</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.pageContainer}>
+      <Header />
+      <BarHeader />
+      <HeaderComponent yes page="1" style={{ justifyContent: "center" }} />
       {/* <NbrMatchComponent /> */}
       {/* <View style={[styles.headerContainer, { height: "10%" }]}>
         <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
@@ -79,7 +221,7 @@ const TinderScreen = ({ navigation }) => {
         <LoadingComponent />
       ) : (
         <>
-          <View style={{ height: "85%", width: "100%" }}>
+          <View style={{ height: "63%", width: "100%" }}>
             <AnimatedStack
               data={recipes}
               renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
@@ -95,7 +237,7 @@ const TinderScreen = ({ navigation }) => {
               onSwipeRight={onSwipeRight}
             />
           </View>
-          {matches.length > 1 && (
+          {matches.length > 1 ? (
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -109,6 +251,8 @@ const TinderScreen = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </View>
+          ) : (
+            <BottomContainer />
           )}
         </>
       )}
@@ -121,7 +265,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#f5f4f4",
     paddingTop: 10,
   },
   container: {

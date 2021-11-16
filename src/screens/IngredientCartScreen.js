@@ -56,6 +56,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
         <CheckBox
           value={toggle}
           onValueChange={(newValue) => setToggle(!newValue)}
+          tintColors={{ true: COLORS.primary, false: "gray" }}
         />
       </TouchableOpacity>
     );
@@ -76,7 +77,14 @@ const IngredientCartScreen = ({ route, navigation }) => {
             />
           </View>
           <View style={{ width: "85%" }}>
-            <Text style={{ margin: 10, fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{
+                margin: 10,
+                fontSize: 16,
+                fontWeight: "bold",
+                marginBottom: -5,
+              }}
+            >
               {item.name}
             </Text>
             {item.ingredients.map((elmt, index) => (
@@ -109,7 +117,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
           textAlign: "center",
           fontSize: 22,
           fontWeight: "bold",
-          margin: 20,
+          margin: 30,
         }}
       >
         Les ingredients

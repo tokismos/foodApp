@@ -42,7 +42,7 @@ const PanierScreen = ({ navigation }) => {
   //   }, [finalCart]);
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.title}>Les recettes séléctionnées:</Text>
+      <Text style={styles.title}>Les recettes sélectionnées:</Text>
       <ScrollView>
         <View style={{ width: "100%" }}>
           <View style={{}}>
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginVertical: 15,
+    marginTop: 30,
   },
   bottomContainer: {
     width: "100%",
