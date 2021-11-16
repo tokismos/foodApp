@@ -54,6 +54,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
           {ingredient.quantity} {ingredient.name}
         </Text>
         <CheckBox
+          disabled
           value={toggle}
           onValueChange={(newValue) => setToggle(!newValue)}
           tintColors={{ true: COLORS.primary, false: "gray" }}
