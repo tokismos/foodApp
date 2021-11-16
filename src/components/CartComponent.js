@@ -18,7 +18,7 @@ const CartComponent = ({ item, onPress }) => {
     <>
       <TouchableOpacity
         activeOpacity={0.7}
-        style={styles.container}
+        style={[styles.container]}
         onPress={() => {
           onPress(item);
           setToggle((prev) => !prev);
@@ -45,22 +45,9 @@ const CartComponent = ({ item, onPress }) => {
               {item.ingredients.length} d'ingredients
             </Text>
           </View>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 12 }}>4 personnes</Text>
-          </View>
+          <Text style={{ fontSize: 12 }}>4 personnes</Text>
         </View>
-        <View
-          style={{
-            width: "10%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <View style={styles.checkBoxContainer}>
           <CheckBox
             value={toggle}
             onValueChange={(newValue) => setToggle(newValue)}
@@ -70,14 +57,7 @@ const CartComponent = ({ item, onPress }) => {
           />
         </View>
       </TouchableOpacity>
-      <View
-        style={{
-          height: 0.4,
-          width: "80%",
-          alignSelf: "center",
-          backgroundColor: "gray",
-        }}
-      />
+      <View style={styles.separator} />
     </>
   );
 };
@@ -88,7 +68,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     height: height * 0.1,
-    width,
+    width: "95%",
+    alignSelf: "center",
     marginVertical: 7,
   },
   imgContainer: {
@@ -102,5 +83,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  checkBoxContainer: {
+    width: "10%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  separator: {
+    height: 0.4,
+    width: "80%",
+    alignSelf: "center",
+    backgroundColor: "gray",
   },
 });

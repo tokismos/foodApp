@@ -93,69 +93,58 @@ const HeaderComponent = ({ page }) => {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
-          height: 15,
         };
         break;
       case "2":
-        style1 = { backgroundColor: COLORS.primary, height: 10 };
+        style1 = { backgroundColor: COLORS.primary };
         style2 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
-          height: 15,
         };
         break;
       case "3":
-        style1 = { backgroundColor: COLORS.primary, height: 10 };
+        style1 = { backgroundColor: COLORS.primary };
         style2 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style3 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
-          height: 15,
         };
         break;
       case "4":
-        style1 = { backgroundColor: COLORS.primary, height: 10 };
+        style1 = { backgroundColor: COLORS.primary };
 
         style2 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style3 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style4 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
-          height: 15,
         };
         break;
       case "5":
-        style1 = { backgroundColor: COLORS.primary, height: 10 };
+        style1 = { backgroundColor: COLORS.primary };
 
         style2 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style3 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style4 = {
           backgroundColor: COLORS.primary,
-          height: 10,
         };
         style5 = {
           borderWidth,
           borderColor: COLORS.primary,
           backgroundColor: "white",
-          height: 15,
         };
         break;
     }

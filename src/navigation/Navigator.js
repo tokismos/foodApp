@@ -30,6 +30,7 @@ import LogOutScreen from "../screens/LogOutScreen";
 import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
 import HeaderComponent from "../components/HeaderComponent";
+import SummarizeScreen from "../screens/SummarizeScreen";
 const Stack = createStackNavigator();
 const CartStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -207,6 +208,14 @@ const Navigator = () => {
         }}
         name="IngredientsCartScreen"
         component={IngredientCartScreen}
+      />
+      <Stack.Screen
+        options={{
+          ...horizontalAnimation,
+          header: () => <HeaderComponent page="4" />,
+        }}
+        name="SummarizeScreen"
+        component={SummarizeScreen}
       />
       <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
       <Stack.Screen name="FilterScreen" component={FilterScreen} />

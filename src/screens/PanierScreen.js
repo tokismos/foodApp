@@ -42,9 +42,9 @@ const PanierScreen = ({ navigation }) => {
   //   }, [finalCart]);
   return (
     <View style={styles.mainContainer}>
+      <Text style={styles.title}>Les recettes séléctionnées:</Text>
       <ScrollView>
         <View style={{ width: "100%" }}>
-          <Text style={styles.title}>Les recettes séléctionnées:</Text>
           <View style={{}}>
             {matches.map((item) => (
               <CartComponent item={item} key={item.name} onPress={onPress} />

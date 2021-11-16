@@ -35,21 +35,6 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
     });
   };
 
-  useEffect(() => {
-    if (matches.length == nbrOfRecipes) {
-      Alert.alert("You completed your matches", matches.toString(), [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-    }
-  }, [matches]);
-  useEffect(() => {
-    console.log("nbrOfRecipes", nbrOfRecipes);
-  }, [matches]);
   return (
     <>
       <Pressable
@@ -94,11 +79,11 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
             end={{ x: 0, y: 0.3 }}
             style={styles.gradient}
           >
-            {
+            {/* {
               <View style={styles.progressContainer}>
                 <ProgressView />
               </View>
-            }
+            } */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity onPress={onSwipeLeft} style={styles.leftButton}>
                 <FontAwesome name="close" size={50} color="#EF5454" />

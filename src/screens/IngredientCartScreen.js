@@ -4,13 +4,44 @@ import { Image, TouchableOpacity } from "react-native";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { COLORS } from "../consts/colors";
 
-const IngredientCartScreen = ({ route }) => {
+const IngredientCartScreen = ({ route, navigation }) => {
   const { cart } = route.params;
   let finalCart = {};
-  const IngredientItemComponent = ({ item }) => {
+
+  useEffect(() => {
+    cart.map((item) => {
+      finalCart[item.name] = {
+        ingredients: item.ingredients,
+        imgURL: item.imgURL,
+      };
+    });
+  }, []);
+
+  const onPress = (ingredient, title) => {
+    // setToggle(tmpObj[title]?.includes(ingredient));
+    console.log("erd", finalCart[title].ingredients);
+    console.log("bname", JSON.stringify(ingredient), title);
+    if (finalCart[title].ingredients?.includes(ingredient)) {
+      finalCart[title].ingredients = finalCart[title].ingredients.filter(
+        (item) => item != ingredient
+      );
+    } else {
+      finalCart[title].ingredients = finalCart[title]
+        ? [...finalCart[title].ingredients, ingredient]
+        : [ingredient];
+    }
+    console.log("tmopppib", finalCart);
+  };
+
+  const IngredientItemComponent = ({ ingredient, title }) => {
     const [toggle, setToggle] = useState(true);
+
     return (
       <TouchableOpacity
+        onPress={() => {
+          onPress(ingredient, title);
+          setToggle((prev) => !prev);
+        }}
         style={{
           flexDirection: "row",
           width: "95%",
@@ -20,7 +51,7 @@ const IngredientCartScreen = ({ route }) => {
         }}
       >
         <Text style={{ marginLeft: 20, width: "80%" }}>
-          {item.quantity} {item.name}
+          {ingredient.quantity} {ingredient.name}
         </Text>
         <CheckBox
           value={toggle}
@@ -49,18 +80,16 @@ const IngredientCartScreen = ({ route }) => {
               {item.name}
             </Text>
             {item.ingredients.map((elmt, index) => (
-              <IngredientItemComponent item={elmt} key={index} />
+              <IngredientItemComponent
+                ingredient={elmt}
+                key={index}
+                title={item.name}
+                set
+              />
             ))}
           </View>
         </View>
-        <View
-          style={{
-            width: "90%",
-            height: 0.4,
-            backgroundColor: "gray",
-            alignSelf: "center",
-          }}
-        />
+        <View style={styles.separator} />
       </>
     );
   };
@@ -75,18 +104,18 @@ const IngredientCartScreen = ({ route }) => {
   //   }, [finalCart]);
   return (
     <View style={{ alignItems: "center", flex: 1, backgroundColor: "white" }}>
+      <Text
+        style={{
+          textAlign: "center",
+          fontSize: 22,
+          fontWeight: "bold",
+          margin: 20,
+        }}
+      >
+        Les ingredients
+      </Text>
       <ScrollView style={{ flex: 1 }}>
         <View style={{ width: "100%" }}>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 22,
-              fontWeight: "bold",
-              margin: 10,
-            }}
-          >
-            Les ingredients
-          </Text>
           {cart.map((item, index) => (
             <CartItemComponent item={item} key={index} />
           ))}
@@ -102,6 +131,7 @@ const IngredientCartScreen = ({ route }) => {
       >
         <TouchableOpacity
           style={{ ...styles.buttonContainer, backgroundColor: COLORS.primary }}
+          onPress={() => navigation.navigate("SummarizeScreen", { finalCart })}
         >
           <Text style={{ fontWeight: "bold", color: "white", fontSize: 18 }}>
             Valider les recettes
@@ -122,5 +152,11 @@ const styles = StyleSheet.create({
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  separator: {
+    width: "90%",
+    height: 0.4,
+    backgroundColor: "gray",
+    alignSelf: "center",
   },
 });
