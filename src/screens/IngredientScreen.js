@@ -40,7 +40,7 @@ const IngredientScreen = ({ route, navigation }) => {
           <View style={styles.lineHeader}></View>
         </View>
         {recipe.steps.map((item, index) => (
-          <StepContainer item={item} index={index} />
+          <StepContainer item={item} index={index} key={index} />
         ))}
       </View>
     );

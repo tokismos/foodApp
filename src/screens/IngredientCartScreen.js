@@ -117,7 +117,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
           textAlign: "center",
           fontSize: 22,
           fontWeight: "bold",
-          margin: 30,
+          marginTop: 30,
         }}
       >
         Les ingredients
@@ -142,7 +142,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate("SummarizeScreen", { finalCart })}
         >
           <Text style={{ fontWeight: "bold", color: "white", fontSize: 18 }}>
-            Valider les recettes
+            Valider les ingrédients
           </Text>
         </TouchableOpacity>
       </View>

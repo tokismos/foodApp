@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     fontWeight: "bold",
-    marginVertical: 15,
     marginTop: 30,
   },
   bottomContainer: {

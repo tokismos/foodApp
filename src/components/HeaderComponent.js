@@ -171,8 +171,8 @@ const HeaderComponent = ({ page, style, yes }) => {
           styles.container,
           {
             borderRadius: yes ? 10 : 0,
-            borderTopLeftRadius: yes ? 10 : 25,
-            borderTopRightRadius: yes ? 10 : 25,
+            borderTopLeftRadius: yes ? 10 : 15,
+            borderTopRightRadius: yes ? 10 : 15,
           },
         ]}
       >
@@ -191,8 +191,7 @@ const styles = StyleSheet.create({
     width: "95%",
     alignSelf: "center",
     height: "80%",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
+
     flexDirection: "row",
     paddingTop: 15,
   },

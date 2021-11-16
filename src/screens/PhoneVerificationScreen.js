@@ -100,11 +100,9 @@ const PhoneVerificationScreen = ({ navigation }) => {
     });
     return ref.current;
   };
-  const prev = usePrevious(code);
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.lightGrey }}>
       {isLoading && <LoadingComponent />}
-      <HeaderComponent />
       <View
         style={{
           justifyContent: "space-between",

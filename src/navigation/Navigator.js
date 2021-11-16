@@ -31,6 +31,7 @@ import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
 import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
+import IntroScreen from "../screens/IntroScreen";
 const Stack = createStackNavigator();
 const CartStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -191,6 +192,14 @@ const Navigator = () => {
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
         }}
+        name="IntroScreen"
+        component={IntroScreen}
+      />
+      <Stack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
         name="TinderScreen"
         component={TinderScreen}
       />
@@ -218,7 +227,38 @@ const Navigator = () => {
         name="SummarizeScreen"
         component={SummarizeScreen}
       />
-      <Stack.Screen name="IngredientScreen" component={IngredientScreen} />
+      <Stack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
+        name="IngredientScreen"
+        component={IngredientScreen}
+      />
+      <Stack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
+        name="LoginScreen"
+        component={LoginScreen}
+      />
+      <Stack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
+        name="SignUpScreen"
+        component={SignUpScreen}
+      />
+      <Stack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
+        name="PhoneVerificationScreen"
+        component={PhoneVerificationScreen}
+      />
       <Stack.Screen name="FilterScreen" component={FilterScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />

@@ -31,7 +31,6 @@ const LoginScreen = ({ navigation }) => {
     <ScrollView style={{ flex: 1, backgroundColor: COLORS.lightGrey, width }}>
       <StatusBar backgroundColor={COLORS.secondary} />
 
-      <HeaderComponent signUpScreen />
       {/* start of mid container */}
 
       <View style={styles.midContainer}>

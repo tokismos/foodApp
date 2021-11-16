@@ -189,18 +189,18 @@ const TinderScreen = ({ navigation }) => {
             justifyContent: "space-evenly",
           }}
         >
-          <View style={{ alignItems: "center" }}>
+          <TouchableOpacity style={{ alignItems: "center" }}>
             <Image source={require("../assets/recette.png")} />
             <Text style={{ color: "#cccccc" }}>Recettes</Text>
-          </View>
-          <View style={{ alignItems: "center" }}>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ alignItems: "center" }}>
             <Image source={require("../assets/cuisine.png")} />
             <Text style={{ color: "#cccccc" }}>Cuisine</Text>
-          </View>
-          <View style={{ alignItems: "center" }}>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ alignItems: "center" }}>
             <AntDesign name="pluscircle" size={50} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Ajouter</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

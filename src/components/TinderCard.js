@@ -15,16 +15,33 @@ import { COLORS } from "../consts/colors";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
+const Imagee = ({ uri }) => {
+  return <Image style={{ ...styles.image, marginTop: -5 }} source={{ uri }} />;
+};
+
 const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
   const navigation = useNavigation();
 
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   //The progress bar
-
+  console.log("rennndered");
   return (
     <>
+      <View
+        style={{
+          backgroundColor: "#f5f4f4",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+        }}
+      />
       <Pressable
-        style={{ height: "100%", width: "100%" }}
+        style={{
+          height: "100%",
+          width: "100%",
+        }}
         onPress={() =>
           navigation.navigate("IngredientScreen", { recipe: recipe })
         }
@@ -52,7 +69,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               height: "50%",
               justifyContent: "center",
               alignItems: "center",
-              paddingTop: 15,
+              paddingTop: 0,
             }}
           >
             <Text
@@ -61,6 +78,8 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
                 fontWeight: "bold",
                 textAlign: "center",
                 color: "white",
+                width: "90%",
+                marginTop: 10,
               }}
             >
               {recipe?.name}
@@ -72,7 +91,9 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignSelf: "center",
-              paddingTop: 10,
+              paddingHorizontal: 10,
+              paddingBottom: 10,
+              alignItems: "center",
             }}
           >
             <Text style={{ width: "30%", textAlign: "center", color: "white" }}>
@@ -107,7 +128,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               </View>
             </View> */}
         </View>
-        <Image style={{ ...styles.image }} source={{ uri: recipe?.imgURL }} />
+        <Imagee uri={recipe?.imgURL} />
         <LinearGradient
           colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
           start={{ x: 0, y: 0 }}
@@ -145,7 +166,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
   );
 };
 
-export default TinderCard;
+export default React.memo(TinderCard);
 
 const styles = StyleSheet.create({
   imgText: {
