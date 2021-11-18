@@ -44,8 +44,8 @@ const Header = () => {
         <Image
           source={require("../assets/avatar.png")}
           style={{
-            height: "80%",
-            width: "100%",
+            height: "60%",
+            width: "60%",
             resizeMode: "contain",
             padding: 20,
           }}
@@ -73,7 +73,7 @@ const Header = () => {
           style={{
             backgroundColor: COLORS.primary,
             width: "80%",
-            height: "80%",
+            height: "60%",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 10,
@@ -87,7 +87,7 @@ const Header = () => {
               fontWeight: "bold",
             }}
           >
-            FeedBack Nous
+            FeedBack
           </Text>
         </View>
       </View>
@@ -118,7 +118,7 @@ const BarHeader = () => {
         }}
       >
         <Entypo name="home" size={24} color="black" />
-        <Text>Avenue Jomini 5,Lausagne,1004</Text>
+        <Text>Avenue Jomini 5, Lausanne, 1004</Text>
         <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
       </View>
       <View
@@ -183,10 +183,10 @@ const TinderScreen = ({ navigation }) => {
       >
         <View
           style={{
-            width: "80%",
-            alignSelf: "center",
+            width: "100%",
             flexDirection: "row",
             justifyContent: "space-evenly",
+            transform: [{ scale: 0.8 }],
           }}
         >
           <TouchableOpacity style={{ alignItems: "center" }}>
@@ -197,8 +197,14 @@ const TinderScreen = ({ navigation }) => {
             <Image source={require("../assets/cuisine.png")} />
             <Text style={{ color: "#cccccc" }}>Cuisine</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: "center" }}>
-            <AntDesign name="pluscircle" size={50} color="#cccccc" />
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: -3,
+            }}
+          >
+            <AntDesign name="pluscircle" size={40} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Ajouter</Text>
           </TouchableOpacity>
         </View>
@@ -237,7 +243,7 @@ const TinderScreen = ({ navigation }) => {
               onSwipeRight={onSwipeRight}
             />
           </View>
-          {matches.length > 1 ? (
+          {matches.length > 3 ? (
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}

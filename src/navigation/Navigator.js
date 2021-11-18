@@ -121,66 +121,6 @@ const horizontalAnimation = {
     };
   },
 };
-export const SignNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen
-        options={{}}
-        name="OnBoardingScreen"
-        component={OnBoardingScreen}
-      />
-      <Stack.Screen options={{}} name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen options={{}} name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen
-        name="PhoneVerificationScreen"
-        options={{ ...horizontalAnimation }}
-        component={PhoneVerificationScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-const TinderNavigator = () => {
-  return (
-    <CartStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <CartStack.Screen name="TinderScreen" component={TinderScreen} />
-      <CartStack.Screen name="PanierScreen" component={PanierScreen} />
-      <CartStack.Screen
-        name="IngredientCartScreen"
-        component={IngredientCartScreen}
-      />
-    </CartStack.Navigator>
-  );
-};
-export const TinderNavigator2 = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: true,
-      }}
-    >
-      <Stack.Screen options={{}} name="TinderScreen" component={TinderScreen} />
-
-      <Stack.Screen
-        name="CartScreen"
-        options={{ ...horizontalAnimation }}
-        component={CartScreen}
-      />
-      <Stack.Screen
-        name="ResultCartScreen"
-        options={{ ...horizontalAnimation }}
-        component={ResultCartScreen}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const Navigator = () => {
   // to add transition effect

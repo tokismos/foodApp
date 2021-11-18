@@ -91,7 +91,7 @@ const SummarizeScreen = ({ route }) => {
                 Avenue Jomini 5
               </Text>
               <Text style={{ fontSize: 16, marginLeft: 10 }}>
-                1004 Lausagne
+                1004 Lausanne
               </Text>
             </View>
           </View>
@@ -105,6 +105,7 @@ const SummarizeScreen = ({ route }) => {
               }
               return (
                 <CartComponent
+                  key={index}
                   name={key}
                   imgURL={finalCart[key].imgURL}
                   ingredients={finalCart[key].ingredients}
@@ -114,6 +115,8 @@ const SummarizeScreen = ({ route }) => {
           </ScrollView>
         </View>
       </View>
+      <View style={{ ...styles.separator, width: "100%" }} />
+
       <View
         style={{
           width: "100%",

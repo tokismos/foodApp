@@ -50,7 +50,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar translucent />
-        {user ? <Navigator /> : <SignNavigator />}
+        <Navigator />
       </NavigationContainer>
     </Provider>
   );

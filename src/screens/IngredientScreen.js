@@ -69,10 +69,18 @@ const IngredientScreen = ({ route, navigation }) => {
       <View style={styles.bottomBar}>
         <Text style={styles.textBottomBar}>Dèja cuisiné 560 fois</Text>
       </View>
-      <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center" }}>
+      <Text
+        style={{
+          fontSize: 25,
+          fontWeight: "bold",
+          textAlign: "center",
+          backgroundColor: "white",
+          padding: 20,
+        }}
+      >
         {recipe.name}
       </Text>
-      <View style={{ borderBottomWidth: 1, height: 150, flexDirection: "row" }}>
+      {/* <View style={{ borderBottomWidth: 1, height: 150, flexDirection: "row" }}>
         <View style={styles.profileImg}>
           <Image
             style={styles.img}
@@ -93,7 +101,7 @@ const IngredientScreen = ({ route, navigation }) => {
             @picpic
           </Text>
         </View>
-      </View>
+      </View> */}
       <View style={{ backgroundColor: "white", flex: 1 }}>
         <View
           style={{
@@ -106,9 +114,9 @@ const IngredientScreen = ({ route, navigation }) => {
             Recette pour
           </Text>
           <View style={styles.nbrContainer}>
-            <Text style={{ fontSize: 35 }}>-</Text>
+            <AntDesign name="minus" size={24} color="black" />
             <Text style={{ marginHorizontal: 10 }}>4</Text>
-            <Text style={{ fontSize: 24 }}>+</Text>
+            <AntDesign name="plus" size={24} color="black" />
           </View>
         </View>
         <View>

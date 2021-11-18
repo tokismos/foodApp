@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -14,13 +14,22 @@ import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import FastImage from "react-native-fast-image";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 const Imagee = ({ uri }) => {
-  return <Image style={{ ...styles.image, marginTop: -5 }} source={{ uri }} />;
+  return (
+    <FastImage
+      style={{ ...styles.image, marginTop: -5 }}
+      source={{ uri, priority: FastImage.priority.normal }}
+      resizeMode={FastImage.resizeMode.stretch}
+    />
+  );
 };
 
 const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
 
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   //The progress bar
@@ -128,7 +137,9 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               </View>
             </View> */}
         </View>
+
         <Imagee uri={recipe?.imgURL} />
+
         <LinearGradient
           colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
           start={{ x: 0, y: 0 }}
@@ -179,8 +190,6 @@ const styles = StyleSheet.create({
   image: {
     height: "60%",
     width: "100%",
-
-    resizeMode: "stretch",
   },
   headerContainer: {
     height: "70%",
