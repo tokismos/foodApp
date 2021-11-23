@@ -21,10 +21,14 @@ import { getAllRecipes } from "../axios";
 import { setRecipes } from "../redux/slicer/recipeSlicer";
 import data from "../helpers/data";
 import LoadingComponent from "../components/LoadingComponent";
-import { LoginWithFb, signOut } from "../helpers/db";
+// import { LoginWithFb, signOut } from "../helpers/db";
 import HeaderComponent from "../components/HeaderComponent";
+import auth from "@react-native-firebase/auth";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.userStore);
+  const { signOut } = useAuth();
   return (
     <View
       style={{
@@ -42,12 +46,13 @@ const Header = () => {
         }}
       >
         <Image
-          source={require("../assets/avatar.png")}
+          source={{ uri: user?.photoURL }}
           style={{
             height: "60%",
             width: "60%",
             resizeMode: "contain",
             padding: 20,
+            borderRadius: 25,
           }}
         />
       </View>
@@ -90,6 +95,9 @@ const Header = () => {
             FeedBack
           </Text>
         </View>
+      </View>
+      <View style={{ position: "absolute", bottom: 0 }}>
+        <Button title="logout" onPress={() => signOut()} />
       </View>
     </View>
   );
@@ -167,7 +175,6 @@ const TinderScreen = ({ navigation }) => {
 
   const onSwipeRight = (item) => {
     dispatch(addMatch(item));
-    console.log("thiiis is item", item);
     // console.warn("swipe right: ", user.name);
     console.log("swiped right", item);
   };

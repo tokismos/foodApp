@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, View, StatusBar } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
+import { useSelector } from "react-redux";
 import { COLORS } from "../consts/colors";
 
 const { height, width } = Dimensions.get("screen");
 
+const Bar = ({ style, children }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: "#C4C4C4",
+        height: 10,
+        borderRadius: 10,
+        width: "100%",
+        ...style,
+      }}
+    >
+      {children}
+    </View>
+  );
+};
 const HeaderComponent = ({ page, style, yes }) => {
   //The bar with color take the whole width
-  const Bar = ({ style }) => {
-    return (
-      <View
-        style={{
-          backgroundColor: "#C4C4C4",
-          height: 10,
-          borderRadius: 10,
-          width: "100%",
-          ...style,
-        }}
-      ></View>
-    );
-  };
+  const { matches } = useSelector((state) => state.matchStore);
+  const { user } = useSelector((state) => state.userStore);
+
+  const [layout, setLayout] = useState(1);
+
   //The color bar plus title
-  const BarComponent = ({ long, title, style }) => {
+  const BarComponent = ({ long, title, style, children }) => {
     return (
       <View style={{ width: long, marginHorizontal: 3 }}>
-        <Bar style={style} />
+        <Bar style={style}>{children}</Bar>
         <Text style={{ textAlign: "center", fontSize: 12 }}>{title} </Text>
       </View>
     );
@@ -38,7 +47,19 @@ const HeaderComponent = ({ page, style, yes }) => {
           justifyContent: "center",
         }}
       >
-        <BarComponent long="20%" title="Choisir vos recettes" style={first} />
+        <BarComponent long="20%" title="Choisir vos recettes" style={first}>
+          {/* if First page we show the progress bar */}
+          {yes && (
+            <View
+              style={{
+                backgroundColor: "white",
+                flexDirection: "row",
+                width: matches.length < 4 ? `${25 * matches.length}%` : "100%",
+                height: "100%",
+              }}
+            ></View>
+          )}
+        </BarComponent>
         <BarComponent long="20%" title="Valider les recettes" style={second} />
         <BarComponent
           long="22%"
@@ -92,7 +113,7 @@ const HeaderComponent = ({ page, style, yes }) => {
         style1 = {
           borderWidth,
           borderColor: COLORS.primary,
-          backgroundColor: "white",
+          backgroundColor: yes ? COLORS.primary : "white",
         };
         break;
       case "2":

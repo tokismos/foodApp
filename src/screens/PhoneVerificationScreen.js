@@ -26,7 +26,7 @@ import Animated, {
 } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 
-import { signInWithPhoneNumber } from "../helpers/db";
+// import { signInWithPhoneNumber } from "../helpers/db";
 import { COLORS } from "../consts/colors";
 import ContinueButton from "../components/ContinueButton";
 import HeaderComponent from "../components/HeaderComponent";

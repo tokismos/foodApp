@@ -92,7 +92,7 @@ const IntroScreen = ({ navigation }) => {
               Je suis nouveau
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("TinderScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("EmailScreen")}>
             <Text
               style={{
                 fontSize: 18,

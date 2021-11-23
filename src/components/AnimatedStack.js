@@ -39,6 +39,13 @@ const AnimatedStack = (props) => {
 
   const hiddenTranslateX = 2 * screenWidth;
 
+  const test = () => {
+    console.log("yeah");
+
+    translateX.value = 0;
+    setNextIndex(currentIndex + 1);
+  };
+
   const translateX = useSharedValue(0);
   const rotate = useDerivedValue(
     () =>
@@ -63,14 +70,14 @@ const AnimatedStack = (props) => {
         scale: interpolate(
           translateX.value,
           [-hiddenTranslateX, 0, hiddenTranslateX],
-          [1, 0.8, 1]
+          [1, 0.9, 1]
         ),
       },
     ],
     opacity: interpolate(
       translateX.value,
       [-hiddenTranslateX, 0, hiddenTranslateX],
-      [1, 0.5, 1]
+      [1, 0.9, 1]
     ),
   }));
 
@@ -101,8 +108,12 @@ const AnimatedStack = (props) => {
 
       translateX.value = withSpring(
         hiddenTranslateX * Math.sign(event.velocityX),
-        {},
-        () => runOnJS(setCurrentIndex)(currentIndex + 1)
+        {
+          overshootClamping: true,
+        },
+        () => {
+          runOnJS(setCurrentIndex)(currentIndex + 1);
+        }
       );
 
       event.velocityX > 0

@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { COLORS } from "../consts/colors";
-import { signUp } from "../helpers/db";
+// import { signUp } from "../helpers/db";
 const { width, height } = Dimensions.get("window");
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import CheckBox from "@react-native-community/checkbox";

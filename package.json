@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/checkbox": "^0.5.8",
     "@react-native-firebase/app": "^12.9.0",
     "@react-native-firebase/auth": "^12.9.0",
@@ -52,7 +53,8 @@
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
-    "redux-flipper": "^2.0.1"
+    "redux-flipper": "^2.0.1",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -60,6 +62,6 @@
     "react-native-svg-transformer": "^0.14.3"
   },
   "private": true,
-  "name": "foodApp",
+  "name": "foodapp",
   "version": "1.0.0"
 }

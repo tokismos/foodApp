@@ -17,26 +17,28 @@ import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
-const Imagee = ({ uri }) => {
+const Imagee = ({ uri, loaded, setLoaded }) => {
   return (
     <FastImage
-      style={{ ...styles.image, marginTop: -5 }}
-      source={{ uri, priority: FastImage.priority.normal }}
-      resizeMode={FastImage.resizeMode.stretch}
+      style={loaded ? { ...styles.image, marginTop: -5 } : { display: "none" }}
+      source={{ uri, priority: FastImage.priority.high }}
+      resizeMode={FastImage.resizeMode.cover}
+      onLoad={() => setLoaded(true)}
     />
   );
 };
 
 const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
+  const [loaded, setLoaded] = useState(false);
+
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
 
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   //The progress bar
-  console.log("rennndered");
   return (
     <>
-      <View
+      {/* <View
         style={{
           backgroundColor: "#f5f4f4",
           position: "absolute",
@@ -45,8 +47,9 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
           right: 0,
           left: 0,
         }}
-      />
+      /> */}
       <Pressable
+        disabled
         style={{
           height: "100%",
           width: "100%",
@@ -138,7 +141,15 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
             </View> */}
         </View>
 
-        <Imagee uri={recipe?.imgURL} />
+        <Image
+          source={{ uri: recipe?.imgURL }}
+          style={
+            loaded
+              ? { ...styles.image, marginTop: -5 }
+              : { display: "none", backgroundColor: "white" }
+          }
+          onLoad={() => setLoaded(true)}
+        />
 
         <LinearGradient
           colors={["rgba(0, 0, 0, 0)", "rgba(0, 0,0, 1)"]}
@@ -177,7 +188,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
   );
 };
 
-export default React.memo(TinderCard);
+export default TinderCard;
 
 const styles = StyleSheet.create({
   imgText: {

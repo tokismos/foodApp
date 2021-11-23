@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { signOut } from "../helpers/db";
+// import { signOut } from "../helpers/db";
 
 const LogOutScreen = () => {
   return (
@@ -11,7 +11,7 @@ const LogOutScreen = () => {
         alignItems: "center",
       }}
     >
-      <Button title="Sign Out" onPress={signOut} />
+      {/* <Button title="Sign Out" onPress={signOut} /> */}
     </View>
   );
 };

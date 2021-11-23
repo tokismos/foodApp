@@ -4,7 +4,7 @@ import {
   TransitionPresets,
   TransitionSpecs,
 } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -13,6 +13,7 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import auth from "@react-native-firebase/auth";
 
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
@@ -32,10 +33,18 @@ import IngredientCartScreen from "../screens/IngredientCartScreen";
 import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
-const Stack = createStackNavigator();
-const CartStack = createStackNavigator();
+import useAuth from "../hooks/useAuth";
+const LoggedStack = createStackNavigator();
+const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
+import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
+import { useDispatch, useSelector } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
+import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
+import EmailScreen from "../screens/createAccountScreens/EmailScreen";
+import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
+import LoginHeaderScreen from "../components/LoginHeaderScreen";
 
 export const TabScreen = () => {
   return (
@@ -122,20 +131,78 @@ const horizontalAnimation = {
   },
 };
 
-const Navigator = () => {
-  // to add transition effect
+export const LoggedStackScreen = () => {
+  const [accessTokenFb, setAccessTokenFb] = useState(null);
+  const [info, setInfo] = useState(null);
+  const dispatch = useDispatch();
+  // const { accessTokenFb } = useSelector((state) => state.userStore);
+
+  //Get the information from the token we get after connecting to fb
+  const getInfoFromTokenFb = (token) => {
+    const PROFILE_REQUEST_PARAMS = {
+      fields: {
+        string: "id,name,first_name,last_name,email,picture.type(large)",
+      },
+    };
+    const profileRequest = new GraphRequest(
+      "/me",
+      { token, parameters: PROFILE_REQUEST_PARAMS },
+      (error, user) => {
+        if (error) {
+          console.log("login info has error: " + error);
+        } else {
+          setInfo(user);
+        }
+      }
+    );
+    new GraphRequestManager().addRequest(profileRequest).start();
+  };
+
+  //Get the access Token of Fb from the storage if it exists
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem("accessTokenFb");
+        if (accessToken !== null) {
+          setAccessTokenFb(accessToken);
+        } else {
+          console.log("noo toooken");
+        }
+      } catch (e) {
+        // error reading value
+      }
+    };
+    getAccessToken();
+  }, []);
+
+  //Get the authenticated user and set it to the redux store in user state
+  useEffect(() => {
+    const func = async () => {
+      const user = await auth().currentUser;
+      const userObj = {
+        uid: user.uid,
+        displayName: user.displayName,
+        email: info ? info.email : user.email,
+        phoneNumber: user.phoneNumber,
+        photoURL: info ? info.picture.data.url : user.photoURL,
+      };
+
+      dispatch(setUser(userObj));
+    };
+    func();
+  }, [info]);
+
+  //Get the info from facebook API if the access token exists in storage
+  useEffect(() => {
+    if (accessTokenFb) {
+      getInfoFromTokenFb(accessTokenFb);
+      console.log("laast effect ", info);
+    }
+  }, [accessTokenFb]);
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="IntroScreen"
-        component={IntroScreen}
-      />
-      <Stack.Screen
+    <LoggedStack.Navigator screenOptions={{ headerShown: true }}>
+      <LoggedStack.Screen
         options={{
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
@@ -143,7 +210,16 @@ const Navigator = () => {
         name="TinderScreen"
         component={TinderScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
+        options={{
+          // header: () => <HeaderComponent page="1" />,
+          headerShown: false,
+        }}
+        name="IntroScreen"
+        component={IntroScreen}
+      />
+
+      <LoggedStack.Screen
         options={{
           header: () => <HeaderComponent page="2" />,
           headerLeft: null,
@@ -151,7 +227,7 @@ const Navigator = () => {
         name="PanierScreen"
         component={PanierScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           ...horizontalAnimation,
           header: () => <HeaderComponent page="3" />,
@@ -159,7 +235,7 @@ const Navigator = () => {
         name="IngredientsCartScreen"
         component={IngredientCartScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           ...horizontalAnimation,
           header: () => <HeaderComponent page="4" />,
@@ -167,7 +243,7 @@ const Navigator = () => {
         name="SummarizeScreen"
         component={SummarizeScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
@@ -175,7 +251,7 @@ const Navigator = () => {
         name="IngredientScreen"
         component={IngredientScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
@@ -183,7 +259,7 @@ const Navigator = () => {
         name="LoginScreen"
         component={LoginScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
@@ -191,7 +267,7 @@ const Navigator = () => {
         name="SignUpScreen"
         component={SignUpScreen}
       />
-      <Stack.Screen
+      <LoggedStack.Screen
         options={{
           // header: () => <HeaderComponent page="1" />,
           headerShown: false,
@@ -199,11 +275,42 @@ const Navigator = () => {
         name="PhoneVerificationScreen"
         component={PhoneVerificationScreen}
       />
-      <Stack.Screen name="FilterScreen" component={FilterScreen} />
-      <Stack.Screen name="CartScreen" component={CartScreen} />
-      <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
-    </Stack.Navigator>
+      <LoggedStack.Screen name="FilterScreen" component={FilterScreen} />
+      <LoggedStack.Screen name="CartScreen" component={CartScreen} />
+      <LoggedStack.Screen
+        name="ResultCartScreen"
+        component={ResultCartScreen}
+      />
+    </LoggedStack.Navigator>
   );
 };
-export default Navigator;
+
+export const LoginStackScreen = () => {
+  return (
+    <LoginStack.Navigator screenOptions={{ headerShown: false }}>
+      <LoginStack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="IntroScreen"
+        component={IntroScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="EmailScreen"
+        component={EmailScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="PasswordScreen"
+        component={PasswordScreen}
+      />
+    </LoginStack.Navigator>
+  );
+};
+
 const styles = StyleSheet.create({});

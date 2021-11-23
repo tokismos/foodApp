@@ -1,19 +1,28 @@
 import { Alert } from "react-native";
 
 import database from "@react-native-firebase/database";
+// import auth from "@react-native-firebase/auth";
+// import { LoginManager, AccessToken } from "react-native-fbsdk-next";
+// import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
-import { LoginManager, AccessToken } from "react-native-fbsdk-next";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEDrHAl6QWafSMu9MFVbIj2Z2Fr5cr6Og",
   authDomain: "food-app-5c687.firebaseapp.com",
+  databaseURL: "https://food-app-5c687-default-rtdb.firebaseio.com",
   projectId: "food-app-5c687",
   storageBucket: "food-app-5c687.appspot.com",
   messagingSenderId: "954088809444",
   appId: "1:954088809444:web:0714e4191f1876959a1df1",
 };
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
 const LoginWithGoogle = async () => {
   // Get the users ID token
   const { idToken } = await GoogleSignin.signIn();
@@ -81,42 +90,35 @@ const signInWithPhoneNumber = async (phoneNumber, setConfirm) => {
   setConfirm(confirmation);
 };
 
-// const logInWithFb = async () => {
-//   try {
-//     await Facebook.initializeAsync({
-//       appId: "593620908653647",
-//     });
-//     const { type, token, expirationDate, permissions, declinedPermissions } =
-//       await Facebook.logInWithReadPermissionsAsync({
-//         permissions: ["public_profile"],
-//       });
-//     if (type === "success") {
-//       // Get the user's name using Facebook's Graph API
-//       const response = await fetch(
-//         `https://graph.facebook.com/me?access_token=${token}`
-//       );
-//       Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
-//     } else {
-//       // type === 'cancel'
-//     }
-//   } catch ({ message }) {
-//     alert(`Facebook Login Error: ${message}`);
-//   }
-// };
-// // const getData = async (loadMood) => {
-// //   await db
-// //     .ref(`users/`)
-// //     .on("value", (snapshot) => {
-// //       const data = snapshot.val();
-// //       loadMood(data);
-// //     });
-// // };
-
-export {
-  signIn,
-  signUp,
-  signOut,
-  LoginWithFb,
-  LoginWithGoogle,
-  signInWithPhoneNumber,
+const logInWithFb = async () => {
+  try {
+    await Facebook.initializeAsync({
+      appId: "593620908653647",
+    });
+    const { type, token, expirationDate, permissions, declinedPermissions } =
+      await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile"],
+      });
+    if (type === "success") {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`
+      );
+      Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+    } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    alert(`Facebook Login Error: ${message}`);
+  }
 };
+// const getData = async (loadMood) => {
+//   await db
+//     .ref(`users/`)
+//     .on("value", (snapshot) => {
+//       const data = snapshot.val();
+//       loadMood(data);
+//     });
+// };
+
+export { auth, LoginWithFb };

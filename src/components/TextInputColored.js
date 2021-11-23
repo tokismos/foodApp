@@ -14,6 +14,7 @@ const TextInputColored = ({
   const [visible, setVisible] = useState(true);
   return (
     <TextInput
+      autoFocus
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       theme={{ colors: { primary: COLORS.primary } }}
@@ -23,7 +24,6 @@ const TextInputColored = ({
       onChangeText={setChangeText}
       secureTextEntry={secured ? visible : null}
       style={{
-        marginHorizontal: 20,
         marginVertical: 5,
       }}
       left={

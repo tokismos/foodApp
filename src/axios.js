@@ -6,25 +6,20 @@ const api = axios.create({
 
 const getAllRecipes = async (item) => {
   let url = "?";
-  console.log("eerf", item);
   item.map((item) => {
     url = url + `${item.categorie}=${item.value}&`;
   });
   let data;
-  console.log("daaaaata", url);
   try {
     const res = await api.get(`/recipes`);
-    console.log("thid id resssq", res);
     data = res.data;
-    console.log("DATA FETCHED CORRECTLY", data);
   } catch (e) {
-    console.log("EROR", e);
+    console.log("ERROR", e);
   }
   return data;
 };
 
 const getFiltredRecipes = async () => {
-  console.log("hey");
   await api({
     method: "post",
     data: {

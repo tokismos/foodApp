@@ -11,51 +11,61 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { COLORS } from "./src/consts/colors";
 import { store } from "./src/redux/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
+import {
+  LoggedStackScreen,
+  LoginStackScreen,
+} from "./src/navigation/Navigator";
+require("./src/helpers/db");
+import TinderScreen from "./src/screens/TinderScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import IntroScreen from "./src/screens/IntroScreen";
+const config = {
+  webClientId:
+    "954088809444-g38fi65a2f6eotu2o57gekojchbv2d0l.apps.googleusercontent.com",
+  androidClientId:
+    "954088809444-81501s0erj9g0ojcoe08e128ahb3qido.apps.googleusercontent.com",
+  scopes: ["profile", "email"],
+  permissions: ["public_profile", "location", "email"],
+};
 export default function App() {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [splash, setSplash] = useState(true);
 
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        "954088809444-g38fi65a2f6eotu2o57gekojchbv2d0l.apps.googleusercontent.com",
-    });
-    const subscriber = auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        console.log("Connecte2d", user);
-        setSplash(false);
-        if (initializing) setInitializing(false);
+    GoogleSignin.configure(config);
+
+    const sub = auth().onAuthStateChanged((userInfo) => {
+      if (userInfo) {
+        setUser(userInfo);
+        console.log("Connecte2de", userInfo);
       } else {
-        setUser();
-        setInitializing(false);
-        console.log("Disconnected", user);
+        setUser(null);
+
+        console.log("Disconnected", userInfo);
       }
     });
-    return subscriber; // unsubscribe on unmount
+    return sub;
   }, []);
 
-  if (initializing) return null;
+  const SplashScreen = () => {
+    return (
+      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  };
 
-  // const SplashScreen = () => {
-  //   return (
-  //     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </View>
-  //   );
-  // };
   return (
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar translucent />
-        <Navigator />
+        {user ? <LoggedStackScreen /> : <LoginStackScreen />}
       </NavigationContainer>
     </Provider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
