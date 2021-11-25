@@ -14,15 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "768418404122-6te5c2mpiq86v09sc0euhrvphplkoikm.apps.googleusercontent.com",
+          "client_id": "768418404122-0gnou460di9bjq0bflmrtoh88nkh56q5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.foodApp.test",
-            "certificate_hash": "c57b416c043f1b8652fdfcd3b0efffe6f142d5f5"
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "768418404122-gvq3n43pt7jvofk78ojav0pjkpd78qhn.apps.googleusercontent.com",
+          "client_id": "768418404122-rllkjskkgqtvg2g97gp06nmk2ce3n9jp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.foodApp.test",
