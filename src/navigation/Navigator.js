@@ -45,6 +45,7 @@ import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
 import EmailScreen from "../screens/createAccountScreens/EmailScreen";
 import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
 import LoginHeaderScreen from "../components/LoginHeaderScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 export const TabScreen = () => {
   return (
@@ -277,6 +278,7 @@ export const LoggedStackScreen = () => {
       />
       <LoggedStack.Screen name="FilterScreen" component={FilterScreen} />
       <LoggedStack.Screen name="CartScreen" component={CartScreen} />
+      <LoggedStack.Screen name="ProfileScreen" component={ProfileScreen} />
       <LoggedStack.Screen
         name="ResultCartScreen"
         component={ResultCartScreen}
@@ -308,6 +310,41 @@ export const LoginStackScreen = () => {
         }}
         name="PasswordScreen"
         component={PasswordScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="TinderScreen"
+        component={TinderScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="IngredientsCartScreen"
+        component={IngredientCartScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="IngredientScreen"
+        component={IngredientScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="SummarizeScreen"
+        component={SummarizeScreen}
+      />
+      <LoginStack.Screen
+        options={{
+          ...horizontalAnimation,
+        }}
+        name="PanierScreen"
+        component={PanierScreen}
       />
     </LoginStack.Navigator>
   );

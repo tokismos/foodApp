@@ -46,7 +46,7 @@ const Header = () => {
         }}
       >
         <Image
-          source={{ uri: user?.photoURL }}
+          source={require("../assets/avatar.png")}
           style={{
             height: "60%",
             width: "60%",
@@ -95,9 +95,6 @@ const Header = () => {
             FeedBack
           </Text>
         </View>
-      </View>
-      <View style={{ position: "absolute", bottom: 0 }}>
-        <Button title="logout" onPress={() => signOut()} />
       </View>
     </View>
   );

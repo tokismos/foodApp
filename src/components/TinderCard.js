@@ -92,6 +92,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
                 color: "white",
                 width: "90%",
                 marginTop: 10,
+                height: "100%",
               }}
             >
               {recipe?.name}
