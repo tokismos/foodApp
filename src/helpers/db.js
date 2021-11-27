@@ -9,13 +9,12 @@ import auth from "@react-native-firebase/auth";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAEDrHAl6QWafSMu9MFVbIj2Z2Fr5cr6Og",
-  authDomain: "food-app-5c687.firebaseapp.com",
-  databaseURL: "https://food-app-5c687-default-rtdb.firebaseio.com",
-  projectId: "food-app-5c687",
-  storageBucket: "food-app-5c687.appspot.com",
-  messagingSenderId: "954088809444",
-  appId: "1:954088809444:web:0714e4191f1876959a1df1",
+  apiKey: "AIzaSyC_Khzc-fgbnfetYLwwdkSiNYPuRVjbdN8",
+  authDomain: "yuzu-a0d71.firebaseapp.com",
+  projectId: "yuzu-a0d71",
+  storageBucket: "yuzu-a0d71.appspot.com",
+  messagingSenderId: "768418404122",
+  appId: "1:768418404122:web:07f4cd1177316436107ea3",
 };
 
 if (!firebase.apps.length) {

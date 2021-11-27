@@ -15,7 +15,5 @@ export const store = configureStore({
     return getDefaultMiddleware({
       //  serializableCheck: false,
     }).concat(createDebugger());
-
-    //return getDefaultMiddleware();
   },
 });

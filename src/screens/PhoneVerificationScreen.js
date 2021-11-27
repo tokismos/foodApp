@@ -93,13 +93,6 @@ const PhoneVerificationScreen = ({ navigation }) => {
     }
   };
 
-  const usePrevious = (value) => {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  };
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.lightGrey }}>
       {isLoading && <LoadingComponent />}

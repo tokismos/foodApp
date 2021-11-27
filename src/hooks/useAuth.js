@@ -13,11 +13,12 @@ import {
   Profile,
 } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../axios";
 
 const signIn = async (email, password) => {
   try {
-    await auth().signInWithEmailAndPassword(email, password);
-    console.log("signed with email");
+    const res = await auth().signInWithEmailAndPassword(email, password);
+    console.log("signed with email", res);
   } catch (e) {
     console.log(e);
     alert(e);
@@ -28,6 +29,10 @@ const signInWithGoogle = async () => {
   // Get the users ID token
   const userInfo = await GoogleSignin.signIn();
   const { idToken, accessToken } = await GoogleSignin.getTokens();
+
+  console.log("info", userInfo);
+  console.log("access", accessToken);
+  console.log("id", idToken);
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(
     idToken,
@@ -53,7 +58,6 @@ const signOut = async () => {
     }
   }
   auth().signOut();
-  console.log("decienected 3adfi");
 };
 
 const signInWithFb = async () => {
@@ -109,8 +113,46 @@ const signInWithFb = async () => {
   await auth().signInWithCredential(facebookCredential);
   return data.accessToken;
 };
+
+const sendPhoneVerification = async (phoneNumber) => {
+  const res = await api.get(`/verify/num`, { params: { phoneNumber } });
+  console.log("verrre", res.status);
+  return res.status;
+};
+// const verifyPhone = async () => {
+//   // const confirmation = await auth().signInWithPhoneNumber("+212708221665");
+//   // console.log("ciiiiinf", confirmation);
+//   auth()
+//     .verifyPhoneNumber("+212708221665")
+//     .on(
+//       "state_changed",
+//       async (phoneAuthSnapshot) => {
+//         console.log("State: ", phoneAuthSnapshot);
+//         // const credential = await auth.PhoneAuthProvider.credential(
+//         //   phoneAuthSnapshot.verificationId,
+//         //   phoneAuthSnapshot.code
+//         // );
+//         // console.log("creeeeeeeee", credential);
+//         // let userData = await auth().currentUser.linkWithCredential(credential);
+//         // console.log("DAAAAAAAAATAAAAAAAAA", userData.user);
+//       },
+//       (error) => {
+//         console.error(error);
+//       },
+//       (phoneAuthSnapshot) => {
+//         console.log("Success", phoneAuthSnapshot);
+//       }
+//     );
+// };
+
 export default useAuth = () => {
-  return { signIn, signOut, signInWithGoogle, signInWithFb };
+  return {
+    signIn,
+    signOut,
+    signInWithGoogle,
+    signInWithFb,
+    sendPhoneVerification,
+  };
 };
 
 const styles = StyleSheet.create({});

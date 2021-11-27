@@ -22,11 +22,11 @@ import LoginScreen from "./src/screens/LoginScreen";
 import IntroScreen from "./src/screens/IntroScreen";
 const config = {
   webClientId:
-    "954088809444-g38fi65a2f6eotu2o57gekojchbv2d0l.apps.googleusercontent.com",
-  androidClientId:
-    "954088809444-81501s0erj9g0ojcoe08e128ahb3qido.apps.googleusercontent.com",
+    "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
+
   scopes: ["profile", "email"],
   permissions: ["public_profile", "location", "email"],
+  offlineAccess: true,
 };
 export default function App() {
   const [initializing, setInitializing] = useState(true);

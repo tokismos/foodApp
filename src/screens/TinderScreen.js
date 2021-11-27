@@ -28,7 +28,8 @@ import useAuth from "../hooks/useAuth";
 
 const Header = () => {
   const { user } = useSelector((state) => state.userStore);
-  const { signOut } = useAuth();
+  const { signOut, verifyPhone } = useAuth();
+  console.log("tinder user", auth().currentUser);
   return (
     <View
       style={{
@@ -38,6 +39,12 @@ const Header = () => {
         marginTop: 10,
       }}
     >
+      <Button
+        title="presss"
+        onPress={() => signOut()}
+        style={{ position: "absolute" }}
+      />
+
       <View
         style={{
           width: "30%",
@@ -46,13 +53,19 @@ const Header = () => {
         }}
       >
         <Image
-          source={require("../assets/avatar.png")}
+          source={
+            user?.photoURL != null
+              ? {
+                  uri: user?.photoURL,
+                }
+              : require("../assets/avatar.png")
+          }
           style={{
             height: "60%",
             width: "60%",
             resizeMode: "contain",
             padding: 20,
-            borderRadius: 25,
+            borderRadius: 50,
           }}
         />
       </View>
