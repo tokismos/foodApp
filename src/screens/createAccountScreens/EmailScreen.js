@@ -16,6 +16,7 @@ import {
   Dimensions,
   BackHandler,
   Button,
+  Alert,
 } from "react-native";
 import HeaderComponent from "../../components/HeaderComponent";
 import LoginHeaderScreen from "../../components/LoginHeaderScreen";
@@ -24,11 +25,12 @@ import { COLORS } from "../../consts/colors";
 import auth from "@react-native-firebase/auth";
 import useAuth from "../../hooks/useAuth";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
+import CodeVerificationComponent from "../../components/CodeVerificationComponent";
 
 const { height, width } = Dimensions.get("screen");
 const EmailComponent = ({ set, setIndex, index, refe, email }) => {
   return (
-    <View style={{ width }}>
+    <View style={{ width, height }}>
       <View style={{ padding: 20 }}>
         <Text style={{ fontSize: 30, fontWeight: "bold" }}>
           Saisissez votre adresse e-mail
@@ -97,39 +99,93 @@ const PhoneComponent = ({
       />
       <NextButton
         onPress={async () => {
-          const status = await sendPhoneVerification(fullNumber);
-          if (status == 200) {
-            refe.current.scrollToIndex({
-              index,
-              animation: true,
-            });
-            setIndex(index);
+          try {
+            const status = await sendPhoneVerification(fullNumber);
+            console.log("thiiiiiiuuuyyts stau", status);
+            if (status == 200) {
+              console.log("yeaah 200");
+              refe.current.scrollToIndex({
+                index,
+                animation: true,
+              });
+              setIndex(index);
+            } else {
+              console.log("SNS NOT SENT");
+              Alert.alert("SMS NOT SEENTed");
+            }
+          } catch (e) {
+            Alert.alert("SMS NOT SEENTq");
           }
         }}
       />
     </View>
   );
 };
-const VerificationPhoneComponent = ({
-  set,
-  code,
-  setCode,
+const NameComponent = ({
   refe,
+  setIndex,
+  index,
+  setPhoneNumber,
+  setCountryCode,
+  fullNumber,
+}) => {
+  const { sendPhoneVerification } = useAuth();
+  return (
+    <View style={{ backgroundColor: "red", width }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+        Comment vous appelez vous ?
+      </Text>
+      <NextButton onPress={async () => {}} />
+    </View>
+  );
+};
+const VerificationPhoneComponent = ({
+  refe,
+  verificationCode,
+  setCode,
+  index,
+  setIndex,
+  fullNumber,
   setPhoneNumber,
   setCountryCode,
 }) => {
+  const { verifyCode } = useAuth();
   return (
-    <>
-      <Text>hi</Text>
-    </>
-    // <View style={{ backgroundColor: "red", width }}>
-    //   <TextInputColored label="Code" setChangeText={set} />
-    //   <NextButton
-    //     onPress={async () => {
-    //       const status = await sendPhoneVerification();
-    //     }}
-    //   />
-    // </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="height"
+      keyboardVerticalOffset={100}
+      contentContainerStyle={{ backgroundColor: "pink" }}
+    >
+      <ScrollView style={{}}>
+        <View style={{ width }}>
+          <CodeVerificationComponent
+            verificationCode={verificationCode}
+            setCode={setCode}
+            fullNumber={fullNumber}
+          />
+          <NextButton
+            onPress={async () => {
+              try {
+                const status = await verifyCode(fullNumber, verificationCode);
+                if (status == 200) {
+                  refe.current.scrollToIndex({
+                    index,
+                    animation: true,
+                  });
+                  setIndex(index);
+                } else {
+                  Alert.alert("CODE");
+                }
+                return;
+              } catch (e) {
+                console.log("OMG ", e);
+              }
+            }}
+          />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 const NextButton = ({ onPress, disabled }) => {
@@ -160,7 +216,7 @@ const CreateComponent = forwardRef(
       setPhoneNumber,
       setCountryCode,
       fullNumber,
-      code,
+      verificationCode,
       setCode,
     },
     ref
@@ -201,14 +257,18 @@ const CreateComponent = forwardRef(
       case 3:
         return (
           <VerificationPhoneComponent
-            code={code}
+            refe={ref}
+            verificationCode={verificationCode}
+            setCode={setCode}
             setPhoneNumber={setPhoneNumber}
             setCountryCode={setCountryCode}
-            refe={ref}
+            fullNumber={fullNumber}
             setIndex={setIndex}
             index={index}
           />
         );
+      case 4:
+        return <NameComponent />;
       default:
         return <Text>hii</Text>;
     }
@@ -220,7 +280,7 @@ const EmailScreen = ({}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [code, setCode] = useState("");
+  const [verificationCode, setCode] = useState("");
   const [countryCode, setCountryCode] = useState("1");
   const [fullNumber, setFullNumber] = useState("");
 
@@ -228,8 +288,8 @@ const EmailScreen = ({}) => {
     setFullNumber(`+${countryCode}${phoneNumber}`);
   }, [phoneNumber, countryCode]);
   useEffect(() => {
-    console.log("fulkl", fullNumber);
-  }, [fullNumber]);
+    console.log("vcode", verificationCode);
+  }, [verificationCode]);
 
   return (
     <View style={{}}>
@@ -239,7 +299,7 @@ const EmailScreen = ({}) => {
         horizontal
         scrollEnabled={true}
         ref={ref}
-        data={["email", "password", "tel", "verification"]}
+        data={["email", "password", "tel", "verification", "name"]}
         renderItem={({ index, item }) => {
           return (
             <CreateComponent
@@ -249,7 +309,7 @@ const EmailScreen = ({}) => {
               setPassword={setPassword}
               fullNumber={fullNumber}
               setPhoneNumber={setPhoneNumber}
-              code={code}
+              verificationCode={verificationCode}
               setCode={setCode}
               ref={ref}
               index={index + 1}

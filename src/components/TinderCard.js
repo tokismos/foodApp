@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import { Feather } from "@expo/vector-icons";
 
 const Imagee = ({ uri, loaded, setLoaded }) => {
   return (
@@ -82,21 +83,23 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               justifyContent: "center",
               alignItems: "center",
               paddingTop: 0,
+              flexDirection: "row",
             }}
           >
-            <Text
-              style={{
-                fontSize: 22,
-                fontWeight: "bold",
-                textAlign: "center",
-                color: "white",
-                width: "90%",
-                marginTop: 10,
-                height: "100%",
-              }}
-            >
-              {recipe?.name}
-            </Text>
+            <View style={{ width: "100%" }}>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  color: "white",
+                  height: "100%",
+                  marginTop: 10,
+                }}
+              >
+                {recipe?.name}
+              </Text>
+            </View>
           </View>
           <View
             style={{
@@ -174,6 +177,19 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={onSwipeLeft} style={styles.leftButton}>
               <FontAwesome name="close" size={50} color="#EF5454" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("IngredientScreen", { recipe });
+              }}
+              style={{
+                height: "100%",
+                width: "20%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Feather name="info" size={40} color="white" />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onSwipeRight}

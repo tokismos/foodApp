@@ -115,9 +115,26 @@ const signInWithFb = async () => {
 };
 
 const sendPhoneVerification = async (phoneNumber) => {
-  const res = await api.get(`/verify/num`, { params: { phoneNumber } });
-  console.log("verrre", res.status);
-  return res.status;
+  try {
+    const res = await api.get(`/verify/num`, { params: { phoneNumber } });
+    console.log("SMS SENT", res);
+    return res?.status;
+  } catch (e) {
+    console.log("SMS NOT SENT ", e);
+    throw new Error("SMSE  NOT SEND"); // to send error to the try
+  }
+};
+const verifyCode = async (phoneNumber, verificationCode) => {
+  try {
+    const res = await api.get(`/verify/verify`, {
+      params: { phoneNumber, verificationCode },
+    });
+    console.log("code done", res.status);
+    return res?.status;
+  } catch (e) {
+    console.log("SMS NOT SENTg ", e);
+    throw new Error();
+  }
 };
 // const verifyPhone = async () => {
 //   // const confirmation = await auth().signInWithPhoneNumber("+212708221665");
@@ -152,6 +169,7 @@ export default useAuth = () => {
     signInWithGoogle,
     signInWithFb,
     sendPhoneVerification,
+    verifyCode,
   };
 };
 
