@@ -25,8 +25,10 @@ import LoadingComponent from "../components/LoadingComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import auth from "@react-native-firebase/auth";
 import useAuth from "../hooks/useAuth";
+import { useNavigation } from "@react-navigation/core";
 
 const Header = () => {
+  const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
   const { signOut, verifyPhone } = useAuth();
   console.log("tinder user", auth().currentUser);
@@ -45,7 +47,8 @@ const Header = () => {
         style={{ position: "absolute" }}
       />
 
-      <View
+      <TouchableOpacity
+        onPress={() => navigation.navigate("ProfileScreen")}
         style={{
           width: "30%",
           alignItems: "center",
@@ -68,7 +71,7 @@ const Header = () => {
             borderRadius: 50,
           }}
         />
-      </View>
+      </TouchableOpacity>
       <View style={{ width: "40%" }}>
         <Image
           source={require("../assets/logo.png")}

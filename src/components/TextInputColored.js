@@ -9,12 +9,15 @@ const TextInputColored = ({
   setChangeText,
   leftIcon,
   secured,
+  index,
+  currentIndex,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [visible, setVisible] = useState(true);
+  console.log("index", index, currentIndex);
   return (
     <TextInput
-      autoFocus
+      autoFocus={index == currentIndex - 1}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       theme={{ colors: { primary: COLORS.primary } }}

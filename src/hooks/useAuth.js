@@ -13,6 +13,7 @@ import {
   Profile,
 } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-community/async-storage";
+
 import { api } from "../axios";
 
 const signIn = async (email, password) => {
@@ -57,9 +58,10 @@ const signOut = async () => {
       console.log("Error async storage");
     }
   }
+  console.log("heu");
   auth().signOut();
 };
-
+//Sign In with Facebook
 const signInWithFb = async () => {
   //Get info of the fb profile from the token
   //   const getInfoFromToken = (token) => {
@@ -113,17 +115,18 @@ const signInWithFb = async () => {
   await auth().signInWithCredential(facebookCredential);
   return data.accessToken;
 };
-
+//SEnd the verification code to the phone number
 const sendPhoneVerification = async (phoneNumber) => {
   try {
     const res = await api.get(`/verify/num`, { params: { phoneNumber } });
     console.log("SMS SENT", res);
     return res?.status;
   } catch (e) {
-    console.log("SMS NOT SENT ", e);
+    console.log("SMS NOT SENTww ", e);
     throw new Error("SMSE  NOT SEND"); // to send error to the try
   }
 };
+//Verify the code
 const verifyCode = async (phoneNumber, verificationCode) => {
   try {
     const res = await api.get(`/verify/verify`, {
@@ -136,31 +139,6 @@ const verifyCode = async (phoneNumber, verificationCode) => {
     throw new Error();
   }
 };
-// const verifyPhone = async () => {
-//   // const confirmation = await auth().signInWithPhoneNumber("+212708221665");
-//   // console.log("ciiiiinf", confirmation);
-//   auth()
-//     .verifyPhoneNumber("+212708221665")
-//     .on(
-//       "state_changed",
-//       async (phoneAuthSnapshot) => {
-//         console.log("State: ", phoneAuthSnapshot);
-//         // const credential = await auth.PhoneAuthProvider.credential(
-//         //   phoneAuthSnapshot.verificationId,
-//         //   phoneAuthSnapshot.code
-//         // );
-//         // console.log("creeeeeeeee", credential);
-//         // let userData = await auth().currentUser.linkWithCredential(credential);
-//         // console.log("DAAAAAAAAATAAAAAAAAA", userData.user);
-//       },
-//       (error) => {
-//         console.error(error);
-//       },
-//       (phoneAuthSnapshot) => {
-//         console.log("Success", phoneAuthSnapshot);
-//       }
-//     );
-// };
 
 export default useAuth = () => {
   return {

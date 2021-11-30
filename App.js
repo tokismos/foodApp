@@ -12,7 +12,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { COLORS } from "./src/consts/colors";
 import { store } from "./src/redux/store";
 import { Provider, useDispatch } from "react-redux";
-import {
+import RootNavigation, {
   LoggedStackScreen,
   LoginStackScreen,
 } from "./src/navigation/Navigator";
@@ -30,24 +30,25 @@ const config = {
 };
 export default function App() {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [splash, setSplash] = useState(true);
 
-  useEffect(() => {
-    GoogleSignin.configure(config);
+  // useEffect(() => {
+  //   GoogleSignin.configure(config);
 
-    const sub = auth().onAuthStateChanged((userInfo) => {
-      if (userInfo) {
-        setUser(userInfo);
-        console.log("Connecte2de", userInfo);
-      } else {
-        setUser(null);
+  //   const sub = auth().onAuthStateChanged((userInfo) => {
+  //     if (userInfo) {
+  //       dispatch(setUser)(userInfo);
+  //       console.log("Connecte2de", userInfo);
+  //     } else {
+  //       console.log("no usser");
+  //       dispatch(setUser)(null);
 
-        console.log("Disconnected", userInfo);
-      }
-    });
-    return sub;
-  }, []);
+  //       console.log("Disconnected", userInfo);
+  //     }
+  //   });
+  //   return sub;
+  // }, []);
 
   const SplashScreen = () => {
     return (
@@ -59,10 +60,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      <RootNavigation />
+      {/* <NavigationContainer>
         <StatusBar translucent />
         {user ? <LoggedStackScreen /> : <LoginStackScreen />}
-      </NavigationContainer>
+      </NavigationContainer> */}
     </Provider>
   );
 }

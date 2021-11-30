@@ -14,6 +14,7 @@ import {
 } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import auth from "@react-native-firebase/auth";
+import { StatusBar } from "expo-status-bar";
 
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
@@ -34,7 +35,7 @@ import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
 import useAuth from "../hooks/useAuth";
-const LoggedStack = createStackNavigator();
+const Stack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -46,6 +47,8 @@ import EmailScreen from "../screens/createAccountScreens/EmailScreen";
 import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
 import LoginHeaderScreen from "../components/LoginHeaderScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 export const TabScreen = () => {
   return (
@@ -132,7 +135,7 @@ const horizontalAnimation = {
   },
 };
 
-export const LoggedStackScreen = () => {
+const LoggedStackScreen = () => {
   const [accessTokenFb, setAccessTokenFb] = useState(null);
   const [info, setInfo] = useState(null);
   const dispatch = useDispatch();
@@ -202,152 +205,178 @@ export const LoggedStackScreen = () => {
   }, [accessTokenFb]);
 
   return (
-    <LoggedStack.Navigator screenOptions={{ headerShown: true }}>
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="TinderScreen"
-        component={TinderScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="IntroScreen"
-        component={IntroScreen}
-      />
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          options={
+            {
+              // header: () => <HeaderComponent page="1" />,
+            }
+          }
+          name="TinderScreen"
+          component={TinderScreen}
+        />
 
-      <LoggedStack.Screen
-        options={{
-          header: () => <HeaderComponent page="2" />,
-          headerLeft: null,
-        }}
-        name="PanierScreen"
-        component={PanierScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          ...horizontalAnimation,
-          header: () => <HeaderComponent page="3" />,
-        }}
-        name="IngredientsCartScreen"
-        component={IngredientCartScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          ...horizontalAnimation,
-          header: () => <HeaderComponent page="4" />,
-        }}
-        name="SummarizeScreen"
-        component={SummarizeScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="IngredientScreen"
-        component={IngredientScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="LoginScreen"
-        component={LoginScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="SignUpScreen"
-        component={SignUpScreen}
-      />
-      <LoggedStack.Screen
-        options={{
-          // header: () => <HeaderComponent page="1" />,
-          headerShown: false,
-        }}
-        name="PhoneVerificationScreen"
-        component={PhoneVerificationScreen}
-      />
-      <LoggedStack.Screen name="FilterScreen" component={FilterScreen} />
-      <LoggedStack.Screen name="CartScreen" component={CartScreen} />
-      <LoggedStack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <LoggedStack.Screen
-        name="ResultCartScreen"
-        component={ResultCartScreen}
-      />
-    </LoggedStack.Navigator>
+        <Stack.Screen
+          options={{
+            header: () => <HeaderComponent page="2" />,
+            headerLeft: null,
+          }}
+          name="PanierScreen"
+          component={PanierScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            header: () => <HeaderComponent page="3" />,
+          }}
+          name="IngredientsCartScreen"
+          component={IngredientCartScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            header: () => <HeaderComponent page="4" />,
+          }}
+          name="SummarizeScreen"
+          component={SummarizeScreen}
+        />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="IngredientScreen"
+          component={IngredientScreen}
+        />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="LoginScreen"
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="SignUpScreen"
+          component={SignUpScreen}
+        />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="PhoneVerificationScreen"
+          component={PhoneVerificationScreen}
+        />
+        <Stack.Screen name="FilterScreen" component={FilterScreen} />
+        <Stack.Screen name="CartScreen" component={CartScreen} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-export const LoginStackScreen = () => {
+const LoginStackScreen = () => {
   return (
-    <LoginStack.Navigator screenOptions={{ headerShown: false }}>
-      <LoginStack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="IntroScreen"
-        component={IntroScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="EmailScreen"
-        component={EmailScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="PasswordScreen"
-        component={PasswordScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="TinderScreen"
-        component={TinderScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="IngredientsCartScreen"
-        component={IngredientCartScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="IngredientScreen"
-        component={IngredientScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="SummarizeScreen"
-        component={SummarizeScreen}
-      />
-      <LoginStack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="PanierScreen"
-        component={PanierScreen}
-      />
-    </LoginStack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="IntroScreen" component={IntroScreen} />
+
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="EmailScreen"
+          component={EmailScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="PasswordScreen"
+          component={PasswordScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="TinderScreen"
+          component={TinderScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="IngredientsCartScreen"
+          component={IngredientCartScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="IngredientScreen"
+          component={IngredientScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="SummarizeScreen"
+          component={SummarizeScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="PanierScreen"
+          component={PanierScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
+const RootNavigation = () => {
+  const [user, setUser] = useState(null);
+  const config = {
+    webClientId:
+      "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
+
+    scopes: ["profile", "email"],
+    permissions: ["public_profile", "location", "email"],
+    offlineAccess: true,
+  };
+  useEffect(() => {
+    GoogleSignin.configure(config);
+
+    const sub = auth().onAuthStateChanged((userInfo) => {
+      if (userInfo) {
+        setUser(userInfo);
+      } else {
+        console.log("no usser");
+        setUser(null);
+
+        console.log("Disconnected", userInfo);
+      }
+    });
+    return sub;
+  }, []);
+
+  useEffect(() => {
+    console.log("root auth", auth().currentUser);
+  }, [auth().currentUser]);
+  return (
+    <>
+      <StatusBar translucent />
+      {user ? <LoggedStackScreen /> : <LoginStackScreen />}
+    </>
+  );
+};
+export default RootNavigation;
 const styles = StyleSheet.create({});

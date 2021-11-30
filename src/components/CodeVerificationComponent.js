@@ -46,12 +46,12 @@ const CodeVerificationComponent = ({ fullNumber, setCode }) => {
       </Text>
 
       <OTPInputView
+        keyboardType="phone-pad"
         style={{ width: "80%", height: 100, alignSelf: "center" }}
         pinCount={4}
         onCodeChanged={(code) => {
           setCode(code);
         }}
-        autoFocusOnLoad
         selectionColor="rgba(0,0,0,0)"
         codeInputFieldStyle={{
           backgroundColor: "white",
@@ -60,7 +60,7 @@ const CodeVerificationComponent = ({ fullNumber, setCode }) => {
           fontSize: 28,
         }}
         codeInputHighlightStyle={{
-          backgroundColor: COLORS.primary,
+          backgroundColor: COLORS.secondary,
           fontWeight: "bold",
         }}
         onCodeFilled={(code) => {

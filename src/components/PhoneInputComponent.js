@@ -16,21 +16,16 @@ const PhoneInputComponent = ({
   // }, [number]);
 
   return (
-    <View
-      style={[
-        { width, alignItems: "center", backgroundColor: "red" },
-        { ...style },
-      ]}
-    >
+    <View style={[{ width, alignItems: "center" }, { ...style }]}>
       <Text
         style={{
           fontWeight: "bold",
-          fontSize: 18,
+          fontSize: 22,
           margin: 20,
           textAlign: "center",
         }}
       >
-        Enter your phone number :
+        Entrez votre numero de téléphone
       </Text>
       <PhoneInput
         layout="first"
@@ -47,8 +42,22 @@ const PhoneInputComponent = ({
         </Text>
       ) : null}
       <View style={{ margin: 40 }}>
-        <Text>An SMS will be sent to your phone</Text>
-        <Text style={{ textAlign: "center" }}>with the verification code.</Text>
+        <Text style={{ textAlign: "left", color: "gray", fontSize: 12 }}>
+          Nous vous enverrons un code par SMS pour confirmer votre numéro de
+          téléphone.
+        </Text>
+        <Text
+          style={{
+            textAlign: "center",
+            textAlign: "left",
+            marginTop: 10,
+            color: "gray",
+            fontSize: 12,
+          }}
+        >
+          Nous pouvons occasionnellement vous envoyer des messages liés au
+          service.
+        </Text>
       </View>
     </View>
   );

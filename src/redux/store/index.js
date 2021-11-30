@@ -13,7 +13,7 @@ export const store = configureStore({
     const createDebugger = require("redux-flipper").default;
 
     return getDefaultMiddleware({
-      //  serializableCheck: false,
+      serializableCheck: false,
     }).concat(createDebugger());
   },
 });

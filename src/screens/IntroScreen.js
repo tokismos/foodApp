@@ -1,96 +1,80 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../consts/colors";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import FbIcon from "../assets/fbIcon.svg";
+import GoogleIcon from "../assets/GoogleIcon.svg";
+
+import useAuth from "../hooks/useAuth";
 
 const IntroScreen = ({ navigation }) => {
+  const { signIn, signInWithGoogle, signInWithFb } = useAuth();
+
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <Image
         source={require("../assets/intro.jpg")}
         style={{ height: "100%", width: "100%", resizeMode: "cover" }}
       />
-      <View
-        style={{
-          height: "50%",
-          position: "absolute",
-          top: 0,
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
+      <View style={styles.middleTopScreen}>
         <Image
           source={require("../assets/logo.png")}
-          style={{
-            height: "40%",
-            width: "80%",
-            resizeMode: "contain",
-            alignSelf: "center",
-          }}
+          style={styles.logoContainer}
         />
-        <Text
-          style={{
-            fontSize: 25,
-            color: "white",
-            textAlign: "center",
-            fontWeight: "bold",
-            textShadowColor: "black",
-            textShadowOffset: { width: 2, height: 2 },
-            textShadowRadius: 10,
-          }}
-        >
+        <Text style={styles.descriptionText}>
           Faire ses courses en 5 min depuis son canap
         </Text>
       </View>
-      <View
-        style={{
-          height: "50%",
-          position: "absolute",
-          width: "100%",
-          bottom: 0,
-          justifyContent: "flex-end",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "80%",
-          }}
-        >
+      <View style={styles.middleBottomScreen}>
+        <View style={styles.bottomContainer}>
+          {/* Sign Up  */}
           <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.9}
-            onPress={() => navigation.navigate("LoginScreen")}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 25,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              Se connecter
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={{
-              ...styles.button,
-              backgroundColor: "white",
-              marginTop: 5,
+            activeOpacity={0.95}
+            style={{ ...styles.button, width: "60%" }}
+            onPress={() => {
+              signInWithGoogle();
             }}
-            onPress={() => navigation.navigate("SignUpScreen")}
           >
-            <Text
-              style={{
-                color: COLORS.primary,
-                fontSize: 25,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              Je suis nouveau
-            </Text>
+            <Text style={styles.text}>Se connecter</Text>
+          </TouchableOpacity>
+          {/* Sign In from Google */}
+          <TouchableOpacity
+            activeOpacity={0.95}
+            style={{ ...styles.button, backgroundColor: "white" }}
+            onPress={async () => {
+              await signInWithGoogle();
+            }}
+          >
+            <View style={styles.buttonContainer}>
+              <GoogleIcon width={40} height={40} style={{}} />
+
+              <View style={{ width: "85%" }}>
+                <Text style={{ ...styles.socialText, color: "#757575" }}>
+                  Se connecter avec Google
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          {/* Sign In from Facebook */}
+          <TouchableOpacity
+            activeOpacity={0.95}
+            style={{ ...styles.button, backgroundColor: "#4267B2" }}
+            onPress={async () => {
+              await signInWithFb();
+            }}
+          >
+            <View style={styles.buttonContainer}>
+              <FbIcon width={40} height={40} fill={"white"} style={{}} />
+
+              <View style={{ width: "85%" }}>
+                <Text style={{ ...styles.socialText, color: "white" }}>
+                  Se connecter avec Facebook
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("EmailScreen")}>
             <Text
@@ -99,9 +83,10 @@ const IntroScreen = ({ navigation }) => {
                 color: "white",
                 fontWeight: "bold",
                 textAlign: "center",
+                marginTop: "10%",
               }}
             >
-              M'inscrire plus tard
+              M'inscrire gratuitement !
             </Text>
           </TouchableOpacity>
         </View>
@@ -114,12 +99,64 @@ export default IntroScreen;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.primary,
     width: "80%",
-    height: "25%",
-    alignSelf: "center",
+    height: 60,
+    backgroundColor: COLORS.primary,
     justifyContent: "center",
-    borderRadius: 15,
-    marginVertical: 20,
+    alignItems: "center",
+    marginVertical: 5,
+    borderRadius: 10,
+  },
+  text: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+    fontSize: 16,
+  },
+  middleTopScreen: {
+    height: "50%",
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    justifyContent: "center",
+  },
+  logoContainer: {
+    height: "40%",
+    width: "80%",
+    resizeMode: "contain",
+    alignSelf: "center",
+  },
+  descriptionText: {
+    fontSize: 25,
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    textShadowColor: "black",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
+  },
+  middleBottomScreen: {
+    height: "50%",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    justifyContent: "flex-end",
+  },
+  bottomContainer: {
+    width: "100%",
+    height: "80%",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  socialText: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

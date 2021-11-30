@@ -14,12 +14,12 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("screen");
 
-const LoginHeaderScreen = ({ index, innerRef, setIndex }) => {
+const LoginHeaderScreen = ({ index, innerRef }) => {
   const navigation = useNavigation();
   return (
     <View
       style={{
-        backgroundColor: "white",
+        backgroundColor: COLORS.secondary,
         height: height * 0.1,
         width,
         justifyContent: "flex-end",
@@ -31,13 +31,8 @@ const LoginHeaderScreen = ({ index, innerRef, setIndex }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            setIndex(index - 1);
-
             index >= 1
-              ? innerRef?.current.scrollToIndex({
-                  index: index - 1,
-                  animation: true,
-                })
+              ? innerRef?.current.setPage(index - 1)
               : navigation.goBack();
           }}
           style={{ padding: 10 }}
@@ -49,6 +44,7 @@ const LoginHeaderScreen = ({ index, innerRef, setIndex }) => {
             width: "100%",
             fontSize: 20,
             fontWeight: "bold",
+            color: "black",
           }}
         >
           Créer un compte

@@ -124,7 +124,7 @@ const IngredientScreen = ({ route, navigation }) => {
           {recipe.ingredients?.map((text) => {
             return (
               <Text key={text.name} style={styles.ingredientText}>
-                {text.quantity} {text.name}
+                - {text.quantity} {text.name}
               </Text>
             );
           })}
