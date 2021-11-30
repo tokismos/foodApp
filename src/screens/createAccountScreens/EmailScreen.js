@@ -140,14 +140,13 @@ const createUser = async (email, password, phoneNumber) => {
     })
     .catch((error) => {
       if (error.code === "auth/email-already-in-use") {
-        console.log("That email address is already in use!");
+        throw new Error("That email address is already in use!");
       }
 
       if (error.code === "auth/invalid-email") {
         console.log("That email address is invalid!");
       }
-
-      console.error(error);
+      throw new Error("no");
     });
 };
 const VerificationPhoneComponent = ({ fullNumber, email, password }) => {
@@ -175,12 +174,12 @@ const VerificationPhoneComponent = ({ fullNumber, email, password }) => {
               try {
                 const status = await verifyCode(fullNumber, verificationCode);
                 if (status == 200) {
-                  createUser(email, password);
+                  await createUser(email, password);
                 } else {
                   Alert.alert("CODE");
                 }
               } catch (e) {
-                Alert.alert("CODE NOT VALID");
+                Alert.alert("Error", e.Error);
 
                 console.log("OMG ", e);
               }
@@ -228,7 +227,7 @@ const EmailScreen = ({}) => {
       {/* innerRef to pass the ref of flatList to the component */}
       <LoginHeaderScreen innerRef={ref} index={ind} />
       <PagerView
-        scrollEnabled={true}
+        scrollEnabled={false}
         style={{ height: "100%" }}
         initialPage={0}
         ref={ref}

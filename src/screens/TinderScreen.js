@@ -30,7 +30,6 @@ import { useNavigation } from "@react-navigation/core";
 const Header = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
-  const { signOut, verifyPhone } = useAuth();
   console.log("tinder user", auth().currentUser);
   return (
     <View
@@ -41,16 +40,10 @@ const Header = () => {
         marginTop: 10,
       }}
     >
-      <Button
-        title="presss"
-        onPress={() => signOut()}
-        style={{ position: "absolute" }}
-      />
-
       <TouchableOpacity
         onPress={() => navigation.navigate("ProfileScreen")}
         style={{
-          width: "30%",
+          width: "25%",
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -67,19 +60,18 @@ const Header = () => {
             height: "60%",
             width: "60%",
             resizeMode: "contain",
-            padding: 20,
             borderRadius: 50,
           }}
         />
       </TouchableOpacity>
-      <View style={{ width: "40%" }}>
+
+      <View style={{ width: "45%", alignItems: "center" }}>
         <Image
           source={require("../assets/logo.png")}
           style={{
             height: "100%",
             width: "100%",
             resizeMode: "contain",
-            marginLeft: -10,
           }}
         />
       </View>
@@ -90,11 +82,12 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <View
+        <TouchableOpacity
+          onPress={() => navigation.navigate("FeedBackScreen")}
           style={{
             backgroundColor: COLORS.primary,
-            width: "80%",
-            height: "60%",
+            width: "70%",
+            height: "50%",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 10,
@@ -110,7 +103,7 @@ const Header = () => {
           >
             FeedBack
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

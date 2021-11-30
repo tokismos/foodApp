@@ -35,7 +35,7 @@ const IntroScreen = ({ navigation }) => {
             activeOpacity={0.95}
             style={{ ...styles.button, width: "60%" }}
             onPress={() => {
-              signInWithGoogle();
+              navigation.navigate("SignInScreen");
             }}
           >
             <Text style={styles.text}>Se connecter</Text>

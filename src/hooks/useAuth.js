@@ -32,14 +32,18 @@ const signInWithGoogle = async () => {
   const { idToken, accessToken } = await GoogleSignin.getTokens();
 
   console.log("info", userInfo);
-  console.log("access", accessToken);
-  console.log("id", idToken);
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(
     idToken,
     accessToken
   );
   await auth().signInWithCredential(googleCredential);
+  auth()
+    .currentUser.updateEmail(userInfo.user.email)
+    .then(async () => {
+      console.log("email updated");
+    });
+  auth().currentUser.reload();
   console.log("proo", auth().currentUser.providerData);
 };
 

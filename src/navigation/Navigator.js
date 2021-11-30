@@ -49,6 +49,8 @@ import LoginHeaderScreen from "../components/LoginHeaderScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import FeedBackScreen from "../screens/FeedBackScreen";
+import SignInScreen from "../screens/SignInScreen";
 
 export const TabScreen = () => {
   return (
@@ -180,13 +182,16 @@ const LoggedStackScreen = () => {
   }, []);
 
   //Get the authenticated user and set it to the redux store in user state
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!HADCHI N9DER NHTAJO MNB3D!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   useEffect(() => {
     const func = async () => {
       const user = await auth().currentUser;
+      console.log("hna UUUUUUSERRR0", user);
       const userObj = {
         uid: user.uid,
         displayName: user.displayName,
-        email: info ? info.email : user.email,
+        email: info ? info.email : user.email, //if we log with FB we get the info
         phoneNumber: user.phoneNumber,
         photoURL: info ? info.picture.data.url : user.photoURL,
       };
@@ -194,7 +199,7 @@ const LoggedStackScreen = () => {
       dispatch(setUser(userObj));
     };
     func();
-  }, [info]);
+  }, [info, auth().currentUser]);
 
   //Get the info from facebook API if the access token exists in storage
   useEffect(() => {
@@ -233,6 +238,7 @@ const LoggedStackScreen = () => {
           name="IngredientsCartScreen"
           component={IngredientCartScreen}
         />
+        <Stack.Screen name="FeedBackScreen" component={FeedBackScreen} />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
@@ -287,6 +293,13 @@ const LoginStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="IntroScreen" component={IntroScreen} />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="SignInScreen"
+          component={SignInScreen}
+        />
 
         <Stack.Screen
           options={{
