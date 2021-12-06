@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
@@ -15,11 +16,29 @@ import { COLORS } from "../consts/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import CustomButton from "../components/CustomButton";
+import { api } from "../axios";
+import { clockRunning } from "react-native-reanimated";
 const { height, width } = Dimensions.get("screen");
+
 const FeedBackScreen = () => {
-  const [title, setTitle] = useState();
-  const [comment, setComment] = useState();
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
+
+  const sendEmail = async (title, message) => {
+    setIsLoading(true);
+    try {
+      await api.post("/email", { title, message });
+      Alert.alert("Message envoyé avec succès");
+
+      setTitle("");
+      setMessage("");
+    } catch (e) {
+      Alert.alert("Erreur, message non envoyé !");
+    }
+    setIsLoading(false);
+  };
   return (
     <KeyboardAvoidingView
       behavior="position"
@@ -27,48 +46,16 @@ const FeedBackScreen = () => {
       style={{ flex: 1 }}
     >
       <View style={{ height }}>
-        <View
-          style={{
-            height: "10%",
-            width: "10%",
-            justifyContent: "flex-end",
-            marginHorizontal: 20,
-          }}
-        >
+        <View style={styles.backButton}>
           <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
             <AntDesign name="arrowleft" size={40} color="black" />
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            height: "70%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 30,
-              color: COLORS.primary,
-              marginBottom: 20,
-            }}
-          >
-            Ton FeedBack
-          </Text>
-          <View
-            style={{
-              flexShrink: 1,
-              backgroundColor: "#FFF1BE",
-              width: "90%",
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-              borderWidth: 5,
-              borderColor: COLORS.primary,
-              padding: 10,
-            }}
-          >
+        <View style={styles.container}>
+          <Text style={styles.titleText}>Ton FeedBack</Text>
+          <View style={styles.insideContainer}>
             <TextInputColored
+              value={title}
               label="Titre du message"
               setChangeText={setTitle}
             />
@@ -80,13 +67,25 @@ const FeedBackScreen = () => {
               multiline
               mode="outlined"
               numberOfLines={5}
-              value={comment}
+              value={message}
               onChangeText={(Description) => {
-                setComment(Description);
+                setMessage(Description);
               }}
             />
+            {message.length < 100 && (
+              <Text
+                style={{ color: "gray", textAlign: "center", marginTop: 10 }}
+              >
+                {100 - message.length} caractères manquants
+              </Text>
+            )}
 
-            <CustomButton title="Envoyer" />
+            <CustomButton
+              disabled={message.length < 100}
+              isLoading={isLoading}
+              title="Envoyer"
+              onPress={() => sendEmail(title, message)}
+            />
           </View>
         </View>
       </View>
@@ -106,5 +105,32 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 50,
     alignSelf: "flex-end",
+  },
+  backButton: {
+    height: "10%",
+    width: "10%",
+    justifyContent: "flex-end",
+    marginHorizontal: 20,
+  },
+  container: {
+    height: "70%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  insideContainer: {
+    flexShrink: 1,
+    backgroundColor: "#FFF1BE",
+    width: "90%",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderWidth: 5,
+    borderColor: COLORS.primary,
+    padding: 10,
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 30,
+    color: COLORS.primary,
+    marginBottom: 20,
   },
 });

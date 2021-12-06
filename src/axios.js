@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://13e7-105-189-6-127.ngrok.io",
-  //baseURL: "https://backend-yuzi.herokuapp.com/",
+  // baseURL: "http://c41a-196-74-159-229.ngrok.io",
+  baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 
 const getAllRecipes = async (item) => {
@@ -28,13 +28,4 @@ const getAllRecipes = async (item) => {
   return data;
 };
 
-const getFiltredRecipes = async () => {
-  await api({
-    method: "post",
-    data: {
-      firstName: "Fred",
-      lastName: "Flintstone",
-    },
-  });
-};
-export { getAllRecipes, getFiltredRecipes, api };
+export { getAllRecipes, api };

@@ -38,6 +38,7 @@ const signInWithGoogle = async () => {
     accessToken
   );
   await auth().signInWithCredential(googleCredential);
+
   auth()
     .currentUser.updateEmail(userInfo.user.email)
     .then(async () => {

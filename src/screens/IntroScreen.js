@@ -33,15 +33,30 @@ const IntroScreen = ({ navigation }) => {
           {/* Sign Up  */}
           <TouchableOpacity
             activeOpacity={0.95}
-            style={{ ...styles.button, width: "60%" }}
+            style={{ ...styles.button, width: "80%" }}
             onPress={() => {
               navigation.navigate("SignInScreen");
             }}
           >
             <Text style={styles.text}>Se connecter</Text>
           </TouchableOpacity>
-          {/* Sign In from Google */}
           <TouchableOpacity
+            activeOpacity={0.95}
+            style={{
+              ...styles.button,
+              width: "80%",
+              backgroundColor: "white",
+            }}
+            onPress={() => {
+              navigation.navigate("EmailScreen");
+            }}
+          >
+            <Text style={{ ...styles.text, color: COLORS.primary }}>
+              Je suis nouveau
+            </Text>
+          </TouchableOpacity>
+          {/* Sign In from Google */}
+          {/* <TouchableOpacity
             activeOpacity={0.95}
             style={{ ...styles.button, backgroundColor: "white" }}
             onPress={async () => {
@@ -57,9 +72,9 @@ const IntroScreen = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* Sign In from Facebook */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.95}
             style={{ ...styles.button, backgroundColor: "#4267B2" }}
             onPress={async () => {
@@ -75,8 +90,8 @@ const IntroScreen = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("EmailScreen")}>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={() => navigation.navigate("TinderScreen")}>
             <Text
               style={{
                 fontSize: 18,
@@ -86,7 +101,7 @@ const IntroScreen = ({ navigation }) => {
                 marginTop: "10%",
               }}
             >
-              M'inscrire gratuitement !
+              M'inscrire plus tard !
             </Text>
           </TouchableOpacity>
         </View>
@@ -144,8 +159,9 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     width: "100%",
-    height: "80%",
+
     alignItems: "center",
+    marginBottom: "20%",
   },
   buttonContainer: {
     flexDirection: "row",

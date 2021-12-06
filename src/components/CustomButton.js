@@ -1,8 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { COLORS } from "../consts/colors";
 
-const CustomButton = ({ disabled, title, onPress, style }) => {
+const CustomButton = ({ disabled, title, onPress, style, isLoading }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -13,6 +18,7 @@ const CustomButton = ({ disabled, title, onPress, style }) => {
         backgroundColor: disabled ? COLORS.secondary : COLORS.primary,
       }}
     >
+      {isLoading && <ActivityIndicator size="small" color="white" />}
       <Text style={{ fontWeight: "bold", color: "white" }}>{title}</Text>
     </TouchableOpacity>
   );
@@ -30,5 +36,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 50,
     alignSelf: "flex-end",
+    flexDirection: "row",
   },
 });

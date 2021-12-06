@@ -300,6 +300,9 @@ const LoginStackScreen = () => {
           name="SignInScreen"
           component={SignInScreen}
         />
+        <Stack.Screen name="FeedBackScreen" component={FeedBackScreen} />
+
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 
         <Stack.Screen
           options={{
