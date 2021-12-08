@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     borderRadius: 10,
-    alignSelf: "center",
     marginTop: 50,
     alignSelf: "flex-end",
     flexDirection: "row",

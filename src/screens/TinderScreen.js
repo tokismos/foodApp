@@ -30,7 +30,7 @@ import { useNavigation } from "@react-navigation/core";
 const Header = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
-  console.log("tinder user", auth().currentUser);
+
   return (
     <View
       style={{
@@ -41,7 +41,11 @@ const Header = () => {
       }}
     >
       <TouchableOpacity
-        onPress={() => navigation.navigate("ProfileScreen")}
+        onPress={() =>
+          auth().currentUser
+            ? navigation.navigate("ProfileScreen")
+            : navigation.navigate("SignUpScreen")
+        }
         style={{
           width: "25%",
           alignItems: "center",

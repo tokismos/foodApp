@@ -48,7 +48,7 @@ const IntroScreen = ({ navigation }) => {
               backgroundColor: "white",
             }}
             onPress={() => {
-              navigation.navigate("EmailScreen");
+              navigation.navigate("SignUpScreen");
             }}
           >
             <Text style={{ ...styles.text, color: COLORS.primary }}>

@@ -86,10 +86,10 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               flexDirection: "row",
             }}
           >
-            <View style={{ width: "100%" }}>
+            <View style={{ width: "90%" }}>
               <Text
                 style={{
-                  fontSize: 22,
+                  fontSize: 18,
                   fontWeight: "bold",
                   textAlign: "center",
                   color: "white",

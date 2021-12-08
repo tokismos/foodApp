@@ -96,17 +96,10 @@ const PhoneComponent = ({
       />
       <NextButton
         onPress={async () => {
-          try {
-            const status = await sendPhoneVerification(fullNumber);
-            if (status == 200) {
-              console.log("yeaah 200");
-              refe.current.setPage(3);
-            } else {
-              console.log("SNS NOT SENT");
-              Alert.alert("SMS NOT SEENTed");
-            }
-          } catch (e) {
-            Alert.alert("SMS NOT SEENTq");
+          const status = await sendPhoneVerification(fullNumber);
+          if (status == 200) {
+            console.log("yeaah 200");
+            refe.current.setPage(3);
           }
         }}
       />
@@ -152,9 +145,7 @@ const createUser = async (email, password, phoneNumber) => {
 const VerificationPhoneComponent = ({ fullNumber, email, password }) => {
   const { verifyCode } = useAuth();
   const [verificationCode, setCode] = useState();
-  useEffect(() => {
-    console.log("ver0", verificationCode);
-  }, [verificationCode]);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -171,17 +162,10 @@ const VerificationPhoneComponent = ({ fullNumber, email, password }) => {
 
           <NextButton
             onPress={async () => {
-              try {
-                const status = await verifyCode(fullNumber, verificationCode);
-                if (status == 200) {
-                  await createUser(email, password);
-                } else {
-                  Alert.alert("CODE");
-                }
-              } catch (e) {
-                Alert.alert("Error", e.Error);
-
-                console.log("OMG ", e);
+              const status = await verifyCode(fullNumber, verificationCode);
+              if (status == 200) {
+                // await createUser(email, password);
+                console.log("approoved");
               }
             }}
           />
@@ -205,7 +189,7 @@ const NextButton = ({ onPress, disabled }) => {
   );
 };
 
-const EmailScreen = ({}) => {
+const SignUpScreen = ({}) => {
   const ref = createRef();
   const [ind, setIndex] = useState(0);
   const [email, setEmail] = useState("");
@@ -227,7 +211,7 @@ const EmailScreen = ({}) => {
       {/* innerRef to pass the ref of flatList to the component */}
       <LoginHeaderScreen innerRef={ref} index={ind} />
       <PagerView
-        scrollEnabled={false}
+        scrollEnabled={true}
         style={{ height: "100%" }}
         initialPage={0}
         ref={ref}
@@ -268,7 +252,7 @@ const EmailScreen = ({}) => {
   );
 };
 
-export default EmailScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   nextButton: {

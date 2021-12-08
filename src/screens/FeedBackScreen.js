@@ -18,18 +18,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import CustomButton from "../components/CustomButton";
 import { api } from "../axios";
 import { clockRunning } from "react-native-reanimated";
+import { auth } from "../helpers/db";
 const { height, width } = Dimensions.get("screen");
 
 const FeedBackScreen = () => {
+  const [fullName, setFullName] = useState(auth().currentUser?.displayName);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
-  const sendEmail = async (title, message) => {
+  const sendEmail = async (fullName, title, message) => {
     setIsLoading(true);
     try {
-      await api.post("/email", { title, message });
+      await api.post("/email", { fullName, title, message });
       Alert.alert("Message envoyé avec succès");
 
       setTitle("");
@@ -39,10 +41,11 @@ const FeedBackScreen = () => {
     }
     setIsLoading(false);
   };
+  console.log("aaauu0", auth().currentUser);
   return (
     <KeyboardAvoidingView
       behavior="position"
-      keyboardVerticalOffset={-200}
+      keyboardVerticalOffset={-300}
       style={{ flex: 1 }}
     >
       <View style={{ height }}>
@@ -54,6 +57,13 @@ const FeedBackScreen = () => {
         <View style={styles.container}>
           <Text style={styles.titleText}>Ton FeedBack</Text>
           <View style={styles.insideContainer}>
+            {!auth().currentUser && (
+              <TextInputColored
+                value={fullName}
+                label="Nom et Prénom"
+                setChangeText={setFullName}
+              />
+            )}
             <TextInputColored
               value={title}
               label="Titre du message"
@@ -72,19 +82,20 @@ const FeedBackScreen = () => {
                 setMessage(Description);
               }}
             />
-            {message.length < 100 && (
+            {message.length < 30 && (
               <Text
                 style={{ color: "gray", textAlign: "center", marginTop: 10 }}
               >
-                {100 - message.length} caractères manquants
+                {30 - message.length} caractères manquants
               </Text>
             )}
 
             <CustomButton
-              disabled={message.length < 100}
+              style={{ marginTop: 15 }}
+              disabled={message.length < 30}
               isLoading={isLoading}
               title="Envoyer"
-              onPress={() => sendEmail(title, message)}
+              onPress={() => sendEmail(fullName, title, message)}
             />
           </View>
         </View>

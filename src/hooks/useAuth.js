@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import auth from "@react-native-firebase/auth";
 import { setUser } from "../redux/slicer/userSlicer";
@@ -123,25 +123,27 @@ const signInWithFb = async () => {
 //SEnd the verification code to the phone number
 const sendPhoneVerification = async (phoneNumber) => {
   try {
-    const res = await api.get(`/verify/num`, { params: { phoneNumber } });
+    const res = await api.get(`/phoneNumber/send`, { params: { phoneNumber } });
     console.log("SMS SENT", res);
     return res?.status;
   } catch (e) {
-    console.log("SMS NOT SENTww ", e);
-    throw new Error("SMSE  NOT SEND"); // to send error to the try
+    Alert.alert("SMS NOT SENT");
   }
 };
 //Verify the code
 const verifyCode = async (phoneNumber, verificationCode) => {
   try {
-    const res = await api.get(`/verify/verify`, {
+    const res = await api.get(`/phoneNumber/verify`, {
       params: { phoneNumber, verificationCode },
     });
-    console.log("code done", res.status);
+    console.log("code done", res);
     return res?.status;
   } catch (e) {
-    console.log("SMS NOT SENTg ", e);
-    throw new Error();
+    if (e.response.status == 429) {
+      return Alert.alert(`429,Max attempts reached,please try later !`);
+    }
+    console.log("SMS NOT SENTg ", e.response);
+    Alert.alert(`${e.response.status}, ${e.response.data.error}`);
   }
 };
 

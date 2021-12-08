@@ -66,7 +66,6 @@ const SummarizeScreen = ({ route }) => {
             height: "25%",
             padding: 20,
             justifyContent: "space-between",
-            marginVertical: 10,
           }}
         >
           <Text

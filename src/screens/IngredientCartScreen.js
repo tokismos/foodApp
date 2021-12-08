@@ -118,7 +118,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
           textAlign: "center",
           fontSize: 22,
           fontWeight: "bold",
-          marginTop: 30,
+          marginVertical: 15,
         }}
       >
         Les ingredients

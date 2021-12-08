@@ -20,7 +20,6 @@ import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
 import LoginScreen from "../screens/LoginScreen";
-import SignUpScreen from "../screens/SignUpScreen";
 import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
 import CartScreen from "../screens/CartScreen";
 import ResultCartScreen from "../screens/ResultCartScreen";
@@ -43,7 +42,7 @@ import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
-import EmailScreen from "../screens/createAccountScreens/EmailScreen";
+import SignUpScreen from "../screens/createAccountScreens/SignUpScreen";
 import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
 import LoginHeaderScreen from "../components/LoginHeaderScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -211,13 +210,11 @@ const LoggedStackScreen = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: true }}>
         <Stack.Screen
-          options={
-            {
-              // header: () => <HeaderComponent page="1" />,
-            }
-          }
+          options={{
+            headerShown: false,
+          }}
           name="TinderScreen"
           component={TinderScreen}
         />
@@ -238,7 +235,13 @@ const LoggedStackScreen = () => {
           name="IngredientsCartScreen"
           component={IngredientCartScreen}
         />
-        <Stack.Screen name="FeedBackScreen" component={FeedBackScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="FeedBackScreen"
+          component={FeedBackScreen}
+        />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
@@ -291,25 +294,32 @@ const LoggedStackScreen = () => {
 const LoginStackScreen = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="IntroScreen" component={IntroScreen} />
+      <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="IntroScreen"
+          component={IntroScreen}
+        />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            headerShown: false,
           }}
           name="SignInScreen"
           component={SignInScreen}
         />
-        <Stack.Screen name="FeedBackScreen" component={FeedBackScreen} />
 
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            headerShown: false,
           }}
-          name="EmailScreen"
-          component={EmailScreen}
+          name="SignUpScreen"
+          component={SignUpScreen}
         />
         <Stack.Screen
           options={{
@@ -321,17 +331,12 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            headerShown: false,
           }}
           name="TinderScreen"
           component={TinderScreen}
         />
-        <Stack.Screen
-          options={{
-            ...horizontalAnimation,
-          }}
-          name="IngredientsCartScreen"
-          component={IngredientCartScreen}
-        />
+
         <Stack.Screen
           options={{
             ...horizontalAnimation,
@@ -339,19 +344,37 @@ const LoginStackScreen = () => {
           name="IngredientScreen"
           component={IngredientScreen}
         />
+
         <Stack.Screen
           options={{
-            ...horizontalAnimation,
+            header: () => <HeaderComponent page="2" />,
+            headerLeft: null,
           }}
-          name="SummarizeScreen"
-          component={SummarizeScreen}
+          name="PanierScreen"
+          component={PanierScreen}
         />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            header: () => <HeaderComponent page="3" />,
           }}
-          name="PanierScreen"
-          component={PanierScreen}
+          name="IngredientsCartScreen"
+          component={IngredientCartScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="FeedBackScreen"
+          component={FeedBackScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            header: () => <HeaderComponent page="4" />,
+          }}
+          name="SummarizeScreen"
+          component={SummarizeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
