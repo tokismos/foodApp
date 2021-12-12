@@ -14,7 +14,7 @@ const TextInputColored = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [visible, setVisible] = useState(true);
-  console.log("index", index, currentIndex);
+  console.slog("index", index, currentIndex);
   return (
     <TextInput
       autoFocus={index == currentIndex - 1}
