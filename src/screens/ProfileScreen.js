@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Dimensions,
@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -21,6 +21,9 @@ import TextInputColored from "../components/TextInputColored";
 import { COLORS } from "../consts/colors";
 import CustomButton from "../components/CustomButton";
 import { KeyboardAvoidingView } from "react-native";
+import { setUser } from "../redux/slicer/userSlicer";
+import { ToastAndroid } from "react-native";
+import { color } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("screen");
 const ProfileScreen = () => {
@@ -29,10 +32,38 @@ const ProfileScreen = () => {
   const sheetRef = React.useRef(null);
   const inputRef = useRef();
   const [showBlack, setShowBlack] = useState(false);
-  const { signOut } = useAuth();
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { signOut, getAdditionalInfo } = useAuth();
   const navigation = useNavigation();
   console.log("AM THE USER", auth().currentUser);
   console.log("EERFF", user);
+  const dispatch = useDispatch();
+
+  //When we change the email for the first time because of google null email
+  useEffect(() => {
+    if (user.email != auth().currentUser.email) {
+      console.log("not same");
+      dispatch(setUser({ ...user, email: auth().currentUser.email }));
+    }
+  }, []);
+
+  const updateName = async () => {
+    try {
+      setIsLoading(true);
+      await auth().currentUser.updateProfile({
+        displayName: name,
+      });
+      dispatch(setUser({ ...user, displayName: name }));
+      setIsLoading(false);
+      sheetRef.current.snapTo(1);
+      setName("");
+      ToastAndroid.show("Votre nom a été changé !", ToastAndroid.SHORT);
+    } catch (e) {
+      console.log("A// EROR,", e);
+    }
+    console.log("arraQQQQQQQQQQQ", auth().currentUser);
+  };
   return (
     <KeyboardAvoidingView behavior="position">
       <View
@@ -241,19 +272,18 @@ const ProfileScreen = () => {
             <AntDesign
               name="logout"
               size={20}
-              color="black"
+              color="red"
               style={{ marginRight: 20 }}
             />
-            <Text style={{ fontSize: 18, flex: 1 }}>Se deconnecter</Text>
-            <MaterialIcons
-              name="keyboard-arrow-right"
-              size={20}
-              color="black"
-            />
+            <Text style={{ fontSize: 18, flex: 1, color: "red" }}>
+              Se deconnecter
+            </Text>
+            <MaterialIcons name="keyboard-arrow-right" size={20} color="red" />
           </TouchableOpacity>
         </View>
         <BottomSheet
           style={{ backgroundColor: "red" }}
+          enabledContentTapInteraction={false}
           onCloseStart={() => {
             Keyboard.dismiss();
           }}
@@ -287,10 +317,17 @@ const ProfileScreen = () => {
                 Nouveau nom :
               </Text>
               <TextInputColored
+                value={name}
+                setChangeText={setName}
                 ref={inputRef}
                 style={{ width: "90%", alignSelf: "center" }}
               />
-              <CustomButton title="Valider" style={{ marginTop: 20 }} />
+              <CustomButton
+                isLoading={isLoading}
+                onPress={updateName}
+                title="Valider"
+                style={{ marginTop: 20 }}
+              />
             </View>
           )}
         />

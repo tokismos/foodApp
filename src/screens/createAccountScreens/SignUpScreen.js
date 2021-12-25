@@ -19,6 +19,7 @@ import {
   Alert,
 } from "react-native";
 import PagerView from "react-native-pager-view";
+import database from "@react-native-firebase/database";
 
 import HeaderComponent from "../../components/HeaderComponent";
 import LoginHeaderScreen from "../../components/LoginHeaderScreen";
@@ -134,7 +135,7 @@ const NameComponent = ({
 };
 
 const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
-  const { verifyCode, signUp } = useAuth();
+  const { verifyCode, signUp, setAdditionalInfo } = useAuth();
   const [verificationCode, setCode] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -161,11 +162,15 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
               const status = await verifyCode(fullNumber, verificationCode);
               if (status == 200) {
                 await signUp(email, password);
+                await setAdditionalInfo({
+                  phoneNumber: fullNumber,
+                });
                 console.log("approoved");
                 setIsLoading(false);
               } else {
                 setIsLoading(false);
               }
+              console.log("wa8WWWWWWWWW", auth()?.currentUser);
             }}
           />
         </View>

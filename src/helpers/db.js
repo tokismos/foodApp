@@ -11,6 +11,8 @@ import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 const firebaseConfig = {
   apiKey: "AIzaSyC_Khzc-fgbnfetYLwwdkSiNYPuRVjbdN8",
   authDomain: "yuzu-a0d71.firebaseapp.com",
+  databaseURL:
+    "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "yuzu-a0d71",
   storageBucket: "yuzu-a0d71.appspot.com",
   messagingSenderId: "768418404122",

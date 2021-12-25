@@ -175,7 +175,6 @@ const TinderScreen = ({ navigation }) => {
   const loadData = async (item) => {
     getAllRecipes(item)
       .then((result) => {
-        console.log("RRRRRRRR", result);
         const tmp = result.filter((item) => item.imgURL != null);
         setRecipes(tmp);
       })

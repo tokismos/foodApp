@@ -183,30 +183,30 @@ const LoggedStackScreen = () => {
   //Get the authenticated user and set it to the redux store in user state
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!HADCHI N9DER NHTAJO MNB3D!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  useEffect(() => {
-    const func = async () => {
-      const user = await auth().currentUser;
-      console.log("hna UUUUUUSERRR0", user);
-      const userObj = {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: info ? info.email : user.email, //if we log with FB we get the info
-        phoneNumber: user.phoneNumber,
-        photoURL: info ? info.picture.data.url : user.photoURL,
-      };
+  // useEffect(() => {
+  //   const func = async () => {
+  //     const user = await auth().currentUser;
+  //     console.log("hna UUUUUUSERRR0", user);
+  //     const userObj = {
+  //       uid: user.uid,
+  //       displayName: user.displayName,
+  //       email: info ? info.email : user.email, //if we log with FB we get the info
+  //       phoneNumber: user.phoneNumber,
+  //       photoURL: info ? info.picture.data.url : user.photoURL,
+  //     };
 
-      dispatch(setUser(userObj));
-    };
-    func();
-  }, [info, auth().currentUser]);
+  //     dispatch(setUser(userObj));
+  //   };
+  //   func();
+  // }, [info]);
 
   //Get the info from facebook API if the access token exists in storage
-  useEffect(() => {
-    if (accessTokenFb) {
-      getInfoFromTokenFb(accessTokenFb);
-      console.log("laast effect ", info);
-    }
-  }, [accessTokenFb]);
+  // useEffect(() => {
+  //   if (accessTokenFb) {
+  //     getInfoFromTokenFb(accessTokenFb);
+  //     console.log("laast effect ", info);
+  //   }
+  // }, [accessTokenFb]);
 
   return (
     <NavigationContainer>
@@ -382,7 +382,10 @@ const LoginStackScreen = () => {
 };
 
 const RootNavigation = () => {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const { getAdditionalInfo } = useAuth();
+  const { user } = useSelector((state) => state.userStore);
+
   const config = {
     webClientId:
       "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
@@ -391,17 +394,30 @@ const RootNavigation = () => {
     permissions: ["public_profile", "location", "email"],
     offlineAccess: true,
   };
+
   useEffect(() => {
     GoogleSignin.configure(config);
 
-    const sub = auth().onAuthStateChanged((userInfo) => {
+    const sub = auth().onAuthStateChanged(async (userInfo) => {
       if (userInfo) {
-        setUser(userInfo);
+        console.log("changed");
+
+        // const wow = await getAdditionalInfo();
+        // console.log("ADIOTO,", wow);
+
+        dispatch(
+          setUser({
+            uid: userInfo.uid,
+            displayName: userInfo.displayName,
+            email: userInfo.email, //if we log with FB we get the info
+            //    phoneNumber: additionalInfo,
+            photoURL: userInfo.photoURL,
+          })
+        );
       } else {
         console.log("no usser");
-        setUser(null);
 
-        console.log("Disconnected", userInfo);
+        dispatch(setUser(null));
       }
     });
     return sub;

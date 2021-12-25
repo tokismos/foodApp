@@ -4,8 +4,11 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-community/async-storage";
+import database from "@react-native-firebase/database";
+import { firebase } from "@react-native-firebase/database";
 
 import { api } from "../axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const signIn = async (email, password) => {
   try {
@@ -22,20 +25,27 @@ const signInWithGoogle = async () => {
   const userInfo = await GoogleSignin.signIn();
   const { idToken, accessToken } = await GoogleSignin.getTokens();
 
-  console.log("info", userInfo);
+  console.log("info", userInfo.email);
+  console.log("google email", userInfo.user.email);
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(
     idToken,
     accessToken
   );
   await auth().signInWithCredential(googleCredential);
+  console.log("cred", auth().currentUser);
+
+  //if its the first time email in google is null this is why we update it
+  if (!auth().currentUser.email) {
+    auth()
+      .currentUser.updateEmail(userInfo.user.email)
+      .then(async () => {
+        console.log("email updated");
+        console.log("update", auth().currentUser);
+      });
+  }
   // ACHEEEEEEEEEEEECKER CAAAAAAA IMPOOORTAAAAAAAAAAAAAANT !!!!!!!!!!!
-  auth()
-    .currentUser.updateEmail(userInfo.user.email)
-    .then(async () => {
-      console.log("email updated");
-    });
-  auth().currentUser.reload();
+
   console.log("proo", auth().currentUser.providerData);
 };
 
@@ -145,6 +155,36 @@ const signUp = async (email, password) => {
     console.log("user NOT created");
   }
 };
+
+const reference = firebase
+  .app()
+  .database(
+    "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
+  )
+  .ref(`/users/${auth().currentUser?.uid}`);
+
+const setAdditionalInfo = async (info) => {
+  try {
+    reference.set(info).then((i) => console.log("Additional info added", i));
+  } catch (e) {
+    console.log("Additional informations not added !");
+  }
+};
+
+//get num from realtime DB
+const getAdditionalInfo = async () => {
+  let res = "d";
+  reference.once("value", (snapshot) => {
+    console.log("User data: ", snapshot.val());
+    res = snapshot.val();
+  });
+  return new Promise((resolve, reject) => {
+    if (res == "") {
+      reject("NOOOO");
+    }
+    resolve("YEEEEEEEEES");
+  });
+};
 export default useAuth = () => {
   return {
     signIn,
@@ -154,6 +194,8 @@ export default useAuth = () => {
     sendPhoneVerification,
     verifyCode,
     signUp,
+    setAdditionalInfo,
+    getAdditionalInfo,
   };
 };
 
