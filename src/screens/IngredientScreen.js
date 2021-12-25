@@ -1,153 +1,316 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Button,
   Dimensions,
-  FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import Animated, {
+  FadeInLeft,
+  Layout,
+  StretchOutY,
+  ZoomOut,
+} from "react-native-reanimated";
+import { recipeSlice } from "../redux/slicer/recipeSlicer";
+import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
+import LinearGradient from "react-native-linear-gradient";
+import CheckBox from "@react-native-community/checkbox";
 
-const { width } = Dimensions.get("screen");
-
-const IngredientScreen = ({ route, navigation }) => {
-  const { recipe } = route.params;
-  console.log("iten", recipe);
-  //container of each step
-  const StepContainer = ({ item, index }) => {
-    return (
-      <View style={styles.stepContainer}>
-        <Text style={{ fontSize: 25, color: "gray" }}>{index + 1}.</Text>
-        <Text>{item}</Text>
-      </View>
-    );
-  };
-  //The view wich contain all steps
-  const StepsView = () => {
-    return (
-      <View>
-        <View style={styles.stepHeaderContainer}>
-          <View style={styles.lineHeader}></View>
-          <View style={styles.stepsTitle}>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              Etapes de preparation
-            </Text>
-          </View>
-          <View style={styles.lineHeader}></View>
-        </View>
-        {recipe.steps.map((item, index) => (
-          <StepContainer item={item} index={index} key={index} />
-        ))}
-      </View>
-    );
-  };
+const { height, width } = Dimensions.get("screen");
+const IngredientComponent = ({ ingredient: { name, quantity, unite } }) => {
+  const [toggle, setToggle] = useState(true);
 
   return (
-    <ScrollView style={{ marginTop: 40 }}>
-      <View style={styles.topBar}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <AntDesign name="clockcircleo" size={15} color="black" />
-          <Text style={{ fontSize: 15, fontWeight: "bold" }}> 35 min</Text>
-        </View>
-        <Text style={{ fontSize: 15, fontWeight: "bold" }}>Crustacés</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ fontSize: 15, fontWeight: "bold" }}>88%</Text>
-          <AntDesign name="like2" size={15} color="black" />
-        </View>
-      </View>
-      <Image
-        resizeMode="contain"
-        style={{ aspectRatio: 1 }}
-        source={{
-          uri: recipe.imgURL,
-        }}
-      />
-      <View style={styles.bottomBar}>
-        <Text style={styles.textBottomBar}>Dèja cuisiné 560 fois</Text>
-      </View>
-      <Text
+    <TouchableOpacity
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        alignSelf: "center",
+        marginVertical: 3,
+      }}
+      onPress={() => setToggle((p) => !p)}
+    >
+      <Text style={{ fontSize: 16 }} style={{ width: "20%" }}>{`${quantity} ${
+        unite == "unite" ? "" : unite
+      }`}</Text>
+      <View
         style={{
-          fontSize: 25,
-          fontWeight: "bold",
-          textAlign: "center",
-          backgroundColor: "white",
-          padding: 20,
+          width: "80%",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        {recipe.name}
-      </Text>
-      {/* <View style={{ borderBottomWidth: 1, height: 150, flexDirection: "row" }}>
-        <View style={styles.profileImg}>
-          <Image
-            style={styles.img}
-            source={{
-              uri: "https://avatoon.me/wp-content/uploads/2020/07/Cartoon-Pic-Ideas-for-DP-Profile-03.png",
-            }}
+        <Text style={{ marginLeft: 20, width: "80%" }}>{name}</Text>
+        <CheckBox
+          disabled
+          value={toggle}
+          tintColors={{ true: COLORS.primary, false: "gray" }}
+          style={{ transform: [{ scale: 1.2 }], width: "20%" }}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const StepComponent = ({ step, index }) => {
+  const [toggle, setToggle] = useState(false);
+
+  return (
+    <View
+      style={{
+        width: width * 0.9,
+        backgroundColor: "white",
+        justifyContent: "space-between",
+        padding: 5,
+        marginVertical: 10,
+        borderRadius: 5,
+      }}
+    >
+      <TouchableOpacity style={{}} onPress={() => setToggle((p) => !p)}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ fontSize: 20, color: "gray", fontWeight: "bold" }}>
+            Etape {index + 1}.
+          </Text>
+          <CheckBox
+            boxType="circle"
+            disabled
+            value={toggle}
+            tintColors={{ true: COLORS.primary, false: "gray" }}
+            style={{ transform: [{ scale: 1.2 }] }}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <View style={styles.descriptionContainer}>
-            <Text style={{ fontWeight: "bold" }}>Hélène de Pic</Text>
-            <View style={{ flexDirection: "row" }}>
-              <AntDesign name="star" size={24} color="gold" />
-              <AntDesign name="star" size={24} color="gold" />
-            </View>
-          </View>
-          <Text style={{ color: "grey", marginLeft: 12, marginTop: -10 }}>
-            @picpic
-          </Text>
-        </View>
-      </View> */}
-      <View style={{ backgroundColor: "white", flex: 1 }}>
+
+        {!toggle && (
+          <Animated.View entering={FadeInLeft}>
+            <Text style={{ marginLeft: "5%" }}>{step}</Text>
+          </Animated.View>
+        )}
+      </TouchableOpacity>
+    </View>
+  );
+};
+const IngredientScreen = ({ route }) => {
+  const [nbr, setNbr] = useState(4);
+  const { recipe } = route.params;
+  console.log("RECEIPPE", recipe);
+  return (
+    <ScrollView
+      style={{ backgroundColor: "#E6E6E6", flex: 1 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <Image
+        source={{ uri: recipe.imgURL }}
+        style={{
+          aspectRatio: 1,
+        }}
+      />
+      <LinearGradient
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 0, y: 0.2 }}
+        locations={[0.3, 1]}
+        colors={["black", "transparent"]}
+        style={{ height: height * 0.3, marginTop: "-28%", paddingTop: "25%" }}
+      >
+        <Text
+          numberOfLines={2}
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            textAlign: "center",
+            margin: 10,
+            color: "white",
+          }}
+        >
+          {recipe.name}
+        </Text>
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center",
+            width: "80%",
+            alignSelf: "center",
+            justifyContent: "space-between",
+            marginBottom: 20,
           }}
         >
-          <Text style={{ fontSize: 20, marginHorizontal: 20 }}>
-            Recette pour
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 18, color: "white", marginRight: 5 }}>
+              620
+            </Text>
+            <AntDesign name="heart" size={14} color={COLORS.primary} />
+          </View>
+          <Text style={{ fontSize: 18, color: "white" }}>
+            {recipe.tempsPreparation + recipe.tempsCuisson} min
           </Text>
-          <View style={styles.nbrContainer}>
-            <AntDesign name="minus" size={24} color="black" />
-            <Text style={{ marginHorizontal: 10 }}>4</Text>
-            <AntDesign name="plus" size={24} color="black" />
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 18, color: "white", marginRight: 5 }}>
+              4.7
+            </Text>
+            <AntDesign name="star" size={15} color={COLORS.primary} />
           </View>
         </View>
-        <View>
-          <Text style={styles.ingredientTitle}>Les ingredients:</Text>
-          {recipe.ingredients?.map((text) => {
-            return (
-              <Text key={text.name} style={styles.ingredientText}>
-                - {text.quantity} {text.name}
-              </Text>
-            );
+        <View style={{ flexDirection: "row", backgroundColor: "black" }}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              width: "50%",
+              height: height * 0.08,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
+              La recette
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: "white",
+              width: "50%",
+              height: height * 0.08,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
+              Nutrition
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            paddingVertical: 10,
+            justifyContent: "space-evenly",
+            backgroundColor: "black",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Difficulté {"\n"} {recipe.difficulty}
+          </Text>
+          <Text
+            style={{
+              fontSize: 18,
+
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Préparation {"\n"} {recipe.tempsPreparation} min
+          </Text>
+          <Text
+            style={{
+              fontSize: 18,
+
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Cuisson {"\n"} {recipe.tempsCuisson} min
+          </Text>
+        </View>
+      </LinearGradient>
+      <View
+        style={{ marginTop: "22%", alignItems: "center", paddingVertical: 10 }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>INGREDIENTS</Text>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Text style={{}}>{nbr} REPAS</Text>
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (nbr == 1) {
+                    return;
+                  }
+                  setNbr((p) => p - 1);
+                }}
+              >
+                <AntDesign
+                  name="minussquareo"
+                  size={30}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (nbr == 8) {
+                    return;
+                  }
+                  setNbr((p) => p + 1);
+                }}
+              >
+                <AntDesign
+                  name="plussquareo"
+                  size={30}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: "white",
+            width: "80%",
+            borderRadius: 5,
+            padding: 10,
+          }}
+        >
+          {recipe.ingredients.map((item, index) => {
+            return <IngredientComponent ingredient={item} key={index} />;
           })}
         </View>
-      </View>
-      <StepsView steps={recipe.steps} />
-      <View
-        style={{
-          alignItems: "center",
-          marginBottom: 50,
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          title="Add to cart"
-          color={COLORS.primary}
-          width={400}
-          onPress={() =>
-            navigation.navigate("CartScreen", {
-              ingredients: recipe.ingredients,
-            })
-          }
-        />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              height: 10,
+              flex: 1,
+            }}
+          />
+          <Text style={{ fontSize: 20, margin: 20, fontWeight: "bold" }}>
+            Etapes de la recette
+          </Text>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              height: 10,
+              flex: 1,
+            }}
+          />
+        </View>
+        {recipe.steps.map((item, index) => {
+          return <StepComponent step={item} index={index} key={index} />;
+        })}
+        <View style={{}}></View>
       </View>
     </ScrollView>
   );
@@ -155,90 +318,4 @@ const IngredientScreen = ({ route, navigation }) => {
 
 export default IngredientScreen;
 
-const styles = StyleSheet.create({
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    height: 50,
-    justifyContent: "space-around",
-  },
-  bottomBar: {
-    backgroundColor: COLORS.primary,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  textBottomBar: {
-    color: "white",
-    fontWeight: "600",
-    fontSize: 20,
-    marginRight: 20,
-  },
-  profileImg: {
-    borderWidth: 1,
-    height: 105,
-    width: 105,
-    marginTop: 15,
-    marginLeft: 20,
-    borderRadius: 52.5,
-  },
-  img: {
-    height: 100,
-    width: 100,
-    overflow: "hidden",
-    borderRadius: 50,
-    borderWidth: 1,
-  },
-  descriptionContainer: {
-    flexDirection: "row",
-    height: 30,
-    justifyContent: "space-between",
-    marginHorizontal: 10,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  stepContainer: {
-    backgroundColor: "white",
-    padding: 10,
-    margin: 10,
-    width: "90%",
-    borderRadius: 10,
-    alignSelf: "center",
-  },
-  stepHeaderContainer: {
-    flexDirection: "row",
-    height: 50,
-
-    alignItems: "center",
-  },
-  lineHeader: {
-    height: 10,
-    width: "20%",
-    backgroundColor: COLORS.primary,
-  },
-  stepsTitle: {
-    width: "60%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  nbrContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    width: 100,
-    height: 30,
-  },
-  ingredientTitle: {
-    fontSize: 20,
-    marginHorizontal: 20,
-    marginTop: 30,
-    fontWeight: "bold",
-  },
-  ingredientText: {
-    marginVertical: 10,
-    marginHorizontal: 30,
-    fontSize: 18,
-  },
-});
+const styles = StyleSheet.create({});

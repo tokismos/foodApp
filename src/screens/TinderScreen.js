@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   Image,
+  Dimensions,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import users from "../helpers/data/";
@@ -15,17 +16,17 @@ import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
 import { addMatch, changeNumberOfRecipes } from "../redux/slicer/MatchSlicer";
 import { COLORS } from "../consts/colors";
-import { TextInput } from "react-native-gesture-handler";
-import { FontAwesome5 } from "@expo/vector-icons";
+
 import { getAllRecipes } from "../axios";
-import { setRecipes } from "../redux/slicer/recipeSlicer";
-import data from "../helpers/data";
+// import { setRecipes } from "../redux/slicer/recipeSlicer";
+
 import LoadingComponent from "../components/LoadingComponent";
 // import { LoginWithFb, signOut } from "../helpers/db";
 import HeaderComponent from "../components/HeaderComponent";
 import auth from "@react-native-firebase/auth";
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/core";
+const { height, width } = Dimensions.get("screen");
 
 const Header = () => {
   const navigation = useNavigation();
@@ -37,7 +38,7 @@ const Header = () => {
         flexDirection: "row",
         height: "10%",
         width: "100%",
-        marginTop: 10,
+        marginTop: 20,
       }}
     >
       <TouchableOpacity
@@ -167,16 +168,22 @@ const BarHeader = () => {
 };
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [recipes, setRecipes] = useState([]);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
-  const { recipes, activeFilters } = useSelector((state) => state.recipeStore);
+  const { activeFilters } = useSelector((state) => state.recipeStore);
 
   const loadData = async (item) => {
-    const recipesData = await getAllRecipes(item);
-    dispatch(setRecipes(recipesData));
+    getAllRecipes(item)
+      .then((result) => {
+        console.log("RRRRRRRR", result);
+        const tmp = result.filter((item) => item.imgURL != null);
+        setRecipes(tmp);
+      })
+      .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
   useEffect(() => {
-    loadData(activeFilters);
-  }, [activeFilters]);
+    loadData();
+  }, []);
 
   const onSwipeLeft = (item) => {
     // console.warn("swipe left", user.name);
@@ -222,7 +229,7 @@ const TinderScreen = ({ navigation }) => {
             }}
           >
             <AntDesign name="pluscircle" size={40} color="#cccccc" />
-            <Text style={{ color: "#cccccc" }}>Ajouter</Text>
+            <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -233,14 +240,18 @@ const TinderScreen = ({ navigation }) => {
     <View style={styles.pageContainer}>
       <Header />
       <BarHeader />
-      <HeaderComponent yes page="1" style={{ justifyContent: "center" }} />
+      <HeaderComponent
+        yes
+        page="1"
+        style={{ justifyContent: "center", height: height * 0.1 }}
+      />
       {/* <NbrMatchComponent /> */}
       {/* <View style={[styles.headerContainer, { height: "10%" }]}>
         <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
           <FontAwesome5 name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View> */}
-      {recipes == null ? (
+      {recipes.length == 0 ? (
         <LoadingComponent />
       ) : (
         <>

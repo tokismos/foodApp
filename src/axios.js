@@ -1,23 +1,23 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: " http://ae10-105-155-168-199.ngrok.io",
-  // baseURL: "https://backend-yuzi.herokuapp.com/",
+  //baseURL: "http://9ff9-196-65-167-40.ngrok.io",
+  baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 
 const getAllRecipes = async (item) => {
   //randomize data of array
-  const shuffleArray = (array) => {
+  const shuffleArray = () => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
   };
-  let url = "?";
-  item.map((item) => {
-    url = url + `${item.categorie}=${item.value}&`;
-  });
-  let data;
+  // let url = "?";
+  // item.map((item) => {
+  //   url = url + `${item.categorie}=${item.value}&`;
+  // });
+  // let data;
   try {
     const res = await api.get(`/recipes`);
     data = res.data;

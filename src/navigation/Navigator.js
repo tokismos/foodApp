@@ -222,7 +222,6 @@ const LoggedStackScreen = () => {
         <Stack.Screen
           options={{
             header: () => <HeaderComponent page="2" />,
-            headerLeft: null,
           }}
           name="PanierScreen"
           component={PanierScreen}
@@ -340,6 +339,7 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            headerShown: false,
           }}
           name="IngredientScreen"
           component={IngredientScreen}

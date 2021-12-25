@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import auth from "@react-native-firebase/auth";
-import { setUser } from "../redux/slicer/userSlicer";
+import { Alert, StyleSheet } from "react-native";
 
+import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import {
-  AccessToken,
-  GraphRequest,
-  GraphRequestManager,
-  LoginManager,
-  Profile,
-} from "react-native-fbsdk-next";
+import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { api } from "../axios";
@@ -38,7 +29,7 @@ const signInWithGoogle = async () => {
     accessToken
   );
   await auth().signInWithCredential(googleCredential);
-
+  // ACHEEEEEEEEEEEECKER CAAAAAAA IMPOOORTAAAAAAAAAAAAAANT !!!!!!!!!!!
   auth()
     .currentUser.updateEmail(userInfo.user.email)
     .then(async () => {
@@ -146,7 +137,14 @@ const verifyCode = async (phoneNumber, verificationCode) => {
     Alert.alert(`${e.response.status}, ${e.response.data.error}`);
   }
 };
-
+const signUp = async (email, password) => {
+  try {
+    const res = await auth().createUserWithEmailAndPassword(email, password);
+    console.log("User Created !", res);
+  } catch (e) {
+    console.log("user NOT created");
+  }
+};
 export default useAuth = () => {
   return {
     signIn,
@@ -155,6 +153,7 @@ export default useAuth = () => {
     signInWithFb,
     sendPhoneVerification,
     verifyCode,
+    signUp,
   };
 };
 

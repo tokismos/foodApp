@@ -1084,7 +1084,7 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@4.0.7", "@expo/config-plugins@^4.0.2", "@expo/config-plugins@^4.0.3":
+"@expo/config-plugins@4.0.7", "@expo/config-plugins@^4.0.2":
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.7.tgz#c3cd8d2297edd779576b71a8ad16fc8b80c08eda"
   integrity sha512-m160Y039LJcI8Q4arzA9edWNRPPnLnTe5tB41812Mn1BAmtoZy9OMs4Rj78OKFkMx6A9JJKUTWMnP/FVAbeMiw==
@@ -1092,6 +1092,28 @@
     "@expo/config-types" "^43.0.1"
     "@expo/json-file" "8.2.33"
     "@expo/plist" "0.0.15"
+    "@react-native/normalize-color" "^2.0.0"
+    chalk "^4.1.2"
+    debug "^4.3.1"
+    find-up "~5.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "0.4.23"
+
+"@expo/config-plugins@^4.0.12":
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.15.tgz#cc170a0cf890973b6491cf357540e9955296019c"
+  integrity sha512-QqxVEt2bFu3ZuI1soULRJv7i0Zrg/FMZ0IxNV7Y3AjH7fhtUJH3pPo9f6MURvqNr+PLxhBlkofkWfunrVejSkw==
+  dependencies:
+    "@expo/config-types" "^43.0.1"
+    "@expo/json-file" "8.2.34"
+    "@expo/plist" "0.0.16"
+    "@expo/sdk-runtime-versions" "^1.0.0"
     "@react-native/normalize-color" "^2.0.0"
     chalk "^4.1.2"
     debug "^4.3.1"
@@ -1189,6 +1211,15 @@
     json5 "^1.0.1"
     write-file-atomic "^2.3.0"
 
+"@expo/json-file@8.2.34":
+  version "8.2.34"
+  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.34.tgz#2f24e90a677195f7a81e167115460eb2902c3130"
+  integrity sha512-ZxtBodAZGxdLtgKzmsC+8ViUxt1mhFW642Clu2OuG3f6PAyAFsU/SqEGag9wKFaD3x3Wt8VhL+3y5fMJmUFgPw==
+  dependencies:
+    "@babel/code-frame" "~7.10.4"
+    json5 "^1.0.1"
+    write-file-atomic "^2.3.0"
+
 "@expo/metro-config@~0.1.84":
   version "0.1.84"
   resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.1.84.tgz#ddcc7b4f1087c29f86bc9d916933d29bacd2c726"
@@ -1217,6 +1248,15 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
+"@expo/plist@0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@expo/plist/-/plist-0.0.16.tgz#c7d294a774196cfa1d8caf89a75ba923f5d1d53c"
+  integrity sha512-yQMt2CTm2VNLiHv2/EqHYrHvfflI2mFJd+DZIQQy569hvpZle0CxMPGH1p2KatbrO8htxJNvwrlR/4TIwhQJ5w==
+  dependencies:
+    "@xmldom/xmldom" "~0.7.0"
+    base64-js "^1.2.3"
+    xmlbuilder "^14.0.0"
+
 "@expo/prebuild-config@^3.0.6":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-3.0.7.tgz#9d2e22b06ea61377331d561e5fb47a505d96757c"
@@ -1231,6 +1271,11 @@
     fs-extra "^9.0.0"
     resolve-from "^5.0.0"
     semver "7.3.2"
+
+"@expo/sdk-runtime-versions@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
+  integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
 "@expo/spawn-async@1.5.0":
   version "1.5.0"
@@ -1465,12 +1510,12 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-2.0.2.tgz#622b190294b1310c4825c98daeaee1c8443f7124"
   integrity sha512-CKVhIZdX/Cmb80muog8sKpi5vM8npwFp4tx4Dj1IvTBidZweuO22+VH2rDOj7E0LzdV9IYRJ4FGBwcPBD2qUrQ==
 
-"@react-native-firebase/app@^12.9.0":
-  version "12.9.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.9.3.tgz#7f0f8ee8598557e3d8997d5a7e820f89d2a3479d"
-  integrity sha512-Qy5awKs/VvASUFvjXUCtkUxZo+MEt6Rv32xXK18isUDWoqsopL5o0tHiWF+86EAyZTx/j0C1nc6lYlCwvLvDwQ==
+"@react-native-firebase/app@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.1.0.tgz#f3a26c893c86e9cb50f9735bc9ab0b1fef6462aa"
+  integrity sha512-xYGJEbKBfi3UNTeSHKSc1LcAZ9wuTi4uqgdmmm5vBiSF0+IkpxGmCk3izACDRaaji7eEBAHu4MaHFRmqwuil6Q==
   dependencies:
-    "@expo/config-plugins" "^4.0.3"
+    "@expo/config-plugins" "^4.0.12"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
@@ -1479,10 +1524,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-12.9.3.tgz#370702cfa3f17283f958843e1b4d13e57ec686a5"
   integrity sha512-fVYPepp9LtL3k+ra7MuWmNxzhUmTTtBEaXHS1Ir2k0mgdAuPwssjW1MLrGl2ygvDsiMwm+tcBBw6DC9pfIa9hw==
 
-"@react-native-firebase/database@^12.9.0":
-  version "12.9.3"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-12.9.3.tgz#71c4b7f94d98091acf3771d08c7f6ceddec16794"
-  integrity sha512-XfjJ9tcgnAYkxDwnWtL7lE1ZqTWztyFcYGSwLRqpzxgteQoqkWUuCMH+HFQ7tQO6ebN9d3Nm8PGV+OjWMDtY5g==
+"@react-native-firebase/database@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-14.1.0.tgz#4a3fb3b7c326ae328233ffc4eb7b52736fd12d49"
+  integrity sha512-ERTWP6OXogeU4QamgtQBddNOos4swyAYJmtE66Ovc5D+TygQZOgWRdnrPSAQ+voKinUBq2nf+RZofamBtHSR6Q==
 
 "@react-native-google-signin/google-signin@^7.0.1":
   version "7.0.1"
@@ -5727,6 +5772,11 @@ readable-stream@~2.3.6:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
+
+reanimated-bottom-sheet@^1.0.0-alpha.22:
+  version "1.0.0-alpha.22"
+  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.22.tgz#01a200946f1a461f01f1e773e5b4961c2df2e53b"
+  integrity sha512-NxecCn+2iA4YzkFuRK5/b86GHHS2OhZ9VRgiM4q18AC20YE/psRilqxzXCKBEvkOjP5AaAvY0yfE7EkEFBjTvw==
 
 recast@^0.20.3:
   version "0.20.5"

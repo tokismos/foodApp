@@ -18,7 +18,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
   }, []);
 
   const onPress = (ingredient, title) => {
-    // setToggle(tmpObj[title]?.includes(ingredient));
     console.log("erd", finalCart[title].ingredients);
     console.log("bname", JSON.stringify(ingredient), title);
     if (finalCart[title].ingredients?.includes(ingredient)) {
@@ -56,7 +55,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
         <CheckBox
           disabled
           value={toggle}
-          onValueChange={(newValue) => setToggle(!newValue)}
           tintColors={{ true: COLORS.primary, false: "gray" }}
         />
       </TouchableOpacity>

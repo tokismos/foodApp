@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     marginTop: 50,
-    alignSelf: "flex-end",
+    justifyContent: "center",
     flexDirection: "row",
+    alignSelf: "center",
   },
 });
