@@ -9,6 +9,7 @@ import { firebase } from "@react-native-firebase/database";
 
 import { api } from "../axios";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 const signIn = async (email, password) => {
   try {
@@ -20,7 +21,7 @@ const signIn = async (email, password) => {
   }
 };
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (navigation) => {
   // Get the users ID token
   const userInfo = await GoogleSignin.signIn();
   const { idToken, accessToken } = await GoogleSignin.getTokens();
@@ -32,8 +33,9 @@ const signInWithGoogle = async () => {
     idToken,
     accessToken
   );
-  await auth().signInWithCredential(googleCredential);
+  // reference.set(info).then((i) => console.log("Additional info added", i));
   console.log("cred", auth().currentUser);
+  await auth().signInWithCredential(googleCredential);
 
   //if its the first time email in google is null this is why we update it
   if (!auth().currentUser.email) {
@@ -44,9 +46,11 @@ const signInWithGoogle = async () => {
         console.log("update", auth().currentUser);
       });
   }
+  console.log("update", auth().currentUser);
+
   // ACHEEEEEEEEEEEECKER CAAAAAAA IMPOOORTAAAAAAAAAAAAAANT !!!!!!!!!!!
 
-  console.log("proo", auth().currentUser.providerData);
+  console.log("UIIID", auth().currentUser.uid);
 };
 
 // Sign In with Facebook
@@ -151,6 +155,7 @@ const signUp = async (email, password) => {
   try {
     const res = await auth().createUserWithEmailAndPassword(email, password);
     console.log("User Created !", res);
+    return res;
   } catch (e) {
     console.log("user NOT created");
   }
@@ -164,8 +169,16 @@ const reference = firebase
   .ref(`/users/${auth().currentUser?.uid}`);
 
 const setAdditionalInfo = async (info) => {
+  console.log("AUTHHHHHHHHHHH", auth().currentUser?.uid);
   try {
-    reference.set(info).then((i) => console.log("Additional info added", i));
+    firebase
+      .app()
+      .database(
+        "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
+      )
+      .ref(`/users/${auth().currentUser?.uid}`)
+      .set(info)
+      .then((i) => console.log("Additional info added", i));
   } catch (e) {
     console.log("Additional informations not added !");
   }
@@ -173,17 +186,17 @@ const setAdditionalInfo = async (info) => {
 
 //get num from realtime DB
 const getAdditionalInfo = async () => {
-  let res = "d";
-  reference.once("value", (snapshot) => {
-    console.log("User data: ", snapshot.val());
-    res = snapshot.val();
-  });
-  return new Promise((resolve, reject) => {
-    if (res == "") {
-      reject("NOOOO");
-    }
-    resolve("YEEEEEEEEES");
-  });
+  const snapshot = await firebase
+    .app()
+    .database(
+      "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
+    )
+    .ref(`/users/${auth().currentUser?.uid}`)
+    .once("value");
+  if (snapshot.exists()) {
+    return snapshot.val();
+  }
+  return false;
 };
 export default useAuth = () => {
   return {

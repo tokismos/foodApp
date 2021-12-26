@@ -175,7 +175,7 @@ const ProfileScreen = () => {
                   flex: 1,
                 }}
               >
-                +212 675234067
+                {user.phoneNumber}
               </Text>
               <TouchableOpacity
                 onPress={() => {

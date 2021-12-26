@@ -5,7 +5,13 @@ import {
   TransitionSpecs,
 } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Animated,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Ionicons,
@@ -20,7 +26,6 @@ import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
 import LoginScreen from "../screens/LoginScreen";
-import PhoneVerificationScreen from "../screens/PhoneVerificationScreen";
 import CartScreen from "../screens/CartScreen";
 import ResultCartScreen from "../screens/ResultCartScreen";
 import RecetteSVG from "../assets/recette.svg";
@@ -34,6 +39,8 @@ import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
 import useAuth from "../hooks/useAuth";
+import { useNavigation } from "@react-navigation/native";
+
 const Stack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,6 +57,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import FeedBackScreen from "../screens/FeedBackScreen";
 import SignInScreen from "../screens/SignInScreen";
+import PhoneScreen from "../screens/PhoneScreen";
 
 export const TabScreen = () => {
   return (
@@ -273,15 +281,9 @@ const LoggedStackScreen = () => {
           name="SignUpScreen"
           component={SignUpScreen}
         />
-        <Stack.Screen
-          options={{
-            // header: () => <HeaderComponent page="1" />,
-            headerShown: false,
-          }}
-          name="PhoneVerificationScreen"
-          component={PhoneVerificationScreen}
-        />
+
         <Stack.Screen name="FilterScreen" component={FilterScreen} />
+        <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
         <Stack.Screen name="CartScreen" component={CartScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
@@ -301,6 +303,8 @@ const LoginStackScreen = () => {
           name="IntroScreen"
           component={IntroScreen}
         />
+        <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
+
         <Stack.Screen
           options={{
             ...horizontalAnimation,
@@ -400,9 +404,17 @@ const RootNavigation = () => {
 
     const sub = auth().onAuthStateChanged(async (userInfo) => {
       if (userInfo) {
-        console.log("changed");
+        console.log("changed", userInfo);
 
-        // const wow = await getAdditionalInfo();
+        // getAdditionalInfo().then((e) => {
+        //   console.log("W", e);
+        //   if (e != null) {
+        //     console.log("props", props);
+        //     navigation.navigate("PhoneScreen");
+        //     setShow(true);
+        //   }
+        // });
+
         // console.log("ADIOTO,", wow);
 
         dispatch(
@@ -423,9 +435,6 @@ const RootNavigation = () => {
     return sub;
   }, []);
 
-  useEffect(() => {
-    console.log("root auth", auth().currentUser);
-  }, [auth().currentUser]);
   return (
     <>
       <StatusBar translucent />

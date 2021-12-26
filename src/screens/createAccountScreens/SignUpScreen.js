@@ -29,7 +29,6 @@ import auth from "@react-native-firebase/auth";
 import useAuth from "../../hooks/useAuth";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
 import CodeVerificationComponent from "../../components/CodeVerificationComponent";
-import PhoneVerificationScreen from "../PhoneVerificationScreen";
 import CustomButton from "../../components/CustomButton";
 
 const { height, width } = Dimensions.get("screen");
@@ -159,17 +158,25 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
             isLoading={isLoading}
             onPress={async () => {
               setIsLoading(true);
-              const status = await verifyCode(fullNumber, verificationCode);
-              if (status == 200) {
-                await signUp(email, password);
+              signUp(email, password).then(async (e) => {
+                console.log("cREEEATEEED", e);
                 await setAdditionalInfo({
-                  phoneNumber: fullNumber,
+                  phoneNumber: "99999911111111",
                 });
-                console.log("approoved");
-                setIsLoading(false);
-              } else {
-                setIsLoading(false);
-              }
+              });
+
+              setIsLoading(false);
+              // const status = await verifyCode(fullNumber, verificationCode);
+              // if (status == 200) {
+              //   await signUp(email, password);
+              //   await setAdditionalInfo({
+              //     phoneNumber: fullNumber,
+              //   });
+              //   console.log("approoved");
+              //   setIsLoading(false);
+              // } else {
+              //   setIsLoading(false);
+              // }
               console.log("wa8WWWWWWWWW", auth()?.currentUser);
             }}
           />

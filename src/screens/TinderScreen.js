@@ -27,6 +27,7 @@ import auth from "@react-native-firebase/auth";
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/core";
 const { height, width } = Dimensions.get("screen");
+import { setUser } from "../redux/slicer/userSlicer";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -168,6 +169,9 @@ const BarHeader = () => {
 };
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { getAdditionalInfo } = useAuth();
+  const { user } = useSelector((state) => state.userStore);
+
   const [recipes, setRecipes] = useState([]);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
@@ -180,6 +184,16 @@ const TinderScreen = ({ navigation }) => {
       })
       .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
+
+  useEffect(() => {
+    getAdditionalInfo().then((e) => {
+      console.log("W", e);
+      if (!e) {
+        return navigation.navigate("PhoneScreen");
+      }
+      dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
+    });
+  }, []);
   useEffect(() => {
     loadData();
   }, []);

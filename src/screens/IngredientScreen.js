@@ -102,6 +102,7 @@ const IngredientScreen = ({ route }) => {
   console.log("RECEIPPE", recipe);
   return (
     <ScrollView
+      overScrollMode="never"
       style={{ backgroundColor: "#E6E6E6", flex: 1 }}
       showsVerticalScrollIndicator={false}
     >
