@@ -6,6 +6,8 @@ import { COLORS } from "../consts/colors";
 const TextInputColored = forwardRef(
   (
     {
+      placeholder,
+      multiline,
       label,
       value,
       setChangeText,
@@ -21,6 +23,7 @@ const TextInputColored = forwardRef(
     const [visible, setVisible] = useState(true);
     return (
       <TextInput
+        multiline={multiline}
         ref={ref}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -28,6 +31,7 @@ const TextInputColored = forwardRef(
         mode="outlined"
         label={label}
         value={value}
+        placeholder={placeholder}
         onChangeText={setChangeText}
         secureTextEntry={secured ? visible : null}
         style={{

@@ -14,8 +14,8 @@ const CustomButton = ({ disabled, title, onPress, style, isLoading }) => {
       disabled={disabled}
       style={{
         ...styles.button,
-        ...style,
         backgroundColor: disabled ? COLORS.secondary : COLORS.primary,
+        ...style,
       }}
     >
       {isLoading && <ActivityIndicator size="small" color="white" />}
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     borderRadius: 10,
-    marginTop: 50,
     justifyContent: "center",
     flexDirection: "row",
     alignSelf: "center",
