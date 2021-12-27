@@ -7,10 +7,16 @@ import {
   Button,
   Image,
   Dimensions,
+  ActivityIndicator,
+  Pressable,
+  ImageBackground,
+  requireNativeComponent,
+  ToastAndroid,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import users from "../helpers/data/";
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import LottieView from "lottie-react-native";
 
 import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +25,7 @@ import { COLORS } from "../consts/colors";
 
 import { getAllRecipes } from "../axios";
 // import { setRecipes } from "../redux/slicer/recipeSlicer";
+import { Avatar } from "react-native-paper";
 
 import LoadingComponent from "../components/LoadingComponent";
 // import { LoginWithFb, signOut } from "../helpers/db";
@@ -32,16 +39,51 @@ import { setUser } from "../redux/slicer/userSlicer";
 const Header = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
-
+  useEffect(() => {
+    ToastAndroid.show(
+      "🎁🎁SUUURRRRPRRIIIIISSEEEEE !!🎁🎁🎉🎉",
+      ToastAndroid.LONG
+    );
+  }, []);
   return (
-    <View
+    <ImageBackground
+      source={require("../assets/logoNoel.png")}
+      resizeMode="contain"
       style={{
         flexDirection: "row",
-        height: "10%",
+        height: height * 0.08,
         width: "100%",
         marginTop: 20,
+        justifyContent: "space-between",
       }}
     >
+      <View
+        style={{
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+        }}
+      >
+        <LottieView
+          source={require("../assets/snow.json")}
+          speed={0.4}
+          autoPlay
+          style={{
+            width: "100%",
+          }}
+        />
+        <LottieView
+          source={require("../assets/snow.json")}
+          autoPlay
+          speed={0.6}
+          style={{
+            width: "80%",
+            marginLeft: 15,
+            position: "absolute",
+            bottom: -20,
+          }}
+        />
+      </View>
       <TouchableOpacity
         onPress={() =>
           auth().currentUser
@@ -54,7 +96,18 @@ const Header = () => {
           justifyContent: "center",
         }}
       >
-        <Image
+        <Avatar.Image
+          size={40}
+          source={
+            user?.photoURL != null
+              ? {
+                  uri: user?.photoURL,
+                }
+              : require("../assets/avatar.png")
+          }
+        />
+
+        {/* <Image
           source={
             user?.photoURL != null
               ? {
@@ -68,12 +121,22 @@ const Header = () => {
             resizeMode: "contain",
             borderRadius: 50,
           }}
-        />
+        /> */}
       </TouchableOpacity>
 
-      <View style={{ width: "45%", alignItems: "center" }}>
+      <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          left: 0,
+          zIndex: 99,
+        }}
+      >
         <Image
-          source={require("../assets/logo.png")}
+          source={require("../assets/logoNoel.png")}
           style={{
             height: "100%",
             width: "100%",
@@ -111,11 +174,13 @@ const Header = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 const BarHeader = () => {
-  return (
+  const { user } = useSelector((state) => state.userStore);
+  const navigation = useNavigation();
+  return user?.phoneNumber || user == null ? (
     <View
       style={{
         height: "5%",
@@ -165,6 +230,23 @@ const BarHeader = () => {
         <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
       </View>
     </View>
+  ) : (
+    <Pressable
+      onPress={() => navigation.navigate("ProfileScreen")}
+      style={{
+        height: "5%",
+        width: "100%",
+        backgroundColor: "#b20000",
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ textAlign: "center", color: "white", fontWeight: "bold" }}>
+        Vous avez des informations manquantes dans votre profile.
+      </Text>
+    </Pressable>
   );
 };
 const TinderScreen = ({ navigation }) => {
@@ -173,6 +255,7 @@ const TinderScreen = ({ navigation }) => {
   const { user } = useSelector((state) => state.userStore);
 
   const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
@@ -185,14 +268,22 @@ const TinderScreen = ({ navigation }) => {
       .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
 
+  //To add the additional information to the store , we get them from firebase DB
   useEffect(() => {
-    getAdditionalInfo().then((e) => {
-      console.log("W", e);
-      if (!e) {
-        return navigation.navigate("PhoneScreen");
-      }
-      dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
-    });
+    if (user != null) {
+      getAdditionalInfo().then((e) => {
+        console.log("W", e);
+        if (!e) {
+          setIsLoading(false);
+
+          return navigation.navigate("PhoneScreen");
+        }
+        dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
+    }
   }, []);
   useEffect(() => {
     loadData();
@@ -252,7 +343,11 @@ const TinderScreen = ({ navigation }) => {
   return (
     <View style={styles.pageContainer}>
       <Header />
-      <BarHeader />
+      {isLoading ? (
+        <ActivityIndicator size="small" color="#0000ff" />
+      ) : (
+        <BarHeader />
+      )}
       <HeaderComponent
         yes
         page="1"
