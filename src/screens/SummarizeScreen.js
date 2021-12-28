@@ -14,12 +14,10 @@ const SummarizeScreen = ({ route }) => {
   const [cartArray, setCartArray] = useState([]);
   const { finalCart } = route.params;
 
+  //To transform the cart from obj to array
   useEffect(() => {
-    console.log("ffffffffffff", Object.entries(finalCart));
     let arr = [];
     Object.entries(finalCart).forEach(([key, value]) => {
-      console.log("key", key); // 'one'
-      console.log("value", value); // 1
       arr.push({ _id: key, ...value });
     });
     setCartArray(arr);
@@ -27,31 +25,10 @@ const SummarizeScreen = ({ route }) => {
   const CartComponent = ({ imgURL, name, ingredients }) => {
     return (
       <>
-        <View
-          style={{
-            flexDirection: "row",
-            marginHorizontal: 10,
-            marginVertical: 5,
-          }}
-        >
+        <View style={styles.itemComponent}>
           {console.log("imnage", imgURL)}
-          <View
-            style={{
-              height: 60,
-              width: 60,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={{ uri: imgURL }}
-              style={{
-                height: "90%",
-                width: "90%",
-                borderRadius: 10,
-                resizeMode: "contain",
-              }}
-            />
+          <View style={styles.itemContainer}>
+            <Image source={{ uri: imgURL }} style={styles.image} />
           </View>
           <View style={{ width: "90%" }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
@@ -72,24 +49,8 @@ const SummarizeScreen = ({ route }) => {
   return (
     <>
       <View style={{ height: "80%", backgroundColor: "white" }}>
-        <View
-          style={{
-            width: "100%",
-            height: "25%",
-            padding: 20,
-
-            justifyContent: "space-between",
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 20,
-              fontWeight: "bold",
-            }}
-          >
-            Résumé de la commande
-          </Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Résumé de la commande</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={{ fontSize: 16 }}>Supermarché sélectionné :</Text>
             <Text style={{ fontSize: 22, marginLeft: 10 }}>Manor Food</Text>
@@ -130,56 +91,19 @@ const SummarizeScreen = ({ route }) => {
       </View>
       <View style={{ ...styles.separator, width: "100%" }} />
 
-      <View
-        style={{
-          width: "100%",
-          height: "20%",
-          backgroundColor: "white",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            width: "90%",
-            height: "90%",
-            alignSelf: "center",
-            justifyContent: "space-between",
-            backgroundColor: "white",
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 16,
-              color: "gray",
-              width: "100%",
-            }}
-          >
+      <View style={styles.bottomComponent}>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.text}>
             Pour continuer la commande, tu vas être redirigé vers le site de ton
             supermarché.
           </Text>
           <TouchableOpacity
             onPress={() => {
-              setCommandes(finalCart);
+              setCommandes(cartArray);
             }}
-            style={{
-              width: "90%",
-              height: "50%",
-              backgroundColor: COLORS.primary,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            style={styles.button}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                color: "white",
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            >
+            <Text style={styles.textButton}>
               Enregistrer les recettes & continuer la commande
             </Text>
           </TouchableOpacity>
@@ -197,5 +121,68 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center",
     backgroundColor: "gray",
+  },
+  headerContainer: {
+    width: "100%",
+    height: "25%",
+    padding: 20,
+
+    justifyContent: "space-between",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  bottomComponent: {
+    width: "100%",
+    height: "20%",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bottomContainer: {
+    width: "90%",
+    height: "90%",
+    alignSelf: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "gray",
+    width: "100%",
+  },
+  button: {
+    width: "90%",
+    height: "50%",
+    backgroundColor: COLORS.primary,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textButton: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  itemComponent: {
+    flexDirection: "row",
+    marginHorizontal: 10,
+    marginVertical: 5,
+  },
+  itemContainer: {
+    height: 60,
+    width: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    height: "90%",
+    width: "90%",
+    borderRadius: 10,
+    resizeMode: "contain",
   },
 });

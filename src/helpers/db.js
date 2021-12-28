@@ -55,12 +55,20 @@ const getAdditionalInfo = async () => {
 };
 
 const setCommandes = (cart) => {
+  let obj = {};
+  cart.map((item) => {
+    obj[item._id] = {
+      name: item.name,
+      imgURL: item.imgURL,
+    };
+    console.log("UUUUTEMN", obj);
+  });
   try {
     firebase
       .app()
       .database(firebaseDbURL)
       .ref(`/users/${auth().currentUser?.uid}/commandes`)
-      .push({ ...cart, dateTime: firebase.database.ServerValue.TIMESTAMP })
+      .push({ ...obj, dateTime: firebase.database.ServerValue.TIMESTAMP })
       .then((i) => console.log("cartadded", i));
   } catch (e) {
     console.log("Additional informations not added !");
