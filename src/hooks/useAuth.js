@@ -8,8 +8,6 @@ import database from "@react-native-firebase/database";
 import { firebase } from "@react-native-firebase/database";
 
 import { api } from "../axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 
 const signIn = async (email, password) => {
   try {
@@ -46,11 +44,8 @@ const signInWithGoogle = async (navigation) => {
         console.log("update", auth().currentUser);
       });
   }
-  console.log("update", auth().currentUser);
 
   // ACHEEEEEEEEEEEECKER CAAAAAAA IMPOOORTAAAAAAAAAAAAAANT !!!!!!!!!!!
-
-  console.log("UIIID", auth().currentUser.uid);
 };
 
 // Sign In with Facebook
@@ -161,43 +156,6 @@ const signUp = async (email, password) => {
   }
 };
 
-const reference = firebase
-  .app()
-  .database(
-    "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
-  )
-  .ref(`/users/${auth().currentUser?.uid}`);
-
-const setAdditionalInfo = async (info) => {
-  console.log("AUTHHHHHHHHHHH", auth().currentUser?.uid);
-  try {
-    firebase
-      .app()
-      .database(
-        "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
-      )
-      .ref(`/users/${auth().currentUser?.uid}`)
-      .set(info)
-      .then((i) => console.log("Additional info added", i));
-  } catch (e) {
-    console.log("Additional informations not added !");
-  }
-};
-
-//get num from realtime DB
-const getAdditionalInfo = async () => {
-  const snapshot = await firebase
-    .app()
-    .database(
-      "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/"
-    )
-    .ref(`/users/${auth().currentUser?.uid}`)
-    .once("value");
-  if (snapshot.exists()) {
-    return snapshot.val();
-  }
-  return false;
-};
 export default useAuth = () => {
   return {
     signIn,
@@ -207,8 +165,6 @@ export default useAuth = () => {
     sendPhoneVerification,
     verifyCode,
     signUp,
-    setAdditionalInfo,
-    getAdditionalInfo,
   };
 };
 

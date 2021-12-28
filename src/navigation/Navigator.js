@@ -387,7 +387,7 @@ const LoginStackScreen = () => {
 
 const RootNavigation = () => {
   const dispatch = useDispatch();
-  const { getAdditionalInfo } = useAuth();
+
   const { user } = useSelector((state) => state.userStore);
 
   const config = {

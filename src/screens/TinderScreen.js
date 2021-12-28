@@ -35,6 +35,7 @@ import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/core";
 const { height, width } = Dimensions.get("screen");
 import { setUser } from "../redux/slicer/userSlicer";
+import { getAdditionalInfo } from "../helpers/db";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -251,7 +252,6 @@ const BarHeader = () => {
 };
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { getAdditionalInfo } = useAuth();
   const { user } = useSelector((state) => state.userStore);
 
   const [recipes, setRecipes] = useState([]);

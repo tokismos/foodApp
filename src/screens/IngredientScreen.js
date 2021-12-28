@@ -122,6 +122,7 @@ const IngredientScreen = ({ route }) => {
             slideFrom: "bottom",
           })
         }
+        onHardwareBackPress={() => true}
       >
         <DialogContent>
           <ReportComponent

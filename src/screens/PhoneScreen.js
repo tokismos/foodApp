@@ -1,11 +1,13 @@
 import React, { createRef, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { GameRequestDialog } from "react-native-fbsdk-next";
 import PagerView from "react-native-pager-view";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CodeVerificationComponent from "../components/CodeVerificationComponent";
 import CustomButton from "../components/CustomButton";
 import PhoneInputComponent from "../components/PhoneInputComponent";
+import { setAdditionalInfo } from "../helpers/db";
 import useAuth from "../hooks/useAuth";
 import { setUser } from "../redux/slicer/userSlicer";
 
@@ -19,7 +21,7 @@ const PhoneScreen = ({ navigation }) => {
   const [index, setIndex] = useState("");
   const ref = createRef();
   const dispatch = useDispatch();
-  const { sendPhoneVerification, verifyCode, setAdditionalInfo } = useAuth();
+  const { sendPhoneVerification, verifyCode } = useAuth();
   useEffect(() => {
     setFullNumber(`+${countryCode}${phoneNumber}`);
   }, [phoneNumber, countryCode]);
@@ -72,6 +74,10 @@ const PhoneScreen = ({ navigation }) => {
             });
             dispatch(setUser({ ...user, phoneNumber: fullNumber }));
             navigation.pop();
+            ToastAndroid.show(
+              "Votre numéro de téléphone a été changé !",
+              ToastAndroid.SHORT
+            );
             // const status = await verifyCode(fullNumber, verificationCode);
             // if (status == 200) {
             //   await setAdditionalInfo({

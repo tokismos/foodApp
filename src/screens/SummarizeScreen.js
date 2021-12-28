@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -8,10 +8,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { COLORS } from "../consts/colors";
+import { setCommandes } from "../helpers/db";
 
 const SummarizeScreen = ({ route }) => {
+  const [cartArray, setCartArray] = useState([]);
   const { finalCart } = route.params;
-  console.log("f", finalCart);
+
+  useEffect(() => {
+    console.log("ffffffffffff", Object.entries(finalCart));
+    let arr = [];
+    Object.entries(finalCart).forEach(([key, value]) => {
+      console.log("key", key); // 'one'
+      console.log("value", value); // 1
+      arr.push({ _id: key, ...value });
+    });
+    setCartArray(arr);
+  }, []);
   const CartComponent = ({ imgURL, name, ingredients }) => {
     return (
       <>
@@ -45,7 +57,7 @@ const SummarizeScreen = ({ route }) => {
             <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
               {name}
             </Text>
-            {ingredients.map((item, index) => (
+            {ingredients?.map((item, index) => (
               <Text key={index} style={{ marginLeft: 10 }}>
                 {item.quantity} {item.name}
               </Text>
@@ -65,6 +77,7 @@ const SummarizeScreen = ({ route }) => {
             width: "100%",
             height: "25%",
             padding: 20,
+
             justifyContent: "space-between",
           }}
         >
@@ -98,16 +111,17 @@ const SummarizeScreen = ({ route }) => {
         <View style={{ ...styles.separator, width: "100%" }} />
         <View style={{ height: "75%" }}>
           <ScrollView>
-            {Object.keys(finalCart).map((key, index) => {
-              if (finalCart[key].ingredients.length == 0) {
+            {cartArray.map((item, index) => {
+              console.log("THJIS IS ITEM", cartArray);
+              if (item.ingredients?.length == 0) {
                 return;
               }
               return (
                 <CartComponent
                   key={index}
-                  name={key}
-                  imgURL={finalCart[key].imgURL}
-                  ingredients={finalCart[key].ingredients}
+                  name={item.name}
+                  imgURL={item.imgURL}
+                  ingredients={item.ingredients}
                 />
               );
             })}
@@ -146,6 +160,9 @@ const SummarizeScreen = ({ route }) => {
             supermarché.
           </Text>
           <TouchableOpacity
+            onPress={() => {
+              setCommandes(finalCart);
+            }}
             style={{
               width: "90%",
               height: "50%",
@@ -155,8 +172,15 @@ const SummarizeScreen = ({ route }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
-              Continuer ma commande
+            <Text
+              style={{
+                fontSize: 16,
+                color: "white",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Enregistrer les recettes & continuer la commande
             </Text>
           </TouchableOpacity>
         </View>

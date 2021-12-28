@@ -160,7 +160,7 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
           style={{ backgroundColor: "red", marginLeft: 10 }}
           onPress={async () => {
             await sendEmail(
-              auth().currentUser.displayName,
+              auth().currentUser?.displayName || "ANONYME",
               report,
               reportDescription
             );

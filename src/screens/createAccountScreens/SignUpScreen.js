@@ -30,6 +30,7 @@ import useAuth from "../../hooks/useAuth";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
 import CodeVerificationComponent from "../../components/CodeVerificationComponent";
 import CustomButton from "../../components/CustomButton";
+import { setAdditionalInfo } from "../../helpers/db";
 
 const { height, width } = Dimensions.get("screen");
 const EmailComponent = ({ setEmail, refe, email }) => {
@@ -134,7 +135,7 @@ const NameComponent = ({
 };
 
 const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
-  const { verifyCode, signUp, setAdditionalInfo } = useAuth();
+  const { verifyCode, signUp } = useAuth();
   const [verificationCode, setCode] = useState();
   const [isLoading, setIsLoading] = useState(false);
 

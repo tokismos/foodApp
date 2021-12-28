@@ -10,8 +10,9 @@ const IngredientCartScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     cart.map((item) => {
-      finalCart[item.name] = {
+      finalCart[item._id] = {
         ingredients: item.ingredients,
+        name: item.name,
         imgURL: item.imgURL,
       };
     });
@@ -90,7 +91,7 @@ const IngredientCartScreen = ({ route, navigation }) => {
               <IngredientItemComponent
                 ingredient={elmt}
                 key={index}
-                title={item.name}
+                title={item._id}
                 set
               />
             ))}

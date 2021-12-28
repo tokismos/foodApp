@@ -8,6 +8,8 @@ import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 
+const firebaseDbURL =
+  "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/";
 const firebaseConfig = {
   apiKey: "AIzaSyC_Khzc-fgbnfetYLwwdkSiNYPuRVjbdN8",
   authDomain: "yuzu-a0d71.firebaseapp.com",
@@ -24,6 +26,46 @@ if (!firebase.apps.length) {
 } else {
   firebase.app(); // if already initialized, use that one
 }
+
+const setAdditionalInfo = async (info) => {
+  console.log("AUTHHHHHHHHHHH", auth().currentUser?.uid);
+  try {
+    firebase
+      .app()
+      .database(firebaseDbURL)
+      .ref(`/users/${auth().currentUser?.uid}`)
+      .set(info)
+      .then((i) => console.log("Additional info added", i));
+  } catch (e) {
+    console.log("Additional informations not added !");
+  }
+};
+
+//get num from realtime DB
+const getAdditionalInfo = async () => {
+  const snapshot = await firebase
+    .app()
+    .database(firebaseDbURL)
+    .ref(`/users/${auth().currentUser?.uid}`)
+    .once("value");
+  if (snapshot.exists()) {
+    return snapshot.val();
+  }
+  return false;
+};
+
+const setCommandes = (cart) => {
+  try {
+    firebase
+      .app()
+      .database(firebaseDbURL)
+      .ref(`/users/${auth().currentUser?.uid}/commandes`)
+      .push({ ...cart, dateTime: firebase.database.ServerValue.TIMESTAMP })
+      .then((i) => console.log("cartadded", i));
+  } catch (e) {
+    console.log("Additional informations not added !");
+  }
+};
 const LoginWithGoogle = async () => {
   // Get the users ID token
   const { idToken } = await GoogleSignin.signIn();
@@ -122,4 +164,10 @@ const logInWithFb = async () => {
 //     });
 // };
 
-export { auth, LoginWithFb };
+export {
+  auth,
+  LoginWithFb,
+  setAdditionalInfo,
+  getAdditionalInfo,
+  setCommandes,
+};
