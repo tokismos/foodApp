@@ -34,7 +34,7 @@ const setAdditionalInfo = async (info) => {
       .app()
       .database(firebaseDbURL)
       .ref(`/users/${auth().currentUser?.uid}`)
-      .set(info)
+      .update(info)
       .then((i) => console.log("Additional info added", i));
   } catch (e) {
     console.log("Additional informations not added !");
@@ -55,24 +55,46 @@ const getAdditionalInfo = async () => {
 };
 
 const setCommandes = (cart) => {
-  let obj = {};
+  let obj = [];
   cart.map((item) => {
-    obj[item._id] = {
+    obj.push({
+      _id: item._id,
       name: item.name,
       imgURL: item.imgURL,
-    };
-    console.log("UUUUTEMN", obj);
+    });
   });
   try {
     firebase
       .app()
       .database(firebaseDbURL)
       .ref(`/users/${auth().currentUser?.uid}/commandes`)
-      .push({ ...obj, dateTime: firebase.database.ServerValue.TIMESTAMP })
+      .push({
+        recipes: { ...obj },
+        dateTime: firebase.database.ServerValue.TIMESTAMP,
+      })
       .then((i) => console.log("cartadded", i));
   } catch (e) {
     console.log("Additional informations not added !");
   }
+};
+
+const getCommandes = async (setCommandes) => {
+  let arr = [];
+  const hi = firebase
+    .app()
+    .database(firebaseDbURL)
+    .ref(`/users/${auth().currentUser?.uid}/commandes`)
+    .on("value", (snapshot) => {
+      // let arr = [];
+      // Object.entries(snapshot).forEach(([key, value]) => {
+      //   arr.push({ _id: key, ...value });
+      // });
+      if (snapshot.exists()) {
+        console.log("it exists");
+        arr = Object?.values(snapshot.val());
+      }
+      setCommandes(arr);
+    });
 };
 const LoginWithGoogle = async () => {
   // Get the users ID token
@@ -174,8 +196,8 @@ const logInWithFb = async () => {
 
 export {
   auth,
-  LoginWithFb,
   setAdditionalInfo,
   getAdditionalInfo,
   setCommandes,
+  getCommandes,
 };

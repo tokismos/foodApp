@@ -40,12 +40,7 @@ import { getAdditionalInfo } from "../helpers/db";
 const Header = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
-  useEffect(() => {
-    ToastAndroid.show(
-      "🎁🎁SUUURRRRPRRIIIIISSEEEEE !!🎁🎁🎉🎉",
-      ToastAndroid.LONG
-    );
-  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/logoNoel.png")}
@@ -273,7 +268,7 @@ const TinderScreen = ({ navigation }) => {
     if (user != null) {
       getAdditionalInfo().then((e) => {
         console.log("W", e);
-        if (!e) {
+        if (!e.phoneNumber) {
           setIsLoading(false);
 
           return navigation.navigate("PhoneScreen");
@@ -326,13 +321,14 @@ const TinderScreen = ({ navigation }) => {
             <Text style={{ color: "#cccccc" }}>Cuisine</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => navigation.navigate("CommandesScreen")}
             style={{
               alignItems: "center",
               justifyContent: "center",
               marginTop: -3,
             }}
           >
-            <AntDesign name="pluscircle" size={40} color="#cccccc" />
+            <Entypo name="list" size={40} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
           </TouchableOpacity>
         </View>
@@ -388,7 +384,7 @@ const TinderScreen = ({ navigation }) => {
                 <Text
                   style={{ fontSize: 20, color: "white", fontWeight: "bold" }}
                 >
-                  Voir le panier{" "}
+                  Générer ma liste de course{" "}
                   {matches.length != 0 ? `(${matches.length})` : null}
                 </Text>
               </TouchableOpacity>
@@ -453,7 +449,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: COLORS.primary,
-    width: "70%",
+    width: "90%",
     height: "80%",
     alignItems: "center",
     justifyContent: "center",

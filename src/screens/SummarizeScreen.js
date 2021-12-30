@@ -10,7 +10,7 @@ import {
 import { COLORS } from "../consts/colors";
 import { setCommandes } from "../helpers/db";
 
-const SummarizeScreen = ({ route }) => {
+const SummarizeScreen = ({ route, navigation }) => {
   const [cartArray, setCartArray] = useState([]);
   const { finalCart } = route.params;
 
@@ -100,6 +100,7 @@ const SummarizeScreen = ({ route }) => {
           <TouchableOpacity
             onPress={() => {
               setCommandes(cartArray);
+              navigation.popToTop();
             }}
             style={styles.button}
           >

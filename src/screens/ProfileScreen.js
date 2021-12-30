@@ -151,43 +151,72 @@ const ProfileScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View
-            style={{
-              alignSelf: "flex-start",
-              width: "100%",
-              marginVertical: 10,
-            }}
-          >
+          {user.phoneNumber && (
             <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignItems: "center",
-                marginHorizontal: "3%",
+                alignSelf: "flex-start",
+                width: "100%",
+                marginVertical: 10,
               }}
             >
-              <Text style={{}}>Numero Téléphone :</Text>
-              <Text
+              <View
                 style={{
-                  textAlign: "center",
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  marginHorizontal: "3%",
                 }}
               >
-                {user.phoneNumber}
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  sheetRef.current.snapTo(0);
-                }}
-              >
-                {/* <AntDesign name="edit" size={20} color="gray" /> */}
-              </TouchableOpacity>
+                <Text style={{}}>Numero Téléphone :</Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    flex: 1,
+                  }}
+                >
+                  {user.phoneNumber}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    sheetRef.current.snapTo(0);
+                  }}
+                >
+                  {/* <AntDesign name="edit" size={20} color="gray" /> */}
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          )}
         </View>
         <View style={{ width: "100%", padding: 20 }}>
+          {!user.phoneNumber && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PhoneScreen")}
+              style={{
+                height: 50,
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginVertical: 3,
+                flexDirection: "row",
+              }}
+            >
+              <AntDesign
+                name="mobile1"
+                size={20}
+                color="black"
+                style={{ marginRight: 20 }}
+              />
+              <Text style={{ fontSize: 18, flex: 1 }}>Ajouter mon numéro</Text>
+
+              <AntDesign name="exclamationcircle" size={16} color="red" />
+              <MaterialIcons
+                name="keyboard-arrow-right"
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={{
               height: 50,
@@ -206,6 +235,7 @@ const ProfileScreen = () => {
             <Text style={{ fontSize: 18, fontWeight: "900", flex: 1 }}>
               Ajouter une addresse
             </Text>
+            <AntDesign name="exclamationcircle" size={16} color="red" />
             <MaterialIcons
               name="keyboard-arrow-right"
               size={20}
@@ -237,28 +267,31 @@ const ProfileScreen = () => {
               color="black"
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              height: 50,
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginVertical: 3,
-              flexDirection: "row",
-            }}
-          >
-            <AntDesign
-              name="mobile1"
-              size={20}
-              color="black"
-              style={{ marginRight: 20 }}
-            />
-            <Text style={{ fontSize: 18, flex: 1 }}>Modifier mon numéro</Text>
-            <MaterialIcons
-              name="keyboard-arrow-right"
-              size={20}
-              color="black"
-            />
-          </TouchableOpacity>
+          {user.phoneNumber && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PhoneScreen")}
+              style={{
+                height: 50,
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginVertical: 3,
+                flexDirection: "row",
+              }}
+            >
+              <AntDesign
+                name="mobile1"
+                size={20}
+                color="black"
+                style={{ marginRight: 20 }}
+              />
+              <Text style={{ fontSize: 18, flex: 1 }}>Modifier mon numéro</Text>
+              <MaterialIcons
+                name="keyboard-arrow-right"
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             onPress={() => signOut()}
             style={{

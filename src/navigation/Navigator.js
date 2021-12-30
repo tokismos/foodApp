@@ -58,6 +58,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import FeedBackScreen from "../screens/FeedBackScreen";
 import SignInScreen from "../screens/SignInScreen";
 import PhoneScreen from "../screens/PhoneScreen";
+import CommandesScreen from "../screens/CommandesScreen";
 
 export const TabScreen = () => {
   return (
@@ -225,6 +226,13 @@ const LoggedStackScreen = () => {
           }}
           name="TinderScreen"
           component={TinderScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+          }}
+          name="CommandesScreen"
+          component={CommandesScreen}
         />
 
         <Stack.Screen

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { logPushNotificationOpenAsync } from "expo-facebook";
 
 const api = axios.create({
-  //baseURL: "http://9ff9-196-65-167-40.ngrok.io",
+  //baseURL: "http://4f54-105-154-109-13.ngrok.io",
   baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 
@@ -28,4 +29,14 @@ const getAllRecipes = async (item) => {
   return data;
 };
 
-export { getAllRecipes, api };
+const getRecipe = async (_id) => {
+  try {
+    const res = await api.get(`/recipes/${_id}`);
+    data = res.data;
+    console.log("DAAANAAA", data);
+  } catch (e) {
+    console.log("ERROR", e);
+  }
+  return data[0];
+};
+export { getAllRecipes, getRecipe, api };
