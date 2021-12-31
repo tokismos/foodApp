@@ -312,7 +312,13 @@ const LoginStackScreen = () => {
           component={IntroScreen}
         />
         <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
-
+        <Stack.Screen
+          options={{
+            headerShown: true,
+          }}
+          name="CommandesScreen"
+          component={CommandesScreen}
+        />
         <Stack.Screen
           options={{
             ...horizontalAnimation,

@@ -14,6 +14,7 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import FastImage from "react-native-fast-image";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 
 const Skeleton = ({ title }) => {
   return (
@@ -109,8 +110,8 @@ const CommandeItem = ({ recipe }) => {
   );
 };
 const CommandeComponent = ({ item }) => {
-  const d = new Date(+item.dateTime);
-  let text = d.toLocaleString("fr-FR");
+  var time = new Date(item.dateTime);
+
   return (
     <View
       style={{
@@ -120,7 +121,7 @@ const CommandeComponent = ({ item }) => {
       }}
     >
       <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 5 }}>
-        {text}
+        {`Recettes du ${format(time, "dd/MM/yyyy")} à ${format(time, "H:mm")}`}
       </Text>
       {item.recipes.map((elmt, i) => {
         return <CommandeItem recipe={elmt} key={i} />;

@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import { COLORS } from "../consts/colors";
@@ -45,6 +46,7 @@ const CartComponent = ({ item, onPress }) => {
               {item.ingredients.length} d'ingredients
             </Text>
           </View>
+          <Button title="hola" />
           <Text style={{ fontSize: 12 }}>4 personnes</Text>
         </View>
         <View style={styles.checkBoxContainer}>

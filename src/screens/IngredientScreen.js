@@ -229,7 +229,7 @@ const IngredientScreen = ({ route }) => {
                   <Text
                     style={{ fontSize: 18, color: "white", marginRight: 5 }}
                   >
-                    4.7
+                    N/A
                   </Text>
                   <AntDesign name="star" size={15} color={COLORS.primary} />
                 </View>

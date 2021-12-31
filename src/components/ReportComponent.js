@@ -2,31 +2,23 @@ import React, { useState } from "react";
 import {
   Dimensions,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
   ToastAndroid,
   Alert,
 } from "react-native";
-import { TextInput } from "react-native-paper";
 import { api } from "../axios";
 
 import CustomButton from "./CustomButton";
-import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import TextInputColored from "./TextInputColored";
 import auth from "@react-native-firebase/auth";
 
 const { height, width } = Dimensions.get("screen");
 
-const ReportItemComponent = ({
-  title,
-  isSelected,
-  setIsSelected,
-  setReport,
-  report,
-}) => {
+const ReportItemComponent = ({ title, setReport, report }) => {
   return (
     <>
       <Pressable
@@ -68,7 +60,7 @@ const ReportItemComponent = ({
           style={{
             width: "90%",
             alignSelf: "center",
-            height: 0.2,
+            height: 0.3,
             backgroundColor: "gray",
           }}
         />
@@ -83,7 +75,9 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
   const [reportDescription, setReportDescription] = useState("");
   const reportsTab = [
     "Champs manquants ou vides",
-    "Fautes d'orthographes",
+    "Erreur de description ou d’ingrédients",
+    "L’image ne correspond pas à la recette",
+    "Contenu inapproprié",
     "Autres :",
   ];
 
@@ -123,7 +117,7 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
             textAlign: "center",
           }}
         >
-          Que voulez vous report{" "}
+          Que voulez vous signaler ?
         </Text>
       </View>
 
