@@ -7,13 +7,16 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
+import FastImage from "react-native-fast-image";
+import { useDispatch } from "react-redux";
 import { COLORS } from "../consts/colors";
 import { setCommandes } from "../helpers/db";
+import { resetMatches } from "../redux/slicer/MatchSlicer";
 
 const SummarizeScreen = ({ route, navigation }) => {
   const [cartArray, setCartArray] = useState([]);
   const { finalCart } = route.params;
-
+  const dispatch = useDispatch();
   //To transform the cart from obj to array
   useEffect(() => {
     let arr = [];
@@ -28,7 +31,16 @@ const SummarizeScreen = ({ route, navigation }) => {
         <View style={styles.itemComponent}>
           {console.log("imnage", imgURL)}
           <View style={styles.itemContainer}>
-            <Image source={{ uri: imgURL }} style={styles.image} />
+            <FastImage
+              style={styles.image}
+              source={{
+                uri: imgURL,
+                headers: { Authorization: "someAuthToken" },
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+            {/* <Image source={{ uri: imgURL }} style={styles.image} /> */}
           </View>
           <View style={{ width: "90%" }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
@@ -36,7 +48,8 @@ const SummarizeScreen = ({ route, navigation }) => {
             </Text>
             {ingredients?.map((item, index) => (
               <Text key={index} style={{ marginLeft: 10 }}>
-                {item.quantity} {item.name}
+                {item.quantity} {item.unite == "unite" ? "" : item.unite}{" "}
+                {item.name}
               </Text>
             ))}
           </View>
@@ -100,7 +113,11 @@ const SummarizeScreen = ({ route, navigation }) => {
           <TouchableOpacity
             onPress={() => {
               setCommandes(cartArray);
-              navigation.popToTop();
+              dispatch(resetMatches());
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "TinderScreen" }],
+              });
             }}
             style={styles.button}
           >

@@ -15,7 +15,11 @@ import Animated, {
   StretchOutY,
   ZoomOut,
 } from "react-native-reanimated";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import LinearGradient from "react-native-linear-gradient";
 import CheckBox from "@react-native-community/checkbox";
@@ -30,7 +34,11 @@ import { getRecipe } from "../axios";
 
 const { height, width } = Dimensions.get("screen");
 
-const IngredientComponent = ({ ingredient: { name, quantity, unite } }) => {
+const IngredientComponent = ({
+  ingredient: { name, quantity, unite },
+  defaultNbrPersonne,
+  nbrPersonne,
+}) => {
   const [toggle, setToggle] = useState(true);
 
   return (
@@ -46,18 +54,19 @@ const IngredientComponent = ({ ingredient: { name, quantity, unite } }) => {
         }}
         onPress={() => setToggle((p) => !p)}
       >
-        <Text style={{ fontSize: 16 }} style={{ width: "20%" }}>{`${quantity} ${
-          unite == "unite" ? "" : unite
-        }`}</Text>
+        <Text style={{ fontSize: 16 }} style={{ width: "25%" }}>{`${+(
+          (quantity * nbrPersonne) /
+          defaultNbrPersonne
+        ).toFixed(1)} ${unite == "unite" ? "" : unite}`}</Text>
         <View
           style={{
-            width: "80%",
+            width: "75%",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <Text style={{ marginLeft: 20, width: "80%" }}>{name}</Text>
+          <Text style={{ marginLeft: 20, width: "75%" }}>{name}</Text>
           <CheckBox
             disabled
             value={toggle}
@@ -107,11 +116,54 @@ const StepComponent = ({ step, index }) => {
     </View>
   );
 };
+const NbrPersonneComponent = ({ nbrPersonne, setNbrPersonne }) => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: "10%",
+      }}
+    >
+      <TouchableOpacity
+        style={{ padding: 10, marginRight: "-15%" }}
+        onPress={() => {
+          if (nbrPersonne == 4) return;
+
+          setNbrPersonne((p) => p - 1);
+        }}
+      >
+        <AntDesign name="minuscircleo" size={24} color={COLORS.primary} />
+      </TouchableOpacity>
+      <Text style={{ fontWeight: "bold", color: "black", marginLeft: 5 }}>
+        {nbrPersonne}
+      </Text>
+      <MaterialCommunityIcons
+        name="snowman"
+        size={24}
+        color="black"
+        style={{ marginRight: 5 }}
+      />
+      <TouchableOpacity
+        style={{ padding: 10, marginLeft: "-15%" }}
+        onPress={() => {
+          if (nbrPersonne == 8) return;
+          setNbrPersonne((p) => p + 1);
+        }}
+      >
+        <AntDesign name="pluscircleo" size={24} color={COLORS.primary} />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 const IngredientScreen = ({ route }) => {
-  const [nbr, setNbr] = useState(4);
-  const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState();
+  const [nbr, setNbr] = useState(+route.params.recipe?.nbrPersonne);
+  const [isLoading, setIsLoading] = useState(true);
   const [showReport, setShowReport] = useState(false);
+  const [showVote, setShowVote] = useState(false);
   useEffect(() => {
     if (route.params.recipe) {
       setRecipe(route.params.recipe);
@@ -119,12 +171,13 @@ const IngredientScreen = ({ route }) => {
     } else {
       getRecipe(route.params._id).then((res) => {
         console.log("HOLA THIS IS RES", res);
+        setNbr(+res.nbrPersonne);
         setRecipe(res);
         setIsLoading(false);
       });
     }
   }, []);
-  console.log("RECEIPPE", recipe);
+  console.log("RECEIPPE", recipe?.nbrPersonne);
   return (
     <>
       {isLoading ? (
@@ -183,14 +236,6 @@ const IngredientScreen = ({ route }) => {
                   alignItems: "center",
                 }}
               >
-                <TouchableOpacity onPress={() => setShowReport(true)}>
-                  <MaterialIcons
-                    name="report"
-                    size={30}
-                    color="red"
-                    style={{ padding: 5 }}
-                  />
-                </TouchableOpacity>
                 <Text
                   numberOfLines={2}
                   style={{
@@ -310,7 +355,7 @@ const IngredientScreen = ({ route }) => {
             </LinearGradient>
             <View
               style={{
-                marginTop: "22%",
+                marginTop: "30%",
                 alignItems: "center",
                 paddingVertical: 10,
               }}
@@ -318,53 +363,37 @@ const IngredientScreen = ({ route }) => {
               <View
                 style={{
                   flexDirection: "row",
-                  width: "90%",
+                  width: "95%",
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginBottom: 20,
                 }}
               >
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  INGREDIENTS
+                <TouchableOpacity onPress={() => setShowReport(true)}>
+                  <MaterialIcons
+                    name="report"
+                    size={30}
+                    color="red"
+                    style={{ padding: 5 }}
+                  />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    marginLeft: "7%",
+                  }}
+                >
+                  Ingrédients
                 </Text>
                 <View
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  <Text style={{}}>{nbr} REPAS</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (nbr == 1) {
-                          return;
-                        }
-                        setNbr((p) => p - 1);
-                      }}
-                    >
-                      <AntDesign
-                        name="minussquareo"
-                        size={30}
-                        color={COLORS.primary}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (nbr == 8) {
-                          return;
-                        }
-                        setNbr((p) => p + 1);
-                      }}
-                    >
-                      <AntDesign
-                        name="plussquareo"
-                        size={30}
-                        color={COLORS.primary}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                  <NbrPersonneComponent
+                    nbrPersonne={nbr}
+                    setNbrPersonne={setNbr}
+                  />
                 </View>
               </View>
               <View
@@ -376,7 +405,14 @@ const IngredientScreen = ({ route }) => {
                 }}
               >
                 {recipe?.ingredients?.map((item, index) => {
-                  return <IngredientComponent ingredient={item} key={index} />;
+                  return (
+                    <IngredientComponent
+                      ingredient={item}
+                      key={index}
+                      nbrPersonne={nbr}
+                      defaultNbrPersonne={recipe?.nbrPersonne}
+                    />
+                  );
                 })}
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -403,6 +439,55 @@ const IngredientScreen = ({ route }) => {
               })}
               <View style={{}}></View>
             </View>
+            {route.params._id && (
+              <>
+                <Dialog
+                  visible={showVote}
+                  onTouchOutside={() => {
+                    setShowVote(false);
+                  }}
+                  dialogAnimation={
+                    new SlideAnimation({
+                      slideFrom: "bottom",
+                    })
+                  }
+                  onHardwareBackPress={() => true}
+                >
+                  <DialogContent>
+                    <View style={{ padding: 20 }}>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: 20,
+                          textAlign: "center",
+                        }}
+                      >
+                        Ca nous fera plaisir d'avoir votre avis
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          height: height * 0.1,
+                          justifyContent: "space-evenly",
+                          alignItems: "center",
+                        }}
+                      >
+                        <TouchableOpacity onPress={() => setShowVote(false)}>
+                          <AntDesign name="like2" size={30} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setShowVote(false)}>
+                          <AntDesign name="dislike2" size={30} color="black" />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </DialogContent>
+                </Dialog>
+                <CustomButton
+                  title="Donner mon avis"
+                  onPress={() => setShowVote(true)}
+                />
+              </>
+            )}
           </ScrollView>
         </>
       )}

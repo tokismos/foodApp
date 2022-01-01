@@ -84,6 +84,7 @@ const getCommandes = async (setCommandes) => {
     .app()
     .database(firebaseDbURL)
     .ref(`/users/${auth().currentUser?.uid}/commandes`)
+    .orderByChild("dateTime")
     .on("value", (snapshot) => {
       // let arr = [];
       // Object.entries(snapshot).forEach(([key, value]) => {

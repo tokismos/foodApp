@@ -312,7 +312,10 @@ const TinderScreen = ({ navigation }) => {
             transform: [{ scale: 0.8 }],
           }}
         >
-          <TouchableOpacity style={{ alignItems: "center" }}>
+          <TouchableOpacity
+            style={{ alignItems: "center" }}
+            onPress={() => navigation.navigate("CommandesScreen")}
+          >
             <Image source={require("../assets/recette.png")} />
             <Text style={{ color: "#cccccc" }}>Recettes</Text>
           </TouchableOpacity>
@@ -326,6 +329,7 @@ const TinderScreen = ({ navigation }) => {
               alignItems: "center",
               justifyContent: "center",
               marginTop: -3,
+              marginLeft: -20,
             }}
           >
             <Entypo name="list" size={40} color="#cccccc" />
