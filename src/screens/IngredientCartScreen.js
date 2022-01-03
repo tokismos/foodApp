@@ -52,8 +52,11 @@ const IngredientCartScreen = ({ route, navigation }) => {
         }}
       >
         <Text style={{ marginLeft: 20, width: "80%" }}>
-          {ingredient.quantity}{" "}
-          {ingredient.unite == "unite" ? "" : ingredient.unite}{" "}
+          <Text style={{ fontWeight: "bold" }}>
+            {" "}
+            {ingredient.quantity}{" "}
+            {ingredient.unite == "unite" ? "" : ingredient.unite}{" "}
+          </Text>
           {ingredient.name}
         </Text>
         <CheckBox

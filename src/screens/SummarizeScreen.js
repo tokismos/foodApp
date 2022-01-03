@@ -43,12 +43,22 @@ const SummarizeScreen = ({ route, navigation }) => {
             {/* <Image source={{ uri: imgURL }} style={styles.image} /> */}
           </View>
           <View style={{ width: "90%" }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                marginLeft: 10,
+                width: "90%",
+              }}
+            >
               {name}
             </Text>
             {ingredients?.map((item, index) => (
               <Text key={index} style={{ marginLeft: 10 }}>
-                {item.quantity} {item.unite == "unite" ? "" : item.unite}{" "}
+                <Text style={{ fontWeight: "bold" }}>
+                  {" "}
+                  {item.quantity} {item.unite == "unite" ? "" : item.unite}{" "}
+                </Text>
                 {item.name}
               </Text>
             ))}

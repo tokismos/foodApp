@@ -36,6 +36,7 @@ import { useNavigation } from "@react-navigation/core";
 const { height, width } = Dimensions.get("screen");
 import { setUser } from "../redux/slicer/userSlicer";
 import { getAdditionalInfo } from "../helpers/db";
+import CustomButton from "../components/CustomButton";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -250,7 +251,8 @@ const TinderScreen = ({ navigation }) => {
   const { user } = useSelector((state) => state.userStore);
 
   const [recipes, setRecipes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [headerIsLoading, setHeaderLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
@@ -269,15 +271,15 @@ const TinderScreen = ({ navigation }) => {
       getAdditionalInfo().then((e) => {
         console.log("W", e);
         if (!e.phoneNumber) {
-          setIsLoading(false);
+          setHeaderLoading(false);
 
           return navigation.navigate("PhoneScreen");
         }
         dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
-        setIsLoading(false);
+        setHeaderLoading(false);
       });
     } else {
-      setIsLoading(false);
+      setHeaderLoading(false);
     }
   }, []);
   useEffect(() => {
@@ -290,32 +292,15 @@ const TinderScreen = ({ navigation }) => {
   };
 
   const onSwipeRight = (item) => {
+    item.defaultNbrPersonne = item.nbrPersonne;
+    item.isChecked = true;
     dispatch(addMatch(item));
-    // console.warn("swipe right: ", user.name);
-    console.log("swiped right", item);
   };
   const BottomContainer = () => {
     return (
-      <View
-        style={{
-          width: "100%",
-          height: "10%",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            transform: [{ scale: 0.8 }],
-          }}
-        >
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={() => navigation.navigate("CommandesScreen")}
-          >
+      <View style={styles.bottomContainer}>
+        <View style={styles.bottomView}>
+          <TouchableOpacity style={{ alignItems: "center" }}>
             <Image source={require("../assets/recette.png")} />
             <Text style={{ color: "#cccccc" }}>Recettes</Text>
           </TouchableOpacity>
@@ -328,11 +313,9 @@ const TinderScreen = ({ navigation }) => {
             style={{
               alignItems: "center",
               justifyContent: "center",
-              marginTop: -3,
-              marginLeft: -20,
             }}
           >
-            <Entypo name="list" size={40} color="#cccccc" />
+            <Entypo name="list" size={50} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
           </TouchableOpacity>
         </View>
@@ -343,7 +326,7 @@ const TinderScreen = ({ navigation }) => {
   return (
     <View style={styles.pageContainer}>
       <Header />
-      {isLoading ? (
+      {headerIsLoading ? (
         <ActivityIndicator size="small" color="#0000ff" />
       ) : (
         <BarHeader />
@@ -353,12 +336,7 @@ const TinderScreen = ({ navigation }) => {
         page="1"
         style={{ justifyContent: "center", height: height * 0.1 }}
       />
-      {/* <NbrMatchComponent /> */}
-      {/* <View style={[styles.headerContainer, { height: "10%" }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
-          <FontAwesome5 name="filter" size={24} color="white" />
-        </TouchableOpacity>
-      </View> */}
+
       {recipes.length == 0 ? (
         <LoadingComponent />
       ) : (
@@ -380,19 +358,14 @@ const TinderScreen = ({ navigation }) => {
             />
           </View>
           {matches.length > 3 ? (
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("PanierScreen")}
-              >
-                <Text
-                  style={{ fontSize: 20, color: "white", fontWeight: "bold" }}
-                >
-                  Générer ma liste de course{" "}
-                  {matches.length != 0 ? `(${matches.length})` : null}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <CustomButton
+              onPress={() => {
+                navigation.navigate("PanierScreen");
+              }}
+              title={`Générer ma liste de course (${matches.length})`}
+              style={styles.button}
+              textStyle={{ fontSize: 20 }}
+            />
           ) : (
             <BottomContainer />
           )}
@@ -436,9 +409,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 3,
   },
-  buttonContainer: {
+  button: {
     height: "10%",
-    width: "100%",
+    width: "90%",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -451,12 +424,18 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginTop: 40,
   },
-  button: {
-    backgroundColor: COLORS.primary,
-    width: "90%",
-    height: "80%",
-    alignItems: "center",
+  bottomContainer: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomView: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    transform: [{ scale: 0.8 }],
   },
 });
 

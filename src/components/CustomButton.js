@@ -7,7 +7,14 @@ import {
 } from "react-native";
 import { COLORS } from "../consts/colors";
 
-const CustomButton = ({ disabled, title, onPress, style, isLoading }) => {
+const CustomButton = ({
+  disabled,
+  title,
+  onPress,
+  style,
+  isLoading,
+  textStyle,
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -19,7 +26,9 @@ const CustomButton = ({ disabled, title, onPress, style, isLoading }) => {
       }}
     >
       {isLoading && <ActivityIndicator size="small" color="white" />}
-      <Text style={{ fontWeight: "bold", color: "white" }}>{title}</Text>
+      <Text style={{ fontWeight: "bold", color: "white", ...textStyle }}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

@@ -11,11 +11,14 @@ import {
 import CheckBox from "@react-native-community/checkbox";
 import { COLORS } from "../consts/colors";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const { width, height } = Dimensions.get("screen");
-const CartComponent = ({ item, onPress, finalCart }) => {
+const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
   const [toggle, setToggle] = useState(true);
   const [nbrPersonne, setNbrPersonne] = useState(+item.nbrPersonne);
+  const { matches } = useSelector((state) => state.matchStore);
+
   console.log("bssssss3", item.nbrPersonne);
   const NbrPersonneComponent = () => {
     return (
@@ -30,12 +33,21 @@ const CartComponent = ({ item, onPress, finalCart }) => {
       >
         <TouchableOpacity
           style={{ padding: 10, marginRight: "-15%" }}
-          onPress={() => setNbrPersonne((p) => p - 1)}
+          onPress={() => {
+            setFinalCart((p) => {
+              const tmp = JSON.parse(JSON.stringify(p));
+              if (tmp[index].nbrPersonne > 4) {
+                tmp[index].nbrPersonne = parseInt(tmp[index].nbrPersonne) - 1;
+              }
+              return [...tmp];
+            });
+            // setNbrPersonne((p) => p - 1);
+          }}
         >
           <AntDesign name="minuscircleo" size={24} color={COLORS.primary} />
         </TouchableOpacity>
         <Text style={{ fontWeight: "bold", color: "gray", marginLeft: 5 }}>
-          {nbrPersonne}
+          {item.nbrPersonne}
         </Text>
         <MaterialCommunityIcons
           name="snowman"
@@ -46,9 +58,13 @@ const CartComponent = ({ item, onPress, finalCart }) => {
         <TouchableOpacity
           style={{ padding: 10, marginLeft: "-15%" }}
           onPress={() => {
-            finalCart[0].nbrPersonne = "999999";
-            console.log("OOOOOOOOOOk01", finalCart[0]);
-            setNbrPersonne((p) => p + 1);
+            setFinalCart((p) => {
+              const tmp = JSON.parse(JSON.stringify(p));
+              if (tmp[index].nbrPersonne < 8) {
+                tmp[index].nbrPersonne = parseInt(tmp[index].nbrPersonne) + 1;
+              }
+              return [...tmp];
+            });
           }}
         >
           <AntDesign name="pluscircleo" size={24} color={COLORS.primary} />
@@ -56,10 +72,6 @@ const CartComponent = ({ item, onPress, finalCart }) => {
       </View>
     );
   };
-
-  useEffect(() => {
-    console.log("¡TJIHS LJADID.", item);
-  }, [item]);
 
   return (
     <>
