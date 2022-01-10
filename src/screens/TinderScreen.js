@@ -403,7 +403,6 @@ const TinderScreen = ({ navigation }) => {
                   position: "absolute",
                   top: -5,
                   right: 0,
-                  zIndex: -1,
                   padding: 5,
                 }}
               >

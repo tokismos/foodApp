@@ -54,7 +54,9 @@ const IngredientCartScreen = ({ route, navigation }) => {
         <Text style={{ marginLeft: 20, width: "80%" }}>
           <Text style={{ fontWeight: "bold" }}>
             {" "}
-            {ingredient.quantity}{" "}
+            {!ingredient.newQuantity
+              ? ingredient.quantity
+              : ingredient.newQuantity}{" "}
             {ingredient.unite == "unite" ? "" : ingredient.unite}{" "}
           </Text>
           {ingredient.name}

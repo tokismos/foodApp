@@ -57,7 +57,7 @@ const SummarizeScreen = ({ route, navigation }) => {
               <Text key={index} style={{ marginLeft: 10 }}>
                 <Text style={{ fontWeight: "bold" }}>
                   {" "}
-                  {item.quantity} {item.unite == "unite" ? "" : item.unite}{" "}
+                  {item.newQuantity} {item.unite == "unite" ? "" : item.unite}{" "}
                 </Text>
                 {item.name}
               </Text>

@@ -20,20 +20,18 @@ const PanierScreen = ({ navigation }) => {
     //Filter just the items in cart which are checked
     const checkedCart = finalCart.filter((item) => item.isChecked == true);
     //Change the quantity of every item in the cart
-    checkedCart.map((item, index) => {
+    checkedCart.forEach((item, index) => {
       const newQuantity = item.ingredients.map((elmt, i) => {
         const tmp = { ...elmt };
         //it's matche[index] and not tmp or finalCart ,because it had a bug when u would return after click on validate , the quantity change again
-        tmp.quantity = +(
-          (matches[index]?.ingredients[i]?.quantity * item.nbrPersonne) /
+        tmp.newQuantity = +(
+          (tmp.quantity * item.nbrPersonne) /
           item.defaultNbrPersonne
         ).toFixed(1);
-
         return { ...tmp };
       });
       item.ingredients = newQuantity;
     });
-
     navigation.navigate("IngredientsCartScreen", { cart: checkedCart });
   };
   //when click on recipe we check if it exist to remove it or if not to add id
