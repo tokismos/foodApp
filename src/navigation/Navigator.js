@@ -60,6 +60,7 @@ import SignInScreen from "../screens/SignInScreen";
 import PhoneScreen from "../screens/PhoneScreen";
 import MyRecipesScreen from "../screens/MyRecipesScreen";
 import CommandesScreen from "../screens/CommandesScreen";
+import InfoCommandeScreen from "../screens/InfoCommandeScreen";
 
 export const TabScreen = () => {
   return (
@@ -231,6 +232,22 @@ const LoggedStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="InfoCommandeScreen"
+          component={InfoCommandeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
           }}
           name="MyRecipesScreen"
           component={MyRecipesScreen}
@@ -333,6 +350,22 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="InfoCommandeScreen"
+          component={InfoCommandeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
             headerTitle: "Mes recettes",
             headerTitleAlign: "center",
             headerTintColor: "white",
@@ -347,6 +380,7 @@ const LoginStackScreen = () => {
           name="MyRecipesScreen"
           component={MyRecipesScreen}
         />
+
         <Stack.Screen
           options={{
             ...horizontalAnimation,

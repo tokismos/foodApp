@@ -1,17 +1,29 @@
 import { format } from "date-fns";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { getCommandes } from "../helpers/db";
 import { MaterialIcons } from "@expo/vector-icons";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 const CommandeItem = ({ item }) => {
+  const navigation = useNavigation();
   console.log("ssssssssssss", item);
   let time = new Date(item.dateTime);
 
   return (
-    <View
+    <Pressable
+      onPress={() =>
+        navigation.navigate("InfoCommandeScreen", { historyDetail: item })
+      }
       style={{
         backgroundColor: "white",
         borderRadius: 10,
@@ -27,9 +39,9 @@ const CommandeItem = ({ item }) => {
         <Text style={{ fontWeight: "bold", fontSize: 18 }}>
           Liste du {format(time, "dd/MM/yyyy")}
         </Text>
-        {item.recipes.map((elmt) => {
+        {item.recipes.map((elmt, i) => {
           return (
-            <Text style={{ marginLeft: 5 }}>
+            <Text key={i} style={{ marginLeft: 5 }}>
               - {elmt.name} ( {elmt.nbrPersonne} personnes )
             </Text>
           );
@@ -38,7 +50,7 @@ const CommandeItem = ({ item }) => {
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <MaterialIcons name="keyboard-arrow-right" size={50} color="black" />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -52,8 +64,8 @@ const CommandesScreen = () => {
 
   return (
     <ScrollView>
-      {commandes.map((item) => {
-        return <CommandeItem item={item} />;
+      {commandes.map((item, i) => {
+        return <CommandeItem item={item} key={i} />;
       })}
     </ScrollView>
   );
