@@ -25,7 +25,8 @@ const IntroScreen = ({ navigation }) => {
           style={styles.logoContainer}
         />
         <Text style={styles.descriptionText}>
-          Perdre quelques kilos n’aura jamais été aussi agréable !
+          Ta dose d'inspiration pour préparer une cuisine facile, rapide et
+          équilibrée !!!!
         </Text>
       </View>
       <View style={styles.middleBottomScreen}>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
-    fontSize: 16,
+    fontSize: 20,
   },
   middleTopScreen: {
     height: "50%",
@@ -136,8 +137,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoContainer: {
-    height: "40%",
-    width: "80%",
+    height: "30%",
+    width: "60%",
     resizeMode: "contain",
     alignSelf: "center",
   },

@@ -36,7 +36,7 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
           onPress={() => {
             setFinalCart((p) => {
               const tmp = JSON.parse(JSON.stringify(p));
-              if (tmp[index].nbrPersonne > 4) {
+              if (tmp[index].nbrPersonne > 2) {
                 tmp[index].nbrPersonne = parseInt(tmp[index].nbrPersonne) - 1;
               }
               return [...tmp];

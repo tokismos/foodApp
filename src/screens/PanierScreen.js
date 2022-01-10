@@ -48,7 +48,7 @@ const PanierScreen = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.title}>Les recettes sélectionnées:</Text>
+      <Text style={styles.title}>Les recettes sélectionnées :</Text>
       <ScrollView>
         <View style={{ width: "100%" }}>
           <View style={{}}>

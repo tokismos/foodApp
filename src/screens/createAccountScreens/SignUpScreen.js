@@ -167,17 +167,17 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
               });
 
               setIsLoading(false);
-              // const status = await verifyCode(fullNumber, verificationCode);
-              // if (status == 200) {
-              //   await signUp(email, password);
-              //   await setAdditionalInfo({
-              //     phoneNumber: fullNumber,
-              //   });
-              //   console.log("approoved");
-              //   setIsLoading(false);
-              // } else {
-              //   setIsLoading(false);
-              // }
+              const status = await verifyCode(fullNumber, verificationCode);
+              if (status == 200) {
+                await signUp(email, password);
+                await setAdditionalInfo({
+                  phoneNumber: fullNumber,
+                });
+                console.log("approoved");
+                setIsLoading(false);
+              } else {
+                setIsLoading(false);
+              }
               console.log("wa8WWWWWWWWW", auth()?.currentUser);
             }}
           />
@@ -223,7 +223,7 @@ const SignUpScreen = ({}) => {
       {/* innerRef to pass the ref of flatList to the component */}
       <LoginHeaderScreen innerRef={ref} index={ind} />
       <PagerView
-        scrollEnabled={true}
+        scrollEnabled={false}
         style={{ height: "100%" }}
         initialPage={0}
         ref={ref}

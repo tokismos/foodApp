@@ -10,11 +10,12 @@ import {
 } from "react-native";
 import { getCommandes } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, Entypo } from "@expo/vector-icons";
 import FastImage from "react-native-fast-image";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Skeleton = ({ title }) => {
   return (
@@ -81,7 +82,7 @@ const CommandeItem = ({ recipe }) => {
           source={{
             uri: recipe.imgURL,
             headers: { Authorization: "someAuthToken" },
-            priority: FastImage.priority.normal,
+            priority: FastImage.priority.high,
           }}
           resizeMode={FastImage.resizeMode.contain}
         />
@@ -120,12 +121,49 @@ const CommandeComponent = ({ item }) => {
         justifyContent: "center",
       }}
     >
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 5 }}>
-        {`Recettes du ${format(time, "dd/MM/yyyy")} à ${format(time, "H:mm")}`}
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "bold",
+          marginLeft: 5,
+          color: "gray",
+        }}
+      >
+        {`Recettes du ${format(time, "dd/MM/yyyy")}`}
       </Text>
       {item.recipes.map((elmt, i) => {
         return <CommandeItem recipe={elmt} key={i} />;
       })}
+    </View>
+  );
+};
+const BottomContainer = () => {
+  return (
+    <View style={styles.bottomContainer}>
+      <View style={styles.bottomView}>
+        <TouchableOpacity style={{ alignItems: "center" }}>
+          <Image source={require("../assets/recette.png")} />
+          <Text style={{ color: "#cccccc" }}>Recettes</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CommandesScreen")}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Entypo name="list" size={45} color="#cccccc" />
+          <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={() => navigation.navigate("CommandesScreen")}
+        >
+          <Image source={require("../assets/cuisine.png")} />
+          <Text style={{ color: "#cccccc" }}>Cuisine</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -154,13 +192,16 @@ const CommandesScreen = () => {
           <Skeleton />
         </View>
       ) : (
-        <ScrollView style={{ flex: 1 }}>
-          <View style={{ alignItems: "center" }}>
-            {commandes.map((item, i) => (
-              <CommandeComponent item={item} key={i} />
-            ))}
-          </View>
-        </ScrollView>
+        <>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: "center", height: "90%" }}>
+              {commandes.map((item, i) => (
+                <CommandeComponent item={item} key={i} />
+              ))}
+            </View>
+          </ScrollView>
+          <BottomContainer />
+        </>
       )}
     </>
   );
@@ -168,4 +209,57 @@ const CommandesScreen = () => {
 
 export default CommandesScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  pageContainer: {
+    alignItems: "center",
+    flex: 1,
+    width: "100%",
+    backgroundColor: "#f5f4f4",
+    paddingTop: 10,
+  },
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: "center",
+    backgroundColor: "grey",
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  TextInput: {
+    borderWidth: 1,
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 3,
+  },
+  button: {
+    height: "10%",
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerContainer: {
+    backgroundColor: Colors.primary,
+    height: "10%",
+    width: "100%",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 20,
+    marginTop: 40,
+  },
+  bottomContainer: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomView: {
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    transform: [{ scale: 0.8 }],
+  },
+});

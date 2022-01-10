@@ -8,7 +8,7 @@ const api = axios.create({
 
 const getAllRecipes = async (item) => {
   //randomize data of array
-  const shuffleArray = () => {
+  const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -21,11 +21,12 @@ const getAllRecipes = async (item) => {
   // let data;
   try {
     const res = await api.get(`/recipes`);
-    data = res.data;
-    shuffleArray(data);
+    data = res.data.filter((item) => item.imgURL != null);
   } catch (e) {
     console.log("ERROR", e);
   }
+  shuffleArray(data);
+
   return data;
 };
 

@@ -20,7 +20,11 @@ import LottieView from "lottie-react-native";
 
 import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
-import { addMatch, changeNumberOfRecipes } from "../redux/slicer/MatchSlicer";
+import {
+  addMatch,
+  changeNumberOfRecipes,
+  resetMatches,
+} from "../redux/slicer/MatchSlicer";
 import { COLORS } from "../consts/colors";
 
 import { getAllRecipes } from "../axios";
@@ -37,7 +41,13 @@ const { height, width } = Dimensions.get("screen");
 import { setUser } from "../redux/slicer/userSlicer";
 import { getAdditionalInfo } from "../helpers/db";
 import CustomButton from "../components/CustomButton";
-
+import { Alert } from "react-native";
+const shuffleArray = () => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
 const Header = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.userStore);
@@ -94,6 +104,8 @@ const Header = () => {
         }}
       >
         <Avatar.Image
+          theme={{ color: "red", backgroundColor: "red" }}
+          style={{ backgroundColor: COLORS.primary }}
           size={40}
           source={
             user?.photoURL != null
@@ -252,15 +264,14 @@ const TinderScreen = ({ navigation }) => {
 
   const [recipes, setRecipes] = useState([]);
   const [headerIsLoading, setHeaderLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
   const loadData = async (item) => {
     getAllRecipes(item)
       .then((result) => {
-        const tmp = result.filter((item) => item.imgURL != null);
-        setRecipes(tmp);
+        setRecipes(result);
       })
       .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
@@ -285,7 +296,11 @@ const TinderScreen = ({ navigation }) => {
   useEffect(() => {
     loadData();
   }, []);
-
+  useEffect(() => {
+    if (matches.length > 0) {
+      setShowButton(true);
+    }
+  }, [matches]);
   const onSwipeLeft = (item) => {
     // console.warn("swipe left", user.name);
     console.log("swiped left", item);
@@ -304,10 +319,7 @@ const TinderScreen = ({ navigation }) => {
             <Image source={require("../assets/recette.png")} />
             <Text style={{ color: "#cccccc" }}>Recettes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: "center" }}>
-            <Image source={require("../assets/cuisine.png")} />
-            <Text style={{ color: "#cccccc" }}>Cuisine</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => navigation.navigate("CommandesScreen")}
             style={{
@@ -315,8 +327,15 @@ const TinderScreen = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <Entypo name="list" size={50} color="#cccccc" />
+            <Entypo name="list" size={45} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ alignItems: "center" }}
+            onPress={() => navigation.navigate("CommandesScreen")}
+          >
+            <Image source={require("../assets/cuisine.png")} />
+            <Text style={{ color: "#cccccc" }}>Cuisine</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -357,15 +376,53 @@ const TinderScreen = ({ navigation }) => {
               onSwipeRight={onSwipeRight}
             />
           </View>
-          {matches.length > 3 ? (
-            <CustomButton
-              onPress={() => {
-                navigation.navigate("PanierScreen");
-              }}
-              title={`Générer ma liste de course (${matches.length})`}
-              style={styles.button}
-              textStyle={{ fontSize: 20 }}
-            />
+          {showButton ? (
+            <View style={styles.button}>
+              <Pressable
+                onPress={() => {
+                  Alert.alert(
+                    "Alerte",
+                    `Voulez-vous conserver les ${matches.length} recettes que vous venez de swiper?`,
+                    [
+                      {
+                        text: "Supprimer",
+                        onPress: () => {
+                          setShowButton(false);
+                          dispatch(resetMatches());
+                        },
+                        style: "cancel",
+                      },
+                      {
+                        text: "Conserver",
+                        onPress: () => setShowButton(false),
+                      },
+                    ]
+                  );
+                }}
+                style={{
+                  position: "absolute",
+                  top: -5,
+                  right: 0,
+                  zIndex: -1,
+                  padding: 5,
+                }}
+              >
+                <AntDesign
+                  name="closecircle"
+                  size={24}
+                  color="#EF5454"
+                  style={{ backgroundColor: "white", borderRadius: 500 }}
+                />
+              </Pressable>
+              <CustomButton
+                onPress={() => {
+                  navigation.navigate("PanierScreen");
+                }}
+                title={`Générer ma liste de course (${matches.length})`}
+                style={{ width: "90%", height: "90%", zIndex: -2 }}
+                textStyle={{ fontSize: 20, textAlign: "center" }}
+              />
+            </View>
           ) : (
             <BottomContainer />
           )}
@@ -432,7 +489,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomView: {
-    width: "100%",
+    width: "90%",
     flexDirection: "row",
     justifyContent: "space-evenly",
     transform: [{ scale: 0.8 }],

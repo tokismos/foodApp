@@ -129,7 +129,7 @@ const NbrPersonneComponent = ({ nbrPersonne, setNbrPersonne }) => {
       <TouchableOpacity
         style={{ padding: 10, marginRight: "-15%" }}
         onPress={() => {
-          if (nbrPersonne == 4) return;
+          if (nbrPersonne == 2) return;
 
           setNbrPersonne((p) => p - 1);
         }}
@@ -158,7 +158,7 @@ const NbrPersonneComponent = ({ nbrPersonne, setNbrPersonne }) => {
   );
 };
 
-const IngredientScreen = ({ route }) => {
+const IngredientScreen = ({ route, navigation }) => {
   const [recipe, setRecipe] = useState();
   const [nbr, setNbr] = useState(+route.params.recipe?.nbrPersonne);
   const [isLoading, setIsLoading] = useState(true);
@@ -187,7 +187,18 @@ const IngredientScreen = ({ route }) => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       ) : (
-        <>
+        <View style={{ height, width }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              position: "absolute",
+              top: 40,
+              left: 20,
+              zIndex: 99,
+            }}
+          >
+            <AntDesign name="arrowleft" size={40} color="black" />
+          </TouchableOpacity>
           <Dialog
             visible={showReport}
             onTouchOutside={() => {
@@ -309,7 +320,7 @@ const IngredientScreen = ({ route }) => {
                   <Text
                     style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
                   >
-                    Nutrition
+                    Commentaires
                   </Text>
                 </View>
               </View>
@@ -489,7 +500,7 @@ const IngredientScreen = ({ route }) => {
               </>
             )}
           </ScrollView>
-        </>
+        </View>
       )}
     </>
   );

@@ -315,6 +315,16 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
+            headerTitle: "Mes recettes",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
           }}
           name="CommandesScreen"
           component={CommandesScreen}
