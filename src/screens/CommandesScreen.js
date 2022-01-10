@@ -1,265 +1,64 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
-import { getCommandes } from "../helpers/db";
-const { width, height } = Dimensions.get("screen");
-import { AntDesign, MaterialIcons, Entypo } from "@expo/vector-icons";
-import FastImage from "react-native-fast-image";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { getCommandes } from "../helpers/db";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const Skeleton = ({ title }) => {
-  return (
-    <SkeletonPlaceholder>
-      {title ? (
-        <View
-          style={{
-            width: width - 100,
-            height: 30,
-            marginLeft: 5,
-            marginVertical: 10,
-            marginBottom: 0,
-            alignSelf: "flex-start",
-          }}
-        />
-      ) : (
-        <View />
-      )}
-      <View
-        style={{
-          width: "90%",
-          marginVertical: 10,
-          flexDirection: "row",
-          backgroundColor: "white",
-          borderRadius: 10,
-          alignSelf: "center",
-        }}
-      >
-        <View style={{ width: width * 0.35, aspectRatio: 1 }} />
-        <View style={{ marginLeft: 20 }}>
-          <View style={{ width: 120, height: 20, borderRadius: 4 }} />
-          <View
-            style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
-          />
-        </View>
-      </View>
-    </SkeletonPlaceholder>
-  );
-};
-const CommandeItem = ({ recipe }) => {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("IngredientScreen", { _id: recipe._id })
-      }
-      style={{
-        width: "90%",
-        marginVertical: 10,
-        flexDirection: "row",
-        backgroundColor: "white",
-        borderRadius: 10,
-        alignSelf: "center",
-      }}
-    >
-      <View
-        style={{
-          width: width * 0.35,
-          borderRadius: 10,
-        }}
-      >
-        <FastImage
-          style={{ aspectRatio: 1 }}
-          source={{
-            uri: recipe.imgURL,
-            headers: { Authorization: "someAuthToken" },
-            priority: FastImage.priority.high,
-          }}
-          resizeMode={FastImage.resizeMode.contain}
-        />
-      </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontWeight: "bold", fontSize: 16, textAlign: "center" }}>
-          {recipe.name}
-        </Text>
-      </View>
-      <View
-        style={{
-          width: "15%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <MaterialIcons name="keyboard-arrow-right" size={20} color="black" />
-      </View>
-    </TouchableOpacity>
-  );
-};
-const CommandeComponent = ({ item }) => {
-  var time = new Date(item.dateTime);
+const { width, height } = Dimensions.get("screen");
+const CommandeItem = ({ item }) => {
+  console.log("ssssssssssss", item);
+  let time = new Date(item.dateTime);
 
   return (
     <View
       style={{
-        width: "100%",
+        backgroundColor: "white",
+        borderRadius: 10,
+        borderWidth: 1,
+        padding: 10,
+        width: width * 0.9,
+        alignSelf: "center",
         marginVertical: 10,
-        justifyContent: "center",
+        flexDirection: "row",
       }}
     >
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "bold",
-          marginLeft: 5,
-          color: "gray",
-        }}
-      >
-        {`Recettes du ${format(time, "dd/MM/yyyy")}`}
-      </Text>
-      {item.recipes.map((elmt, i) => {
-        return <CommandeItem recipe={elmt} key={i} />;
-      })}
-    </View>
-  );
-};
-const BottomContainer = () => {
-  return (
-    <View style={styles.bottomContainer}>
-      <View style={styles.bottomView}>
-        <TouchableOpacity style={{ alignItems: "center" }}>
-          <Image source={require("../assets/recette.png")} />
-          <Text style={{ color: "#cccccc" }}>Recettes</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("CommandesScreen")}
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Entypo name="list" size={45} color="#cccccc" />
-          <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ alignItems: "center" }}
-          onPress={() => navigation.navigate("CommandesScreen")}
-        >
-          <Image source={require("../assets/cuisine.png")} />
-          <Text style={{ color: "#cccccc" }}>Cuisine</Text>
-        </TouchableOpacity>
+      <View style={{ width: "90%" }}>
+        <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+          Liste du {format(time, "dd/MM/yyyy")}
+        </Text>
+        {item.recipes.map((elmt) => {
+          return (
+            <Text style={{ marginLeft: 5 }}>
+              - {elmt.name} ( {elmt.nbrPersonne} personnes )
+            </Text>
+          );
+        })}
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <MaterialIcons name="keyboard-arrow-right" size={50} color="black" />
       </View>
     </View>
   );
 };
+
 const CommandesScreen = () => {
   const [commandes, setCommandes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getCommandes(setCommandes);
   }, []);
 
-  //To detect when we set the commandes
-  useEffect(() => {
-    if (commandes.length != 0) {
-      setIsLoading(false);
-    }
-  }, [commandes]);
-
   return (
-    <>
-      {isLoading ? (
-        <View style={{}}>
-          <Skeleton title={true} />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </View>
-      ) : (
-        <>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={{ alignItems: "center", height: "90%" }}>
-              {commandes.map((item, i) => (
-                <CommandeComponent item={item} key={i} />
-              ))}
-            </View>
-          </ScrollView>
-          <BottomContainer />
-        </>
-      )}
-    </>
+    <ScrollView>
+      {commandes.map((item) => {
+        return <CommandeItem item={item} />;
+      })}
+    </ScrollView>
   );
 };
 
 export default CommandesScreen;
 
-const styles = StyleSheet.create({
-  pageContainer: {
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-    backgroundColor: "#f5f4f4",
-    paddingTop: 10,
-  },
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "grey",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-
-  TextInput: {
-    borderWidth: 1,
-    backgroundColor: "white",
-    borderRadius: 5,
-    padding: 3,
-  },
-  button: {
-    height: "10%",
-    width: "90%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerContainer: {
-    backgroundColor: Colors.primary,
-    height: "10%",
-    width: "100%",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    paddingRight: 20,
-    marginTop: 40,
-  },
-  bottomContainer: {
-    width: "100%",
-    height: "10%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomView: {
-    width: "90%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    transform: [{ scale: 0.8 }],
-  },
-});
+const styles = StyleSheet.create({});

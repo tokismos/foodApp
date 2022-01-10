@@ -58,6 +58,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import FeedBackScreen from "../screens/FeedBackScreen";
 import SignInScreen from "../screens/SignInScreen";
 import PhoneScreen from "../screens/PhoneScreen";
+import MyRecipesScreen from "../screens/MyRecipesScreen";
 import CommandesScreen from "../screens/CommandesScreen";
 
 export const TabScreen = () => {
@@ -231,6 +232,23 @@ const LoggedStackScreen = () => {
           options={{
             headerShown: true,
           }}
+          name="MyRecipesScreen"
+          component={MyRecipesScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mes commandes",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
           name="CommandesScreen"
           component={CommandesScreen}
         />
@@ -326,8 +344,8 @@ const LoginStackScreen = () => {
               fontSize: 22,
             },
           }}
-          name="CommandesScreen"
-          component={CommandesScreen}
+          name="MyRecipesScreen"
+          component={MyRecipesScreen}
         />
         <Stack.Screen
           options={{
@@ -395,6 +413,23 @@ const LoginStackScreen = () => {
           }}
           name="FeedBackScreen"
           component={FeedBackScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mes commandes",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="CommandesScreen"
+          component={CommandesScreen}
         />
         <Stack.Screen
           options={{

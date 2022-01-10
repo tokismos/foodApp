@@ -11,10 +11,12 @@ const IngredientCartScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     cart.map((item) => {
+      console.log("bbbbbb", item);
       finalCart[item._id] = {
         ingredients: item.ingredients,
         name: item.name,
         imgURL: item.imgURL,
+        nbrPersonne: item.nbrPersonne,
       };
     });
   }, []);

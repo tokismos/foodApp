@@ -56,12 +56,18 @@ const getAdditionalInfo = async () => {
 
 const setCommandes = (cart) => {
   let obj = [];
-  cart.map((item) => {
+
+  cart.forEach((item) => {
+    console.log("jjjjjjjjjjjjjjjjjjjjjjjj", item);
     obj.push({
       _id: item._id,
       name: item.name,
       imgURL: item.imgURL,
+      ingredients: item.ingredients,
+      nbrPersonne: item.nbrPersonne,
     });
+    console.log("ooooooooooooooooooooooooooo", obj);
+    console.log("jjjjjjjjjjjjjjjjjjjjjjjjeeeeeeeeeeeee", item);
   });
   try {
     firebase
@@ -80,7 +86,7 @@ const setCommandes = (cart) => {
 
 const getCommandes = async (setCommandes) => {
   let arr = [];
-  const hi = firebase
+  firebase
     .app()
     .database(firebaseDbURL)
     .ref(`/users/${auth().currentUser?.uid}/commandes`)

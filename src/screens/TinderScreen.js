@@ -332,7 +332,7 @@ const TinderScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignItems: "center" }}
-            onPress={() => navigation.navigate("CommandesScreen")}
+            onPress={() => navigation.navigate("MyRecipesScreen")}
           >
             <Image source={require("../assets/cuisine.png")} />
             <Text style={{ color: "#cccccc" }}>Cuisine</Text>

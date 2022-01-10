@@ -29,7 +29,6 @@ const SummarizeScreen = ({ route, navigation }) => {
     return (
       <>
         <View style={styles.itemComponent}>
-          {console.log("imnage", imgURL)}
           <View style={styles.itemContainer}>
             <FastImage
               style={styles.image}
@@ -57,7 +56,8 @@ const SummarizeScreen = ({ route, navigation }) => {
               <Text key={index} style={{ marginLeft: 10 }}>
                 <Text style={{ fontWeight: "bold" }}>
                   {" "}
-                  {item.newQuantity} {item.unite == "unite" ? "" : item.unite}{" "}
+                  {!item.newQuantity ? item.quantity : item.newQuantity}{" "}
+                  {item.unite == "unite" ? "" : item.unite}{" "}
                 </Text>
                 {item.name}
               </Text>
@@ -96,7 +96,6 @@ const SummarizeScreen = ({ route, navigation }) => {
         <View style={{ height: "75%" }}>
           <ScrollView>
             {cartArray.map((item, index) => {
-              console.log("THJIS IS ITEM", cartArray);
               if (item.ingredients?.length == 0) {
                 return;
               }
