@@ -65,15 +65,16 @@ const PanierScreen = ({ navigation }) => {
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          style={{ ...styles.buttonContainer, backgroundColor: "#E3E3E3" }}
+        <CustomButton
           onPress={() => navigation.goBack()}
-        >
-          <Text style={{ fontWeight: "800", fontSize: 18, color: "black" }}>
-            Ajouter d'autres recettes
-          </Text>
-        </TouchableOpacity>
-
+          title="Ajouter d'autres recettes"
+          style={{
+            ...styles.buttonContainer,
+            backgroundColor: "#E3e3e3",
+            borderRadius: 0,
+          }}
+          textStyle={{ fontWeight: "800", fontSize: 18, color: "black" }}
+        />
         <CustomButton
           onPress={validate}
           title="Valider les recettes"

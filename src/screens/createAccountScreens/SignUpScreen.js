@@ -159,14 +159,6 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
             isLoading={isLoading}
             onPress={async () => {
               setIsLoading(true);
-              signUp(email, password).then(async (e) => {
-                console.log("cREEEATEEED", e);
-                await setAdditionalInfo({
-                  phoneNumber: "99999911111111",
-                });
-              });
-
-              setIsLoading(false);
               const status = await verifyCode(fullNumber, verificationCode);
               if (status == 200) {
                 await signUp(email, password);
@@ -188,16 +180,15 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
 };
 const NextButton = ({ onPress, disabled }) => {
   return (
-    <TouchableOpacity
+    <CustomButton
       onPress={onPress}
+      title="Suivant"
       disabled={disabled}
       style={{
         ...styles.nextButton,
-        backgroundColor: disabled ? COLORS.secondary : COLORS.primary,
       }}
-    >
-      <Text style={{ fontWeight: "bold", color: "white" }}>Suivant</Text>
-    </TouchableOpacity>
+      textStyle={{ fontWeight: "bold", color: "white" }}
+    />
   );
 };
 
@@ -273,7 +264,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 50,
     alignItems: "center",
-    borderRadius: 10,
     alignSelf: "center",
   },
   description: {

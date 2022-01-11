@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
 import { COLORS } from "../consts/colors";
 
 const CustomButton = ({
@@ -14,11 +9,13 @@ const CustomButton = ({
   style,
   isLoading,
   textStyle,
+  colorRipple,
 }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
       disabled={disabled}
+      android_ripple={{ color: "white", ...colorRipple }}
       style={{
         ...styles.button,
         backgroundColor: disabled ? COLORS.secondary : COLORS.primary,
@@ -29,7 +26,7 @@ const CustomButton = ({
       <Text style={{ fontWeight: "bold", color: "white", ...textStyle }}>
         {title}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -41,7 +38,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 50,
     alignItems: "center",
-    borderRadius: 10,
     justifyContent: "center",
     flexDirection: "row",
     alignSelf: "center",

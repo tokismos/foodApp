@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import FastImage from "react-native-fast-image";
+import CustomButton from "../components/CustomButton";
 import { COLORS } from "../consts/colors";
 
 const IngredientCartScreen = ({ route, navigation }) => {
@@ -156,14 +157,12 @@ const IngredientCartScreen = ({ route, navigation }) => {
           alignItems: "center",
         }}
       >
-        <TouchableOpacity
-          style={{ ...styles.buttonContainer, backgroundColor: COLORS.primary }}
+        <CustomButton
           onPress={() => navigation.navigate("SummarizeScreen", { finalCart })}
-        >
-          <Text style={{ fontWeight: "bold", color: "white", fontSize: 18 }}>
-            Valider les ingrédients
-          </Text>
-        </TouchableOpacity>
+          title="Valider les ingrédients"
+          style={{ ...styles.buttonContainer, backgroundColor: COLORS.primary }}
+          textStyle={{ fontWeight: "bold", color: "white", fontSize: 18 }}
+        />
       </View>
     </View>
   );
