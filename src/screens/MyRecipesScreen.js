@@ -7,6 +7,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { getCommandes } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
@@ -58,7 +59,8 @@ const Skeleton = ({ title }) => {
 const CommandeItem = ({ recipe }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
+    <Pressable
+      android_ripple={{ color: "#d3d3d3", foreground: true }}
       onPress={() =>
         navigation.navigate("IngredientScreen", { _id: recipe._id })
       }
@@ -107,7 +109,7 @@ const CommandeItem = ({ recipe }) => {
       >
         <MaterialIcons name="keyboard-arrow-right" size={20} color="black" />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 const CommandeComponent = ({ item }) => {

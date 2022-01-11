@@ -10,13 +10,11 @@ import {
   Alert,
   Pressable,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 const Imagee = ({ uri, loaded, setLoaded }) => {
   return (
@@ -119,9 +117,19 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               {" "}
               $
             </Text>
-            <Text style={{ width: "30%", textAlign: "center", color: "white" }}>
-              92% ont aimé cette recette
-            </Text>
+            <View
+              style={{
+                width: "30%",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                {recipe.ingredients.length}{" "}
+              </Text>
+              <Text style={{ color: "white" }}>Ingrédients</Text>
+            </View>
           </View>
           {/* <View style={styles.headerContainer}>
               <Text style={styles.title}>{recipe?.name}</Text>
@@ -190,6 +198,11 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
               }}
             >
               <Feather name="info" size={40} color="white" />
+              <MaterialIcons
+                name="keyboard-arrow-down"
+                size={30}
+                color="white"
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onSwipeRight}

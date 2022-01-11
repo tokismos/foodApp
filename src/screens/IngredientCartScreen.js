@@ -3,16 +3,23 @@ import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import FastImage from "react-native-fast-image";
+import { useDispatch } from "react-redux";
 import CustomButton from "../components/CustomButton";
 import { COLORS } from "../consts/colors";
+import { setCommandes } from "../helpers/db";
+import { resetMatches } from "../redux/slicer/MatchSlicer";
+import {
+  setCuisineNotification,
+  setListNotification,
+} from "../redux/slicer/notificationSlicer";
 
 const IngredientCartScreen = ({ route, navigation }) => {
   const { cart } = route.params;
+  const dispatch = useDispatch();
   let finalCart = {};
 
   useEffect(() => {
     cart.map((item) => {
-      console.log("bbbbbb", item);
       finalCart[item._id] = {
         ingredients: item.ingredients,
         name: item.name,
@@ -158,8 +165,22 @@ const IngredientCartScreen = ({ route, navigation }) => {
         }}
       >
         <CustomButton
-          onPress={() => navigation.navigate("SummarizeScreen", { finalCart })}
-          title="Valider les ingrédients"
+          onPress={() => {
+            console.log("FINAL CART", finalCart);
+            let arr = [];
+            Object.entries(finalCart).forEach(([key, value]) => {
+              arr.push({ _id: key, ...value });
+            });
+            setCommandes(arr);
+            dispatch(setCuisineNotification(true));
+            dispatch(setListNotification(true));
+            dispatch(resetMatches());
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "TinderScreen" }],
+            });
+          }}
+          title="Créer ma liste de courses"
           style={{ ...styles.buttonContainer, backgroundColor: COLORS.primary }}
           textStyle={{ fontWeight: "bold", color: "white", fontSize: 18 }}
         />

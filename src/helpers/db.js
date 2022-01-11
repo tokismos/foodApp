@@ -58,7 +58,6 @@ const setCommandes = (cart) => {
   let obj = [];
 
   cart.forEach((item) => {
-    console.log("jjjjjjjjjjjjjjjjjjjjjjjj", item);
     obj.push({
       _id: item._id,
       name: item.name,

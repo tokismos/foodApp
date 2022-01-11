@@ -71,10 +71,11 @@ const InfoCommandeScreen = ({ navigation, route }) => {
 
   return (
     <ScrollView style={{}}>
-      {params.historyDetail.recipes.map((item) => {
+      {params.historyDetail.recipes.map((item, i) => {
         console.log("this is iteenm", item);
         return (
           <CartComponent
+            key={i}
             imgURL={item.imgURL}
             name={item.name}
             ingredients={item.ingredients}

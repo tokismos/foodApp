@@ -1084,49 +1084,6 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@4.0.15", "@expo/config-plugins@^4.0.12":
-  version "4.0.15"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.15.tgz#cc170a0cf890973b6491cf357540e9955296019c"
-  integrity sha512-QqxVEt2bFu3ZuI1soULRJv7i0Zrg/FMZ0IxNV7Y3AjH7fhtUJH3pPo9f6MURvqNr+PLxhBlkofkWfunrVejSkw==
-  dependencies:
-    "@expo/config-types" "^43.0.1"
-    "@expo/json-file" "8.2.34"
-    "@expo/plist" "0.0.16"
-    "@expo/sdk-runtime-versions" "^1.0.0"
-    "@react-native/normalize-color" "^2.0.0"
-    chalk "^4.1.2"
-    debug "^4.3.1"
-    find-up "~5.0.0"
-    fs-extra "9.0.0"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    resolve-from "^5.0.0"
-    semver "^7.3.5"
-    slash "^3.0.0"
-    xcode "^3.0.1"
-    xml2js "0.4.23"
-
-"@expo/config-plugins@4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.6.tgz#ef52f0e4d96ddd52b4cd4cc8c6efbe3d9576c72d"
-  integrity sha512-K/KQaw/CU8uLQgk7sFnZC54YGHoGucKFfdjYeZx5ds2eyzbuMAiKzGFcxZ/S+1dVBZ8QHzwowsVBW3kuYhnQ3Q==
-  dependencies:
-    "@expo/config-types" "^43.0.1"
-    "@expo/json-file" "8.2.33"
-    "@expo/plist" "0.0.15"
-    "@react-native/normalize-color" "^2.0.0"
-    chalk "^4.1.2"
-    debug "^4.3.1"
-    find-up "~5.0.0"
-    fs-extra "9.0.0"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    resolve-from "^5.0.0"
-    semver "^7.3.5"
-    slash "^3.0.0"
-    xcode "^3.0.1"
-    xml2js "0.4.23"
-
 "@expo/config-plugins@4.0.7", "@expo/config-plugins@^4.0.2":
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.7.tgz#c3cd8d2297edd779576b71a8ad16fc8b80c08eda"
@@ -1135,6 +1092,28 @@
     "@expo/config-types" "^43.0.1"
     "@expo/json-file" "8.2.33"
     "@expo/plist" "0.0.15"
+    "@react-native/normalize-color" "^2.0.0"
+    chalk "^4.1.2"
+    debug "^4.3.1"
+    find-up "~5.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "0.4.23"
+
+"@expo/config-plugins@^4.0.12":
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.15.tgz#cc170a0cf890973b6491cf357540e9955296019c"
+  integrity sha512-QqxVEt2bFu3ZuI1soULRJv7i0Zrg/FMZ0IxNV7Y3AjH7fhtUJH3pPo9f6MURvqNr+PLxhBlkofkWfunrVejSkw==
+  dependencies:
+    "@expo/config-types" "^43.0.1"
+    "@expo/json-file" "8.2.34"
+    "@expo/plist" "0.0.16"
+    "@expo/sdk-runtime-versions" "^1.0.0"
     "@react-native/normalize-color" "^2.0.0"
     chalk "^4.1.2"
     debug "^4.3.1"
@@ -1175,23 +1154,6 @@
     slugify "^1.3.4"
     sucrase "^3.20.0"
 
-"@expo/config@6.0.6":
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-6.0.6.tgz#64b49b93f07cb046f5a8538a1793bef9070d8d52"
-  integrity sha512-GPI8EIdMAtZ5VaB4p5GcfuX50xyfGFdpEqLi0QmcfrCfTsGry1/j/Qy28hovHM1oJYHlaZylTcbGy+1ET+AO2w==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "4.0.6"
-    "@expo/config-types" "^43.0.1"
-    "@expo/json-file" "8.2.33"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    require-from-string "^2.0.2"
-    resolve-from "^5.0.0"
-    semver "7.3.2"
-    slugify "^1.3.4"
-    sucrase "^3.20.0"
-
 "@expo/config@6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@expo/config/-/config-6.0.7.tgz#c84c76c907e65e0f92ebc67e11173c62de1ed513"
@@ -1201,23 +1163,6 @@
     "@expo/config-plugins" "4.0.7"
     "@expo/config-types" "^43.0.1"
     "@expo/json-file" "8.2.33"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    require-from-string "^2.0.2"
-    resolve-from "^5.0.0"
-    semver "7.3.2"
-    slugify "^1.3.4"
-    sucrase "^3.20.0"
-
-"@expo/config@^6.0.6":
-  version "6.0.15"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-6.0.15.tgz#aa610f8b714e0b1103e13c8210059519479d11d6"
-  integrity sha512-nrG+OUe/2n3ulNSgHRs9V70zXu3lpkuzJ6F0VmCuhjyHqT7UYimkgSCJGqaE3N+AayBTK+YffOT6bTWH17wxjQ==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "4.0.15"
-    "@expo/config-types" "^43.0.1"
-    "@expo/json-file" "8.2.34"
     getenv "^1.0.0"
     glob "7.1.6"
     require-from-string "^2.0.2"
@@ -1284,17 +1229,6 @@
     chalk "^4.1.0"
     getenv "^1.0.0"
     metro-react-native-babel-transformer "^0.59.0"
-
-"@expo/metro-config@~0.2.6":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.2.8.tgz#c0fd56723e2fb9bb352e788e8f8fe0e218aaf663"
-  integrity sha512-8g0QrHfvSgTLzryuE4JXRwFwBZ7EmqE55zR39Yy7jEVR3epYL0JbBK0/IDFmf6auwsDFtMjAZjFL4WEhRN5bEQ==
-  dependencies:
-    "@expo/config" "6.0.6"
-    chalk "^4.1.0"
-    debug "^4.3.2"
-    getenv "^1.0.0"
-    sucrase "^3.20.0"
 
 "@expo/plist@0.0.14":
   version "0.0.14"
@@ -2966,13 +2900,6 @@ debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
   dependencies:
     ms "2.1.2"
 
-debug@^4.3.2:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
-  integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
-  dependencies:
-    ms "2.1.2"
-
 decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -3318,11 +3245,6 @@ expo-font@~10.0.3:
     expo-modules-core "~0.4.4"
     fontfaceobserver "^2.1.0"
 
-expo-json-utils@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/expo-json-utils/-/expo-json-utils-0.2.0.tgz#2cd52648060c7905f8fd330d4ac22a5278e40650"
-  integrity sha512-HRPnEYXPMxduR9OzoUS1WmOFhgSLiclDdkbM4rCryiH7kzlKjFVGqaFwIVk1/IELVpDDjg1Fxwf0eSSN7NQXPA==
-
 expo-keep-awake@~10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.0.tgz#275a3e02f99bc0429790047add126c1dcce60d63"
@@ -3334,13 +3256,6 @@ expo-linear-gradient@~10.0.3:
   integrity sha512-zKkBhHvTvDywpb0y5BJDHTbxX5/2C60qW/M8uyZXKIZcTUwY7j/9Kcx0YzoNNglq7p6aQ/DWO7sM8LHr93985Q==
   dependencies:
     expo-modules-core "~0.4.4"
-
-expo-manifests@~0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.2.2.tgz#7033ab52750a19d554fbb4255d41a70eac839ee2"
-  integrity sha512-MRoIfEPn9zNWOqDLstI4NW96xYZpkM448K8lAO9FN5zntfwpkWyQUFH+Et5RIKXHUxuO0xeUmrNtoUJAMjGVdw==
-  dependencies:
-    expo-json-utils "~0.2.0"
 
 expo-modules-autolinking@~0.3.4:
   version "0.3.4"
@@ -3374,31 +3289,6 @@ expo-status-bar@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
-
-expo-structured-headers@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-2.1.0.tgz#1576ac4004e9b7a4924673c8bd362c9679a9337e"
-  integrity sha512-cjb1L2UzlieA+FSksHSZo55LhjvIR8wypkZbzFW5q4SpzOR5zCgtsZ77vz2RNfNQU/ZBxkaHLRrNgiEQzTrwAw==
-
-expo-updates-interface@~0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.5.0.tgz#30b05b9e190b3e2662d7cc26cd84d305d7ab4217"
-  integrity sha512-3Yhip5LQ6x1nQ/2Xm/uP3Oeann7YkaBwsdUpxbcMtn2Ayucuu9U7r9ltwzBFxC4RWebfhXGJZ5+gx85y0leGXQ==
-
-expo-updates@^0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.11.3.tgz#5dcd27ea7de47b6b222c525541a2e0dc91d6191e"
-  integrity sha512-W8oXaH0MKaH5ZLszupnm904A4epBjgvjPEfuIjy3JybTU+JC8319gqsOZ7nWBxZZck67utxHAlyJ9Ks/CcqFmA==
-  dependencies:
-    "@expo/config" "^6.0.6"
-    "@expo/config-plugins" "^4.0.2"
-    "@expo/metro-config" "~0.2.6"
-    expo-manifests "~0.2.2"
-    expo-structured-headers "~2.1.0"
-    expo-updates-interface "~0.5.0"
-    fbemitter "^2.1.1"
-    resolve-from "^5.0.0"
-    uuid "^3.4.0"
 
 expo@~43.0.1:
   version "43.0.3"
@@ -5971,6 +5861,11 @@ react-native-skeleton-placeholder@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-native-skeleton-placeholder/-/react-native-skeleton-placeholder-5.0.0.tgz#899fca447c2f0b81f98566e350e792157a3c9df9"
   integrity sha512-7sdG+Y2ENEVcxFC9XlpCgHy59XKkxaUyVqDwuAb66hvl7lwFr25uA5kHJ+JuDJ84ptVil5UEowW/2avwhsfoYg==
+
+react-native-splash-screen@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz#3af71ed17afe50fee69590a45aec399d071ead02"
+  integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
 
 react-native-svg-transformer@^0.14.3:
   version "0.14.3"

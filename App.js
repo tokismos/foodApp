@@ -1,9 +1,16 @@
-import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 
 import { store } from "./src/redux/store";
 import { Provider } from "react-redux";
 import RootNavigation from "./src/navigation/Navigator";
+import SplashScreen from "react-native-splash-screen";
+
 require("./src/helpers/db");
 
 const config = {
@@ -36,22 +43,19 @@ export default function App() {
   //   return sub;
   // }, []);
 
-  const SplashScreen = () => {
-    return (
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  };
-
+  useEffect(() => {
+    SplashScreen.hide();
+  });
   return (
-    <Provider store={store}>
-      <RootNavigation />
-      {/* <NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <RootNavigation />
+        {/* <NavigationContainer>
         <StatusBar translucent />
         {user ? <LoggedStackScreen /> : <LoginStackScreen />}
       </NavigationContainer> */}
-    </Provider>
+      </Provider>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

@@ -255,7 +255,7 @@ const LoggedStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
-            headerTitle: "Mes commandes",
+            headerTitle: "Liste de courses",
             headerTitleAlign: "center",
             headerTintColor: "white",
 
@@ -451,7 +451,7 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
-            headerTitle: "Mes commandes",
+            headerTitle: "Liste de courses",
             headerTitleAlign: "center",
             headerTintColor: "white",
 

@@ -8,6 +8,7 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView,
 } from "react-native";
 import Animated, {
   FadeInLeft,
@@ -170,14 +171,12 @@ const IngredientScreen = ({ route, navigation }) => {
       setIsLoading(false);
     } else {
       getRecipe(route.params._id).then((res) => {
-        console.log("HOLA THIS IS RES", res);
         setNbr(+res.nbrPersonne);
         setRecipe(res);
         setIsLoading(false);
       });
     }
   }, []);
-  console.log("RECEIPPE", recipe?.nbrPersonne);
   return (
     <>
       {isLoading ? (
@@ -187,7 +186,7 @@ const IngredientScreen = ({ route, navigation }) => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       ) : (
-        <View style={{ height, width }}>
+        <View style={{ flex: 1, width }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{
@@ -302,7 +301,11 @@ const IngredientScreen = ({ route, navigation }) => {
                   }}
                 >
                   <Text
-                    style={{ color: "white", fontSize: 20, fontWeight: "bold" }}
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    }}
                   >
                     La recette
                   </Text>
@@ -318,7 +321,11 @@ const IngredientScreen = ({ route, navigation }) => {
                   }}
                 >
                   <Text
-                    style={{ color: "black", fontSize: 20, fontWeight: "bold" }}
+                    style={{
+                      color: "black",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    }}
                   >
                     Commentaires
                   </Text>
@@ -473,7 +480,7 @@ const IngredientScreen = ({ route, navigation }) => {
                           textAlign: "center",
                         }}
                       >
-                        Ca nous fera plaisir d'avoir votre avis
+                        Est-ce que vous avez aimé cette recette ?
                       </Text>
                       <View
                         style={{
@@ -484,17 +491,19 @@ const IngredientScreen = ({ route, navigation }) => {
                         }}
                       >
                         <TouchableOpacity onPress={() => setShowVote(false)}>
-                          <AntDesign name="like2" size={30} color="black" />
+                          <AntDesign name="like2" size={50} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setShowVote(false)}>
-                          <AntDesign name="dislike2" size={30} color="black" />
+                          <AntDesign name="dislike2" size={50} color="black" />
                         </TouchableOpacity>
                       </View>
                     </View>
                   </DialogContent>
                 </Dialog>
                 <CustomButton
-                  title="Donner mon avis"
+                  style={{ width: "60%", marginBottom: 20 }}
+                  textStyle={{ fontSize: 18 }}
+                  title="J'ai cuisiné cette recette"
                   onPress={() => setShowVote(true)}
                 />
               </>

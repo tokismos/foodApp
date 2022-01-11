@@ -53,6 +53,7 @@
     "react-native-screens": "~3.8.0",
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-skeleton-placeholder": "^5.0.0",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "12.1.1",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.1",

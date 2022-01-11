@@ -42,6 +42,10 @@ import { setUser } from "../redux/slicer/userSlicer";
 import { getAdditionalInfo } from "../helpers/db";
 import CustomButton from "../components/CustomButton";
 import { Alert } from "react-native";
+import {
+  setCuisineNotification,
+  setListNotification,
+} from "../redux/slicer/notificationSlicer";
 const shuffleArray = () => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -258,13 +262,37 @@ const BarHeader = () => {
     </Pressable>
   );
 };
+
+const Notification = ({ right }) => {
+  return (
+    <View
+      style={{
+        height: 10,
+        width: 10,
+        backgroundColor: "#EF5454",
+        borderRadius: 10,
+        position: "absolute",
+        top: 0,
+        right: right ?? "25%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    />
+  );
+};
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userStore);
 
+  const [notificationList, setNotificationList] = useState(true);
+  const [notificationCuisine, setNotificationCuisine] = useState(true);
+
   const [recipes, setRecipes] = useState([]);
   const [headerIsLoading, setHeaderLoading] = useState(true);
   const [showButton, setShowButton] = useState(false);
+  const { listNotification, cuisineNotification } = useSelector(
+    (state) => state.notificationStore
+  );
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
@@ -321,19 +349,27 @@ const TinderScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("CommandesScreen")}
+            onPress={() => {
+              navigation.navigate("CommandesScreen");
+              listNotification && dispatch(setListNotification(false));
+            }}
             style={{
               alignItems: "center",
               justifyContent: "center",
             }}
           >
+            {listNotification && <Notification />}
             <Entypo name="list" size={45} color="#cccccc" />
             <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignItems: "center" }}
-            onPress={() => navigation.navigate("MyRecipesScreen")}
+            onPress={() => {
+              navigation.navigate("MyRecipesScreen");
+              cuisineNotification && dispatch(setCuisineNotification(false));
+            }}
           >
+            {cuisineNotification && <Notification right={0} />}
             <Image source={require("../assets/cuisine.png")} />
             <Text style={{ color: "#cccccc" }}>Cuisine</Text>
           </TouchableOpacity>
