@@ -154,10 +154,10 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('C:\\Users\\tokis\\Desktop\\www.jks')
-            storePassword 'qqqqqq'
-            keyAlias 'key0eee'
-            keyPassword 'wwwwww'
+            storeFile file('C:\\Users\\tokis\\Desktop\\YUZUKEY.jks')
+            storePassword 'med-mapper12'
+            keyAlias 'key0'
+            keyPassword 'medemapper12'
         }
     }
     buildTypes {

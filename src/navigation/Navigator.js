@@ -31,7 +31,6 @@ import ResultCartScreen from "../screens/ResultCartScreen";
 import RecetteSVG from "../assets/recette.svg";
 import { color } from "react-native-reanimated";
 import TinderScreen from "../screens/TinderScreen";
-import FilterScreen from "../screens/FilterScreen";
 import LogOutScreen from "../screens/LogOutScreen";
 import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
@@ -325,7 +324,6 @@ const LoggedStackScreen = () => {
           component={SignUpScreen}
         />
 
-        <Stack.Screen name="FilterScreen" component={FilterScreen} />
         <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
         <Stack.Screen name="CartScreen" component={CartScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
