@@ -6,8 +6,6 @@
     "name": "Yuzu",
     "slug": "Yuzu",
     "version": "1.0.1",
-    "sdkVersion": "38.0.0",
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,7 +18,9 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.foodApp.test"
@@ -34,7 +34,9 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-    "plugins": ["@react-native-firebase/app"],
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     },
