@@ -2871,17 +2871,12 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
 
-cycle@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
-  integrity sha1-IegLK+hYD5i0aPN5QwZisEbDStI=
-
 date-fns@^2.28.0:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
   integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
 
-dayjs@^1.8.15, dayjs@^1.8.29:
+dayjs@^1.8.15:
   version "1.10.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
   integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
@@ -3220,14 +3215,6 @@ expo-error-recovery@~3.0.3:
   dependencies:
     expo-modules-core "~0.4.4"
 
-expo-facebook@~12.0.3:
-  version "12.0.3"
-  resolved "https://registry.yarnpkg.com/expo-facebook/-/expo-facebook-12.0.3.tgz#228d0f00af3c18e5231d92fd22e956729d8f608f"
-  integrity sha512-+0nXNS6hVuwZ75jLd0r06y35ejVY0ujqq8hCd4KFFz22g5/O/3vabp+Sqehq03VnJTNp56/r7YcjpKkJI24Izw==
-  dependencies:
-    "@expo/config-plugins" "^4.0.2"
-    expo-modules-core "~0.4.4"
-
 expo-file-system@~13.0.3:
   version "13.0.3"
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-13.0.3.tgz#f8b3c47e0e7ecfd767043ed4c0aba6b207367678"
@@ -3245,6 +3232,11 @@ expo-font@~10.0.3:
     expo-modules-core "~0.4.4"
     fontfaceobserver "^2.1.0"
 
+expo-json-utils@~0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/expo-json-utils/-/expo-json-utils-0.2.0.tgz#2cd52648060c7905f8fd330d4ac22a5278e40650"
+  integrity sha512-HRPnEYXPMxduR9OzoUS1WmOFhgSLiclDdkbM4rCryiH7kzlKjFVGqaFwIVk1/IELVpDDjg1Fxwf0eSSN7NQXPA==
+
 expo-keep-awake@~10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.0.tgz#275a3e02f99bc0429790047add126c1dcce60d63"
@@ -3257,6 +3249,13 @@ expo-linear-gradient@~10.0.3:
   dependencies:
     expo-modules-core "~0.4.4"
 
+expo-manifests@~0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.2.2.tgz#7033ab52750a19d554fbb4255d41a70eac839ee2"
+  integrity sha512-MRoIfEPn9zNWOqDLstI4NW96xYZpkM448K8lAO9FN5zntfwpkWyQUFH+Et5RIKXHUxuO0xeUmrNtoUJAMjGVdw==
+  dependencies:
+    expo-json-utils "~0.2.0"
+
 expo-modules-autolinking@~0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.3.4.tgz#25ce32ca933fedab2a5eb139e91327d123aa6066"
@@ -3268,7 +3267,7 @@ expo-modules-autolinking@~0.3.4:
     find-up "~5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@~0.4.10:
+expo-modules-core@~0.4.10, expo-modules-core@~0.4.8:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.10.tgz#6c7e7e211b3056fc23a462e9faea88cc7653fe9b"
   integrity sha512-uCZA3QzF0syRaHwYY99iaNhnye4vSQGsJ/y6IAiesXdbeVahWibX4G1KoKNPUyNsKXIM4tqA+4yByUSvJe4AAw==
@@ -3297,6 +3296,32 @@ expo-status-bar@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
+
+expo-structured-headers@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-2.0.0.tgz#a30a370ad9f7bb65a03d81cadc2a0c88e038349d"
+  integrity sha512-pCMjCNpVX8rTD0gwfa29ShUY2++4yxCXodvMWwQonvDtunp2UC3PlvGo82oBBOqsV0yKPN2rMO43tOYSH6lW0Q==
+
+expo-updates-interface@~0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.4.0.tgz#20961f2cb4bd068a74c29434affa08791dbaa240"
+  integrity sha512-EUJaLnDAePikGEQT8w6gjCY3m/dlGgjZKVn5XBaxZMkHzOy3PDQo6QOcK/bcMdkA3CyNrvo6NCe+/7RHrgmK4A==
+
+expo-updates@~0.10.13:
+  version "0.10.15"
+  resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.10.15.tgz#1fcfd78ff615307809ad38a3d37eaa67f7268282"
+  integrity sha512-GHh1e0BwJY7aT+huGfneXpMhPKKkDIOBqCWyZDyTo7AWLj2C2ZCvgT2D9LWyl6v9WwxMEfO94RaYCQaayD/rfw==
+  dependencies:
+    "@expo/config" "^5.0.9"
+    "@expo/config-plugins" "^4.0.2"
+    "@expo/metro-config" "~0.1.84"
+    expo-manifests "~0.2.2"
+    expo-modules-core "~0.4.8"
+    expo-structured-headers "~2.0.0"
+    expo-updates-interface "~0.4.0"
+    fbemitter "^2.1.1"
+    resolve-from "^5.0.0"
+    uuid "^3.4.0"
 
 expo@^43.0.0:
   version "43.0.5"
@@ -5710,16 +5735,6 @@ react-native-fast-image@^8.5.11:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
-react-native-fbsdk-next@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-4.6.0.tgz#0e70aa6d64e99762e6b22b1344eebae3f7fbfcb5"
-  integrity sha512-FPYLUFSWf7V4i084jKpSt8tc1DLkuBm38eYdq4RwpGcojxXIciQ8qQi9DRLNAxqNZHd0G/P6edSVEGsrjtvV7w==
-
-react-native-flipper@^0.116.0:
-  version "0.116.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.116.0.tgz#d85768792907c95f97c7f7e2e3a9db43dd709202"
-  integrity sha512-eOYQn3+23DL5bRXJjdyfEq6ZhyPSmaYGn/tj94qa2PObzOi7VDNhdaQwBe16DFcV8KhT93flZKpGB6ymtFNpCQ==
-
 react-native-gesture-handler@~1.10.2:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"
@@ -6013,14 +6028,6 @@ rechoir@^0.6.2:
   integrity sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q=
   dependencies:
     resolve "^1.1.6"
-
-redux-flipper@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/redux-flipper/-/redux-flipper-2.0.1.tgz#a43603a13e6f06a48c627ae7c144579bd4f1fa54"
-  integrity sha512-JqgnL+fUp3h2fPQRszItLkarTbIf5gjU4Sn0IY/ZxUo6oUUmMh4Lx2J7BBy78cE8KEW9prRRpvJ6NH2uc/QktA==
-  dependencies:
-    cycle "^1.0.3"
-    dayjs "^1.8.29"
 
 redux-persist@^6.0.0:
   version "6.0.0"

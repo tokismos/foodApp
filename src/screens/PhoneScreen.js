@@ -1,12 +1,11 @@
 import React, { createRef, useEffect, useState } from "react";
 import { StyleSheet, Text, ToastAndroid, View } from "react-native";
-import { GameRequestDialog } from "react-native-fbsdk-next";
 import PagerView from "react-native-pager-view";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CodeVerificationComponent from "../components/CodeVerificationComponent";
 import CustomButton from "../components/CustomButton";
-import PhoneInputComponent from "../components/PhoneInputComponent";
+import PhoneInputComponent from "../components/PhsoneInputComponent";
 import { setAdditionalInfo } from "../helpers/db";
 import useAuth from "../hooks/useAuth";
 import { setUser } from "../redux/slicer/userSlicer";

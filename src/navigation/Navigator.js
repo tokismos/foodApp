@@ -47,7 +47,7 @@ const TopTab = createMaterialTopTabNavigator();
 import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
-import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
+// import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
 import SignUpScreen from "../screens/createAccountScreens/SignUpScreen";
 import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
 import LoginHeaderScreen from "../components/LoginHeaderScreen";
@@ -153,25 +153,25 @@ const LoggedStackScreen = () => {
   // const { accessTokenFb } = useSelector((state) => state.userStore);
 
   //Get the information from the token we get after connecting to fb
-  const getInfoFromTokenFb = (token) => {
-    const PROFILE_REQUEST_PARAMS = {
-      fields: {
-        string: "id,name,first_name,last_name,email,picture.type(large)",
-      },
-    };
-    const profileRequest = new GraphRequest(
-      "/me",
-      { token, parameters: PROFILE_REQUEST_PARAMS },
-      (error, user) => {
-        if (error) {
-          console.log("login info has error: " + error);
-        } else {
-          setInfo(user);
-        }
-      }
-    );
-    new GraphRequestManager().addRequest(profileRequest).start();
-  };
+  // const getInfoFromTokenFb = (token) => {
+  //   const PROFILE_REQUEST_PARAMS = {
+  //     fields: {
+  //       string: "id,name,first_name,last_name,email,picture.type(large)",
+  //     },
+  //   };
+  //   const profileRequest = new GraphRequest(
+  //     "/me",
+  //     { token, parameters: PROFILE_REQUEST_PARAMS },
+  //     (error, user) => {
+  //       if (error) {
+  //         console.log("login info has error: " + error);
+  //       } else {
+  //         setInfo(user);
+  //       }
+  //     }
+  //   );
+  //   new GraphRequestManager().addRequest(profileRequest).start();
+  // };
 
   //Get the access Token of Fb from the storage if it exists
   useEffect(() => {
