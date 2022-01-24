@@ -69,10 +69,19 @@ const IngredientComponent = ({
         >
           <Text style={{ marginLeft: 20, width: "75%" }}>{name}</Text>
           <CheckBox
+           style={[ {
+            transform: [{ scale: .8 }]
+          }]}
+          onTintColor={COLORS.primary}
+          onFillColor={COLORS.primary}
+          onCheckColor={'white'}
+          onAnimationType='fill'
+          offAnimationType='fade'
+          boxType='square'
             disabled
             value={toggle}
             tintColors={{ true: COLORS.primary, false: "gray" }}
-            style={{ transform: [{ scale: 1.2 }], width: "20%" }}
+            
           />
         </View>
       </TouchableOpacity>
@@ -100,11 +109,19 @@ const StepComponent = ({ step, index }) => {
             Etape {index + 1}.
           </Text>
           <CheckBox
-            boxType="circle"
+            style={[ {
+              transform: [{ scale:.8}]
+            }]}
+            onTintColor={COLORS.primary}
+            onFillColor={COLORS.primary}
+            onCheckColor={'white'}
+            onAnimationType='fill'
+            offAnimationType='fade'
+            boxType='square'
             disabled
             value={toggle}
             tintColors={{ true: COLORS.primary, false: "gray" }}
-            style={{ transform: [{ scale: 1.2 }] }}
+        
           />
         </View>
 

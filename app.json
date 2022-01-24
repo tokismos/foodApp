@@ -23,11 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.foodApp.test",
+      "bundleIdentifier": "com.yuzu.itten",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "package": "com.foodApp.test",
+      "package": "com.yuzu.itten",
       "googleServicesFile": "./google-services.json",
       "versionCode": 2,
       "adaptiveIcon": {

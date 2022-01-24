@@ -440,13 +440,14 @@ const TinderScreen = ({ navigation }) => {
                   top: -5,
                   right: 0,
                   padding: 5,
+        
                 }}
               >
                 <AntDesign
                   name="closecircle"
                   size={24}
                   color="#EF5454"
-                  style={{ backgroundColor: "white", borderRadius: 500 }}
+                  style={{ backgroundColor: "white",overflow: 'hidden',borderRadius:20 }}
                 />
               </Pressable>
               <CustomButton
