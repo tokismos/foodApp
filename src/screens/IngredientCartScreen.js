@@ -72,6 +72,15 @@ const IngredientCartScreen = ({ route, navigation }) => {
           {ingredient.name}
         </Text>
         <CheckBox
+         style={[ {
+          transform: [{ scale: .8 }]
+        }]}
+        onTintColor={COLORS.primary}
+        onFillColor={COLORS.primary}
+        onCheckColor={'white'}
+        onAnimationType='fill'
+        offAnimationType='fade'
+        boxType='square'
           disabled
           value={toggle}
           tintColors={{ true: COLORS.primary, false: "gray" }}

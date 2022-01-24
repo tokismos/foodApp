@@ -1,4 +1,4 @@
-package com.foodApp.test;
+package com.yuzu.itten;
 
 import android.os.Bundle;
 

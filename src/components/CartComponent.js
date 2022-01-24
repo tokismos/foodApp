@@ -19,7 +19,7 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
   const [nbrPersonne, setNbrPersonne] = useState(+item.nbrPersonne);
   const { matches } = useSelector((state) => state.matchStore);
 
-  console.log("bssssss3", item.nbrPersonne);
+
   const NbrPersonneComponent = () => {
     return (
       <View
@@ -131,9 +131,21 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
         </View>
         <View style={styles.checkBoxContainer}>
           <CheckBox
+
+
+
+onTintColor={COLORS.primary}
+onFillColor={COLORS.primary}
+onCheckColor={'white'}
+onAnimationType='fill'
+
+boxType='square'
+
+style={[ {
+  transform: [{ scale: .8 }]
+}]}
             value={toggle}
             onValueChange={(newValue) => setToggle(newValue)}
-            size={30}
             disabled
             tintColors={{ true: COLORS.primary, false: "gray" }}
           />
