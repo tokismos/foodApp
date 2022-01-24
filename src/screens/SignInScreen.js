@@ -106,7 +106,6 @@ const SignInScreen = () => {
             }}
           >
             <View style={styles.buttonContainer}>
-              <GoogleIcon width={40} height={40} style={{}} />
 
               <View style={{ width: "85%" }}>
                 <Text style={{ ...styles.socialText, color: "#757575" }}>

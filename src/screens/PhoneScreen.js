@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CodeVerificationComponent from "../components/CodeVerificationComponent";
 import CustomButton from "../components/CustomButton";
-import PhoneInputComponent from "../components/PhsoneInputComponent";
+import PhoneInputComponent from "../components/PhoneInputComponent";
 import { setAdditionalInfo } from "../helpers/db";
 import useAuth from "../hooks/useAuth";
 import { setUser } from "../redux/slicer/userSlicer";

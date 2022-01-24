@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = React.useState("testest");
   const [visible, setVisible] = React.useState(true);
   const [isLoading, setLoading] = React.useState(false);
-  const { signIn, signInWithGoogle, signInWithFb } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   return (
     <View
       style={{

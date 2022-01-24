@@ -1,5 +1,5 @@
 import axios from "axios";
-import { logPushNotificationOpenAsync } from "expo-facebook";
+
 
 const api = axios.create({
   //baseURL: "http://4f54-105-154-109-13.ngrok.io",

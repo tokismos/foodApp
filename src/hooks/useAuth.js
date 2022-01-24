@@ -161,7 +161,7 @@ export default useAuth = () => {
     signIn,
     signOut,
     signInWithGoogle,
-    signInWithFb,
+
     sendPhoneVerification,
     verifyCode,
     signUp,
