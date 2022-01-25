@@ -69,19 +69,20 @@ const IngredientComponent = ({
         >
           <Text style={{ marginLeft: 20, width: "75%" }}>{name}</Text>
           <CheckBox
-           style={[ {
-            transform: [{ scale: .8 }]
-          }]}
-          onTintColor={COLORS.primary}
-          onFillColor={COLORS.primary}
-          onCheckColor={'white'}
-          onAnimationType='fill'
-          offAnimationType='fade'
-          boxType='square'
+            style={[
+              {
+                transform: [{ scale: 0.8 }],
+              },
+            ]}
+            onTintColor={COLORS.primary}
+            onFillColor={COLORS.primary}
+            onCheckColor={"white"}
+            onAnimationType="fill"
+            offAnimationType="fade"
+            boxType="square"
             disabled
             value={toggle}
             tintColors={{ true: COLORS.primary, false: "gray" }}
-            
           />
         </View>
       </TouchableOpacity>
@@ -109,19 +110,20 @@ const StepComponent = ({ step, index }) => {
             Etape {index + 1}.
           </Text>
           <CheckBox
-            style={[ {
-              transform: [{ scale:.8}]
-            }]}
+            style={[
+              {
+                transform: [{ scale: 0.8 }],
+              },
+            ]}
             onTintColor={COLORS.primary}
             onFillColor={COLORS.primary}
-            onCheckColor={'white'}
-            onAnimationType='fill'
-            offAnimationType='fade'
-            boxType='square'
+            onCheckColor={"white"}
+            onAnimationType="fill"
+            offAnimationType="fade"
+            boxType="square"
             disabled
             value={toggle}
             tintColors={{ true: COLORS.primary, false: "gray" }}
-        
           />
         </View>
 
@@ -239,158 +241,156 @@ const IngredientScreen = ({ route, navigation }) => {
             style={{ backgroundColor: "#E6E6E6", flex: 1 }}
             showsVerticalScrollIndicator={false}
           >
-            <Image
-              source={{ uri: recipe?.imgURL }}
-              style={{
-                aspectRatio: 1,
-              }}
-            />
-            <LinearGradient
-              start={{ x: 0, y: 0.5 }}
-              end={{ x: 0, y: 0.2 }}
-              locations={[0.3, 1]}
-              colors={["black", "transparent"]}
-              style={{
-                height: height * 0.3,
-                marginTop: "-28%",
-                paddingTop: "25%",
-              }}
-            >
-              <View
+            <View style={{}}>
+              <Image
+                source={{ uri: recipe?.imgURL }}
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  aspectRatio: 1,
                 }}
-              >
-                <Text
-                  numberOfLines={2}
-                  style={{
-                    fontSize: 24,
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    margin: 10,
-                    color: "white",
-                    flex: 1,
-                  }}
-                >
-                  {recipe?.name}
-                </Text>
-              </View>
+              />
               <View
                 style={{
-                  flexDirection: "row",
-                  width: "80%",
-                  alignSelf: "center",
-                  justifyContent: "space-between",
-                  marginBottom: 20,
-                }}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text
-                    style={{ fontSize: 18, color: "white", marginRight: 5 }}
-                  >
-                    620
-                  </Text>
-                  <AntDesign name="heart" size={14} color={COLORS.primary} />
-                </View>
-                <Text style={{ fontSize: 18, color: "white" }}>
-                  {recipe?.tempsPreparation + recipe?.tempsCuisson} min
-                </Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Text
-                    style={{ fontSize: 18, color: "white", marginRight: 5 }}
-                  >
-                    N/A
-                  </Text>
-                  <AntDesign name="star" size={15} color={COLORS.primary} />
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", backgroundColor: "black" }}>
-                <View
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    width: "50%",
-                    height: height * 0.08,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 20,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    La recette
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    width: "50%",
-                    height: height * 0.08,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 10,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "black",
-                      fontSize: 20,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Commentaires
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingVertical: 10,
-                  justifyContent: "space-evenly",
+                  
                   backgroundColor: "black",
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontSize: 18,
-
-                    color: "white",
-                    textAlign: "center",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Difficulté {"\n"} {recipe?.difficulty}
-                </Text>
-                <Text
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      margin: 10,
+                      color: "white",
+                      flex: 1,
+                    }}
+                  >
+                    {recipe?.name}
+                  </Text>
+                </View>
+                <View
                   style={{
-                    fontSize: 18,
-
-                    color: "white",
-                    textAlign: "center",
+                    flexDirection: "row",
+                    width: "80%",
+                    alignSelf: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 20,
                   }}
                 >
-                  Préparation {"\n"} {recipe?.tempsPreparation} min
-                </Text>
-                <Text
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{ fontSize: 18, color: "white", marginRight: 5 }}
+                    >
+                      620
+                    </Text>
+                    <AntDesign name="heart" size={14} color={COLORS.primary} />
+                  </View>
+                  <Text style={{ fontSize: 18, color: "white" }}>
+                    {recipe?.tempsPreparation + recipe?.tempsCuisson} min
+                  </Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{ fontSize: 18, color: "white", marginRight: 5 }}
+                    >
+                      N/A
+                    </Text>
+                    <AntDesign name="star" size={15} color={COLORS.primary} />
+                  </View>
+                </View>
+                <View
+                  style={{ flexDirection: "row", backgroundColor: "black" }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.primary,
+                      width: "50%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      La recette
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      width: "50%",
+                      height: height * 0.08,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "black",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Commentaires
+                    </Text>
+                  </View>
+                </View>
+                <View
                   style={{
-                    fontSize: 18,
-
-                    color: "white",
-                    textAlign: "center",
+                    flexDirection: "row",
+                    marginVertical: 10,
+                    justifyContent: "space-evenly",
+                    backgroundColor: "black",
                   }}
                 >
-                  Cuisson {"\n"} {recipe?.tempsCuisson} min
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >
+                    Difficulté {"\n"} {recipe?.difficulty}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >
+                    Préparation {"\n"} {recipe?.tempsPreparation} min
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >
+                    Cuisson {"\n"} {recipe?.tempsCuisson} min
+                  </Text>
+                </View>
               </View>
-            </LinearGradient>
+            </View>
+
             <View
               style={{
-                marginTop: "30%",
                 alignItems: "center",
                 paddingVertical: 10,
               }}
@@ -417,7 +417,6 @@ const IngredientScreen = ({ route, navigation }) => {
                     fontSize: 20,
                     fontWeight: "bold",
                     textAlign: "center",
-                    marginLeft: "7%",
                   }}
                 >
                   Ingrédients
