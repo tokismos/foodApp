@@ -13,7 +13,6 @@ import { COLORS } from "../consts/colors";
 
 const PanierScreen = ({ navigation }) => {
   const { matches } = useSelector((state) => state.matchStore);
-  //   console.log("thiiiiis matches", matches);
   const [finalCart, setFinalCart] = useState([...matches]);
 
   const validate = () => {

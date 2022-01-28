@@ -4,8 +4,6 @@ import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-community/async-storage";
-import database from "@react-native-firebase/database";
-import { firebase } from "@react-native-firebase/database";
 
 import { api } from "../axios";
 
@@ -24,15 +22,12 @@ const signInWithGoogle = async (navigation) => {
   const userInfo = await GoogleSignin.signIn();
   const { idToken, accessToken } = await GoogleSignin.getTokens();
 
-  console.log("info", userInfo.email);
-  console.log("google email", userInfo.user.email);
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(
     idToken,
     accessToken
   );
   // reference.set(info).then((i) => console.log("Additional info added", i));
-  console.log("cred", auth().currentUser);
   await auth().signInWithCredential(googleCredential);
 
   //if its the first time email in google is null this is why we update it
@@ -40,7 +35,6 @@ const signInWithGoogle = async (navigation) => {
     auth()
       .currentUser.updateEmail(userInfo.user.email)
       .then(async () => {
-        console.log("email updated");
         console.log("update", auth().currentUser);
       });
   }

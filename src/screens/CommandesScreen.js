@@ -16,7 +16,6 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("screen");
 const CommandeItem = ({ item }) => {
   const navigation = useNavigation();
-  console.log("ssssssssssss", item);
   let time = new Date(item.dateTime);
 
   return (

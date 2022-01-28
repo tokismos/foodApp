@@ -25,7 +25,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.foodApp.test</string>
+          <string>com.yuzu.itten</string>
         </array>
       </dict>
       <dict>
@@ -63,8 +63,6 @@
         </dict>
       </dict>
     </dict>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>This identifier will be used to deliver personalized ads to you.</string>
     <key>SKAdNetworkItems</key>
     <array>
       <dict>

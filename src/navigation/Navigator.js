@@ -1,55 +1,30 @@
-import {
-  CardStyleInterpolators,
-  createStackNavigator,
-  TransitionPresets,
-  TransitionSpecs,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Animated,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import auth from "@react-native-firebase/auth";
 import { StatusBar } from "expo-status-bar";
 
-import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
-import LoginScreen from "../screens/LoginScreen";
-import ResultCartScreen from "../screens/ResultCartScreen";
-import RecetteSVG from "../assets/recette.svg";
-import { color } from "react-native-reanimated";
 import TinderScreen from "../screens/TinderScreen";
-import LogOutScreen from "../screens/LogOutScreen";
 import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
 import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
-import useAuth from "../hooks/useAuth";
-import { useNavigation } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
-const LoginStack = createStackNavigator();
+const LoginStac = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const TopTab = createMaterialTopTabNavigator();
 import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 // import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
 import SignUpScreen from "../screens/createAccountScreens/SignUpScreen";
 import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
-import LoginHeaderScreen from "../components/LoginHeaderScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -93,15 +68,6 @@ export const TabScreen = () => {
         }}
         name="CartScreen"
         component={PanierScreen}
-      />
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="shopping-cart" size={24} />
-          ),
-        }}
-        name="Panier"
-        component={LogOutScreen}
       />
     </Tab.Navigator>
   );
@@ -306,14 +272,7 @@ const LoggedStackScreen = () => {
           name="IngredientScreen"
           component={IngredientScreen}
         />
-        <Stack.Screen
-          options={{
-            // header: () => <HeaderComponent page="1" />,
-            headerShown: false,
-          }}
-          name="LoginScreen"
-          component={LoginScreen}
-        />
+
         <Stack.Screen
           options={{
             // header: () => <HeaderComponent page="1" />,
@@ -325,7 +284,6 @@ const LoggedStackScreen = () => {
 
         <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Stack.Screen name="ResultCartScreen" component={ResultCartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

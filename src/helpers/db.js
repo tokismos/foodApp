@@ -28,7 +28,6 @@ if (!firebase.apps.length) {
 }
 
 const setAdditionalInfo = async (info) => {
-  console.log("AUTHHHHHHHHHHH", auth().currentUser?.uid);
   try {
     firebase
       .app()
@@ -65,8 +64,6 @@ const setCommandes = (cart) => {
       ingredients: item.ingredients,
       nbrPersonne: item.nbrPersonne,
     });
-    console.log("ooooooooooooooooooooooooooo", obj);
-    console.log("jjjjjjjjjjjjjjjjjjjjjjjjeeeeeeeeeeeee", item);
   });
   try {
     firebase
@@ -91,25 +88,12 @@ const getCommandes = async (setCommandes) => {
     .ref(`/users/${auth().currentUser?.uid}/commandes`)
     .orderByChild("dateTime")
     .on("value", (snapshot) => {
-      // let arr = [];
-      // Object.entries(snapshot).forEach(([key, value]) => {
-      //   arr.push({ _id: key, ...value });
-      // });
       if (snapshot.exists()) {
         console.log("it exists");
         arr = Object?.values(snapshot.val());
       }
       setCommandes(arr);
     });
-};
-const LoginWithGoogle = async () => {
-  // Get the users ID token
-  const { idToken } = await GoogleSignin.signIn();
-
-  // Create a Google credential with the token
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  // Sign-in the user with the credential
-  return auth().signInWithCredential(googleCredential);
 };
 
 // const LoginWithFb = async () => {
@@ -134,40 +118,6 @@ const LoginWithGoogle = async () => {
 //   // Sign-in the user with the credential
 //   return auth().signInWithCredential(facebookCredential);
 // };
-
-const signUp = async (email, password) => {
-  try {
-    await auth().createUserWithEmailAndPassword(email, password);
-    console.log("User Created !");
-  } catch (e) {
-    alert(e);
-  }
-};
-
-const signIn = async (email, password) => {
-  try {
-    await auth().signInWithEmailAndPassword(email, password);
-    console.log("signed");
-  } catch (e) {
-    console.log(e);
-    alert(e);
-  }
-};
-
-const signOut = async () => {
-  try {
-    if (auth().currentUser.providerData[0].providerId === "google.com")
-      await GoogleSignin.revokeAccess();
-    await auth().signOut();
-    console.log("signed out");
-  } catch (e) {
-    alert(e);
-  }
-};
-const signInWithPhoneNumber = async (phoneNumber, setConfirm) => {
-  const confirmation = await auth().signInWithPhoneNumber(phoneNumber, true);
-  setConfirm(confirmation);
-};
 
 const logInWithFb = async () => {
   try {
@@ -200,10 +150,4 @@ const logInWithFb = async () => {
 //     });
 // };
 
-export {
-  auth,
-  setAdditionalInfo,
-  getAdditionalInfo,
-  setCommandes,
-  getCommandes,
-};
+export { setAdditionalInfo, getAdditionalInfo, setCommandes, getCommandes };

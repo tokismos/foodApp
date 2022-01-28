@@ -60,7 +60,6 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
 };
 const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
-  console.log("dghighig", params);
   useLayoutEffect(() => {
     let time = new Date(params.historyDetail.dateTime);
 
@@ -72,7 +71,6 @@ const InfoCommandeScreen = ({ navigation, route }) => {
   return (
     <ScrollView style={{}}>
       {params.historyDetail.recipes.map((item, i) => {
-        console.log("this is iteenm", item);
         return (
           <CartComponent
             key={i}

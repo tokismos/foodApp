@@ -11,15 +11,16 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		4AC04DBF79324EE2A5B5C7E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D45DDF3A1CC4C4A9C2B96AB /* GoogleService-Info.plist */; };
 		96905EF65AED1B983A6B3ABC /* libPods-Yuzu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Yuzu.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		CC22ACD07F184234B41FA90A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1DDFCECD73D4CEA91D2B1F9 /* GoogleService-Info.plist */; };
-		FA17A7F9CECB4AE38B4DDC41 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA7F6D26C4414BBDAA0BD9 /* noop-file.swift */; };
+		E5196C23B95948EE8468AF9C /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A04C7020FBB49D1913BB9ED /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		0A04C7020FBB49D1913BB9ED /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Yuzu/noop-file.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Yuzu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yuzu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Yuzu/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Yuzu/AppDelegate.m; sourceTree = "<group>"; };
@@ -27,13 +28,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Yuzu/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Yuzu/main.m; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-Yuzu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Yuzu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D45DDF3A1CC4C4A9C2B96AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Yuzu/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-Yuzu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yuzu.debug.xcconfig"; path = "Target Support Files/Pods-Yuzu/Pods-Yuzu.debug.xcconfig"; sourceTree = "<group>"; };
+		6D1C2298052E4216ABA775AD /* Yuzu-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "Yuzu-Bridging-Header.h"; path = "Yuzu/Yuzu-Bridging-Header.h"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-Yuzu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yuzu.release.xcconfig"; path = "Target Support Files/Pods-Yuzu/Pods-Yuzu.release.xcconfig"; sourceTree = "<group>"; };
-		A1DDFCECD73D4CEA91D2B1F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Yuzu/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Yuzu/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CCAA7F6D26C4414BBDAA0BD9 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "Yuzu/noop-file.swift"; sourceTree = "<group>"; };
-		DFBBA78A4B41486B9875CAA8 /* Yuzu-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "Yuzu-Bridging-Header.h"; path = "Yuzu/Yuzu-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Yuzu/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,9 +61,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				A1DDFCECD73D4CEA91D2B1F9 /* GoogleService-Info.plist */,
-				CCAA7F6D26C4414BBDAA0BD9 /* noop-file.swift */,
-				DFBBA78A4B41486B9875CAA8 /* Yuzu-Bridging-Header.h */,
+				5D45DDF3A1CC4C4A9C2B96AB /* GoogleService-Info.plist */,
+				0A04C7020FBB49D1913BB9ED /* noop-file.swift */,
+				6D1C2298052E4216ABA775AD /* Yuzu-Bridging-Header.h */,
 			);
 			name = Yuzu;
 			sourceTree = "<group>";
@@ -155,7 +155,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				A9A2F3BAAF6B267899E95920 /* [CP-User] [RNFB] Core Configuration */,
+				DBE8218C4494A5E96F3410DE /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -175,6 +175,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = NVW3QDQA2M;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -205,7 +206,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				CC22ACD07F184234B41FA90A /* GoogleService-Info.plist in Resources */,
+				4AC04DBF79324EE2A5B5C7E0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +273,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Yuzu/Pods-Yuzu-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A9A2F3BAAF6B267899E95920 /* [CP-User] [RNFB] Core Configuration */ = {
+		DBE8218C4494A5E96F3410DE /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,7 +315,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				FA17A7F9CECB4AE38B4DDC41 /* noop-file.swift in Sources */,
+				E5196C23B95948EE8468AF9C /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +330,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Yuzu/Yuzu.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVW3QDQA2M;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -342,7 +344,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.foodApp.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuzu.itten;
 				PRODUCT_NAME = Yuzu;
 				SWIFT_OBJC_BRIDGING_HEADER = "Yuzu/Yuzu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -360,6 +362,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Yuzu/Yuzu.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVW3QDQA2M;
 				INFOPLIST_FILE = Yuzu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -368,7 +371,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.foodApp.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuzu.itten;
 				PRODUCT_NAME = Yuzu;
 				SWIFT_OBJC_BRIDGING_HEADER = "Yuzu/Yuzu-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

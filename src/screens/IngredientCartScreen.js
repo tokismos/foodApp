@@ -30,8 +30,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
   }, []);
 
   const onPress = (ingredient, title) => {
-    console.log("erd", finalCart[title].ingredients);
-    console.log("bname", JSON.stringify(ingredient), title);
     if (finalCart[title].ingredients?.includes(ingredient)) {
       finalCart[title].ingredients = finalCart[title].ingredients.filter(
         (item) => item != ingredient
@@ -41,7 +39,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
         ? [...finalCart[title].ingredients, ingredient]
         : [ingredient];
     }
-    console.log("tmopppib", finalCart);
   };
 
   const IngredientItemComponent = ({ ingredient, title }) => {
@@ -72,15 +69,17 @@ const IngredientCartScreen = ({ route, navigation }) => {
           {ingredient.name}
         </Text>
         <CheckBox
-         style={[ {
-          transform: [{ scale: .8 }]
-        }]}
-        onTintColor={COLORS.primary}
-        onFillColor={COLORS.primary}
-        onCheckColor={'white'}
-        onAnimationType='fill'
-        offAnimationType='fade'
-        boxType='square'
+          style={[
+            {
+              transform: [{ scale: 0.8 }],
+            },
+          ]}
+          onTintColor={COLORS.primary}
+          onFillColor={COLORS.primary}
+          onCheckColor={"white"}
+          onAnimationType="fill"
+          offAnimationType="fade"
+          boxType="square"
           disabled
           value={toggle}
           tintColors={{ true: COLORS.primary, false: "gray" }}
@@ -175,7 +174,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
       >
         <CustomButton
           onPress={() => {
-            console.log("FINAL CART", finalCart);
             let arr = [];
             Object.entries(finalCart).forEach(([key, value]) => {
               arr.push({ _id: key, ...value });

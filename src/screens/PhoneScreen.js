@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { StyleSheet, Text, ToastAndroid, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const PhoneScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
   const [index, setIndex] = useState("");
-  const ref = createRef();
+  const ref = useRef();
   const dispatch = useDispatch();
   const { sendPhoneVerification, verifyCode } = useAuth();
   useEffect(() => {
