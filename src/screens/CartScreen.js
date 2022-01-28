@@ -36,10 +36,8 @@ const CartScreen = ({ route, navigation }) => {
                 (item) => item.name !== ingredient.name
               );
               cart = newCart;
-              console.log("this isss new caar t", cart);
             } else {
               cart.push(ingredient.name);
-              console.log("cart", cart);
             }
           }}
         />
