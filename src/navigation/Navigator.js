@@ -212,6 +212,16 @@ const LoggedStackScreen = () => {
         <Stack.Screen
           options={{
             headerShown: true,
+            headerTitle: "Mes recettes",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
           }}
           name="MyRecipesScreen"
           component={MyRecipesScreen}
@@ -282,8 +292,40 @@ const LoggedStackScreen = () => {
           component={SignUpScreen}
         />
 
-        <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Modifier mon numéro",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="PhoneScreen"
+          component={PhoneScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mon profile",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="Mon profile"
+          component={ProfileScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -300,7 +342,23 @@ const LoginStackScreen = () => {
           name="IntroScreen"
           component={IntroScreen}
         />
-        <Stack.Screen name="PhoneScreen" component={PhoneScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Modifier mon numéro",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="PhoneScreen"
+          component={PhoneScreen}
+        />
         <Stack.Screen
           options={{
             headerShown: true,
@@ -344,7 +402,23 @@ const LoginStackScreen = () => {
           component={SignInScreen}
         />
 
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mon profile",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
+
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="Mon profile"
+          component={ProfileScreen}
+        />
 
         <Stack.Screen
           options={{
@@ -451,19 +525,6 @@ const RootNavigation = () => {
 
     const sub = auth().onAuthStateChanged(async (userInfo) => {
       if (userInfo) {
-        console.log("changed", userInfo);
-
-        // getAdditionalInfo().then((e) => {
-        //   console.log("W", e);
-        //   if (e != null) {
-        //     console.log("props", props);
-        //     navigation.navigate("PhoneScreen");
-        //     setShow(true);
-        //   }
-        // });
-
-        // console.log("ADIOTO,", wow);
-
         dispatch(
           setUser({
             uid: userInfo.uid,
@@ -474,7 +535,7 @@ const RootNavigation = () => {
           })
         );
       } else {
-        console.log("no usser");
+        console.log("no user");
 
         dispatch(setUser(null));
       }

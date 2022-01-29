@@ -98,7 +98,7 @@ const Header = () => {
       <TouchableOpacity
         onPress={() =>
           auth().currentUser
-            ? navigation.navigate("ProfileScreen")
+            ? navigation.navigate("Mon profile")
             : navigation.navigate("SignUpScreen")
         }
         style={{
@@ -245,7 +245,7 @@ const BarHeader = () => {
     </View>
   ) : (
     <Pressable
-      onPress={() => navigation.navigate("ProfileScreen")}
+      onPress={() => navigation.navigate("Mon profile")}
       style={{
         height: "5%",
         width: "100%",
@@ -440,14 +440,17 @@ const TinderScreen = ({ navigation }) => {
                   top: -5,
                   right: 0,
                   padding: 5,
-        
                 }}
               >
                 <AntDesign
                   name="closecircle"
                   size={24}
                   color="#EF5454"
-                  style={{ backgroundColor: "white",overflow: 'hidden',borderRadius:20 }}
+                  style={{
+                    backgroundColor: "white",
+                    overflow: "hidden",
+                    borderRadius: 20,
+                  }}
                 />
               </Pressable>
               <CustomButton

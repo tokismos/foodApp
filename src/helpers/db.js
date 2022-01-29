@@ -150,4 +150,10 @@ const logInWithFb = async () => {
 //     });
 // };
 
-export { setAdditionalInfo, getAdditionalInfo, setCommandes, getCommandes };
+export {
+  setAdditionalInfo,
+  getAdditionalInfo,
+  setCommandes,
+  getCommandes,
+  auth,
+};
