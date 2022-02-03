@@ -25,7 +25,8 @@ import CustomButton from "../components/CustomButton";
 import ReportComponent from "../components/ReportComponent";
 import { getRecipe } from "../axios";
 import { addToFav, deleteFav, getFavoris } from "../helpers/db";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, deleteFavorite } from "../redux/slicer/favoritesSlicer";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -180,15 +181,10 @@ const IngredientScreen = ({ route, navigation }) => {
   const [showReport, setShowReport] = useState(false);
   const [showVote, setShowVote] = useState(false);
   const { favorites } = useSelector((state) => state.favoritesStore);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log("THOSE ARE FAVORIS ", route);
 
-    if (favorites.indexOf(route.params._id) > -1) {
-      console.log("Yeah it exiiiiiiiiiiiiiiiiiiiiiiiiiiiiist");
-    } else {
-      console.log("NOOOOOOOO EXISTTTTTTTTTTTS");
-    }
     if (route.params.recipe) {
       setRecipe(route.params.recipe);
       setIsLoading(false);
@@ -200,6 +196,7 @@ const IngredientScreen = ({ route, navigation }) => {
       });
     }
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -455,22 +452,39 @@ const IngredientScreen = ({ route, navigation }) => {
               {recipe?.steps?.map((item, index) => {
                 return <StepComponent step={item} index={index} key={index} />;
               })}
-              {!isFavorite && (
+
+              {favorites.includes(
+                route.params._id ?? route.params.recipe._id
+              ) ? (
+                <CustomButton
+                  style={{
+                    width: "60%",
+                    marginBottom: 20,
+                    backgroundColor: COLORS.red,
+                  }}
+                  textStyle={{ fontSize: 18 }}
+                  title="Supprimer des favoris"
+                  onPress={() => {
+                    deleteFav(recipe._id);
+                    dispatch(deleteFavorite(recipe._id));
+                    setIsFavorite(false);
+                  }}
+                />
+              ) : (
                 <CustomButton
                   style={{ width: "60%", marginBottom: 20 }}
                   textStyle={{ fontSize: 18 }}
                   title="Ajouter aux favoris"
-                  onPress={() =>
-                    addToFav(recipe._id, recipe.imgURL, recipe.name)
-                  }
-                />
-              )}
-              {isFavorite && (
-                <CustomButton
-                  style={{ width: "60%", marginBottom: 20 }}
-                  textStyle={{ fontSize: 18 }}
-                  title="Supprimer des favoris"
-                  onPress={() => deleteFav(recipe._id)}
+                  onPress={() => {
+                    addToFav(
+                      recipe._id,
+                      recipe.imgURL,
+                      recipe.name,
+                      recipe.dateTime
+                    );
+                    dispatch(addFavorite(recipe._id));
+                    setIsFavorite(true);
+                  }}
                 />
               )}
             </View>

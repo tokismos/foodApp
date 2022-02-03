@@ -306,9 +306,7 @@ const TinderScreen = ({ navigation }) => {
   };
 
   const getAndSetFavorites = async () => {
-    const favoris = await getFavoris();
-    console.log("THS FAAV", favoris);
-    dispatch(setFavorites(favoris));
+    await getFavoris((fav) => dispatch(setFavorites(fav)));
   };
   //To add the additional information to the store , we get them from firebase DB
   useEffect(() => {

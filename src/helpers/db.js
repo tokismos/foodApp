@@ -56,7 +56,12 @@ const addToFav = async (id, imgURL, name) => {
       .app()
       .database(firebaseDbURL)
       .ref(`/users/${auth().currentUser?.uid}/favoris/${id}`)
-      .set({ imgURL, name });
+      .set({
+        imgURL,
+        name,
+        _id: id,
+        dateTime: firebase.database.ServerValue.TIMESTAMP,
+      });
   } catch (e) {
     console.log("Erreur,recette non ajoutée aux favoris !");
   }
@@ -87,21 +92,19 @@ const deleteFav = async (id) => {
 //     });
 //     return favoritesArray;
 // };
-const getFavoris = async () => {
+const getFavoris = async (tmp) => {
   let favoritesArray = [];
-  const snapshot = await firebase
+  firebase
     .app()
     .database(firebaseDbURL)
     .ref(`/users/${auth().currentUser?.uid}/favoris`)
-    .once("value");
-
-  if (snapshot.exists()) {
-    snapshot.forEach((item) => favoritesArray.push(item.key));
-
-    return favoritesArray;
-  } else {
-    return [""];
-  }
+    .once("value", (snapshot) => {
+      console.log("User data: ", snapshot.val());
+      if (snapshot.exists()) {
+        snapshot.forEach((item) => favoritesArray.push(item.key));
+        tmp(favoritesArray);
+      }
+    });
 };
 
 const getAllFavoris = async (setCommandes) => {
@@ -110,6 +113,7 @@ const getAllFavoris = async (setCommandes) => {
     .app()
     .database(firebaseDbURL)
     .ref(`/users/${auth().currentUser?.uid}/favoris`)
+    .orderByChild("dateTime")
     .on("value", (snapshot) => {
       if (snapshot.exists()) {
         console.log("it exists SNAPSHOT", snapshot);

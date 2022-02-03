@@ -13,10 +13,21 @@ export const favoriteSlice = createSlice({
       console.log("added");
       state.favorites = [...action.payload];
     },
+    addFavorite: (state, action) => {
+      console.log("added");
+      state.favorites = [...state.favorites, action.payload];
+    },
+    deleteFavorite: (state, action) => {
+      console.log("added");
+      state.favorites = [
+        ...state.favorites.filter((item) => item != action.payload),
+      ];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setFavorites } = favoriteSlice.actions;
+export const { setFavorites, addFavorite, deleteFavorite } =
+  favoriteSlice.actions;
 
 export default favoriteSlice.reducer;
