@@ -23,6 +23,7 @@ const CommandeItem = ({ item }) => {
       onPress={() =>
         navigation.navigate("InfoCommandeScreen", { historyDetail: item })
       }
+      android_ripple={{ color: "lightgray" }}
       style={{
         backgroundColor: "white",
         borderRadius: 10,

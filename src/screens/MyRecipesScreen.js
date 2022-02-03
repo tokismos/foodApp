@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { getCommandes } from "../helpers/db";
+import { getAllFavoris, getCommandes } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
 import { AntDesign, MaterialIcons, Entypo } from "@expo/vector-icons";
 import FastImage from "react-native-fast-image";
@@ -112,39 +112,16 @@ const CommandeItem = ({ recipe }) => {
     </Pressable>
   );
 };
-const CommandeComponent = ({ item }) => {
-  let time = new Date(item.dateTime);
 
-  return (
-    <View
-      style={{
-        width: "100%",
-        marginVertical: 10,
-        justifyContent: "center",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "bold",
-          marginLeft: 5,
-          color: "gray",
-        }}
-      >
-        {`Recettes du ${format(time, "dd/MM/yyyy")}`}
-      </Text>
-      {item.recipes.map((elmt, i) => {
-        return <CommandeItem recipe={elmt} key={i} />;
-      })}
-    </View>
-  );
-};
-
-const MyRecipesScreen = () => {
+const MyRecipesScreen = ({ route }) => {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    getCommandes(setRecipes);
+    if (route.name == "Recettes favories") {
+      getAllFavoris(setRecipes);
+    } else {
+      getCommandes(setRecipes);
+    }
   }, []);
 
   //To detect when we set the commandes
@@ -154,6 +131,35 @@ const MyRecipesScreen = () => {
     }
   }, [recipes]);
 
+  const CommandeComponent = ({ item, dateTime }) => {
+    let time = new Date(dateTime);
+
+    return (
+      <View
+        style={{
+          width: "100%",
+          marginVertical: 10,
+          justifyContent: "center",
+        }}
+      >
+        {route.name != "Recettes favories" && (
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              marginLeft: 5,
+              color: "gray",
+            }}
+          >
+            {`Recettes du ${format(time, "dd/MM/yyyy")}`}
+          </Text>
+        )}
+        {item.map((elmt, i) => {
+          return <CommandeItem recipe={elmt} key={i} />;
+        })}
+      </View>
+    );
+  };
   return (
     <>
       {isLoading ? (
@@ -166,13 +172,34 @@ const MyRecipesScreen = () => {
         </View>
       ) : (
         <>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={{ alignItems: "center", height: "90%" }}>
-              {recipes.map((item, i) => (
-                <CommandeComponent item={item} key={i} />
-              ))}
-            </View>
-          </ScrollView>
+          {route.name != "Recettes favories" ? (
+            <ScrollView style={{ flex: 1 }}>
+              <View
+                style={{ alignItems: "center", height: "90%", marginTop: 10 }}
+              >
+                {recipes.map((item, i) => {
+                  console.log("HA ITEN", item);
+                  return (
+                    <CommandeComponent
+                      item={item.recipes}
+                      dateTime={item.dateTime}
+                      key={i}
+                    />
+                  );
+                })}
+              </View>
+            </ScrollView>
+          ) : (
+            <ScrollView style={{ flex: 1 }}>
+              <View
+                style={{ alignItems: "center", height: "90%", marginTop: 10 }}
+              >
+                {recipes.map((item, i) => {
+                  return <CommandeItem recipe={item} key={i} />;
+                })}
+              </View>
+            </ScrollView>
+          )}
         </>
       )}
     </>

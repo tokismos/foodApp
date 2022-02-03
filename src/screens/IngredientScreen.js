@@ -8,30 +8,24 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView,
 } from "react-native";
-import Animated, {
-  FadeInLeft,
-  Layout,
-  StretchOutY,
-  ZoomOut,
-} from "react-native-reanimated";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 import {
   AntDesign,
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
-import LinearGradient from "react-native-linear-gradient";
 import CheckBox from "@react-native-community/checkbox";
 import Dialog, {
   DialogContent,
   SlideAnimation,
 } from "react-native-popup-dialog";
-import { TextInput } from "react-native-paper";
 import CustomButton from "../components/CustomButton";
 import ReportComponent from "../components/ReportComponent";
 import { getRecipe } from "../axios";
+import { addToFav, deleteFav, getFavoris } from "../helpers/db";
+import { useSelector } from "react-redux";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -160,7 +154,7 @@ const NbrPersonneComponent = ({ nbrPersonne, setNbrPersonne }) => {
         {nbrPersonne}
       </Text>
       <MaterialCommunityIcons
-        name="snowman"
+        name="human-male"
         size={24}
         color="black"
         style={{ marginRight: 5 }}
@@ -182,9 +176,19 @@ const IngredientScreen = ({ route, navigation }) => {
   const [recipe, setRecipe] = useState();
   const [nbr, setNbr] = useState(+route.params.recipe?.nbrPersonne);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showVote, setShowVote] = useState(false);
+  const { favorites } = useSelector((state) => state.favoritesStore);
+
   useEffect(() => {
+    console.log("THOSE ARE FAVORIS ", route);
+
+    if (favorites.indexOf(route.params._id) > -1) {
+      console.log("Yeah it exiiiiiiiiiiiiiiiiiiiiiiiiiiiiist");
+    } else {
+      console.log("NOOOOOOOO EXISTTTTTTTTTTTS");
+    }
     if (route.params.recipe) {
       setRecipe(route.params.recipe);
       setIsLoading(false);
@@ -213,6 +217,8 @@ const IngredientScreen = ({ route, navigation }) => {
               top: 40,
               left: 20,
               zIndex: 99,
+              backgroundColor: "white",
+              borderRadius: 30,
             }}
           >
             <AntDesign name="arrowleft" size={40} color="black" />
@@ -304,48 +310,25 @@ const IngredientScreen = ({ route, navigation }) => {
                     <AntDesign name="star" size={15} color={COLORS.primary} />
                   </View>
                 </View>
+
                 <View
-                  style={{ flexDirection: "row", backgroundColor: "black" }}
+                  style={{
+                    backgroundColor: COLORS.primary,
+                    height: height * 0.08,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 10,
+                  }}
                 >
-                  <View
+                  <Text
                     style={{
-                      backgroundColor: COLORS.primary,
-                      width: "50%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 10,
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
                     }}
                   >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      La recette
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      width: "50%",
-                      height: height * 0.08,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 10,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "black",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Commentaires
-                    </Text>
-                  </View>
+                    La recette
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -408,7 +391,7 @@ const IngredientScreen = ({ route, navigation }) => {
                   <MaterialIcons
                     name="report"
                     size={30}
-                    color="red"
+                    color={COLORS.red}
                     style={{ padding: 5 }}
                   />
                 </TouchableOpacity>
@@ -472,7 +455,24 @@ const IngredientScreen = ({ route, navigation }) => {
               {recipe?.steps?.map((item, index) => {
                 return <StepComponent step={item} index={index} key={index} />;
               })}
-              <View style={{}}></View>
+              {!isFavorite && (
+                <CustomButton
+                  style={{ width: "60%", marginBottom: 20 }}
+                  textStyle={{ fontSize: 18 }}
+                  title="Ajouter aux favoris"
+                  onPress={() =>
+                    addToFav(recipe._id, recipe.imgURL, recipe.name)
+                  }
+                />
+              )}
+              {isFavorite && (
+                <CustomButton
+                  style={{ width: "60%", marginBottom: 20 }}
+                  textStyle={{ fontSize: 18 }}
+                  title="Supprimer des favoris"
+                  onPress={() => deleteFav(recipe._id)}
+                />
+              )}
             </View>
             {route.params._id && (
               <>

@@ -1,13 +1,9 @@
 import { Alert } from "react-native";
 
 import database from "@react-native-firebase/database";
-// import auth from "@react-native-firebase/auth";
-// import { LoginManager, AccessToken } from "react-native-fbsdk-next";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
+
 import firebase from "@react-native-firebase/app";
 import auth from "@react-native-firebase/auth";
-// import { AccessToken, LoginManager } from "react-native-fbsdk-next";
-
 const firebaseDbURL =
   "https://yuzu-a0d71-default-rtdb.europe-west1.firebasedatabase.app/";
 const firebaseConfig = {
@@ -53,6 +49,76 @@ const getAdditionalInfo = async () => {
   return false;
 };
 
+//add to favorites
+const addToFav = async (id, imgURL, name) => {
+  try {
+    firebase
+      .app()
+      .database(firebaseDbURL)
+      .ref(`/users/${auth().currentUser?.uid}/favoris/${id}`)
+      .set({ imgURL, name });
+  } catch (e) {
+    console.log("Erreur,recette non ajoutée aux favoris !");
+  }
+};
+
+const deleteFav = async (id) => {
+  try {
+    firebase
+      .app()
+      .database(firebaseDbURL)
+      .ref(`/users/${auth().currentUser?.uid}/favoris/${id}`)
+      .remove();
+  } catch (e) {
+    console.log("Recette ajoutées aux favoris .");
+  }
+};
+
+// const getFavoris = async () => {
+//   let favoritesArray = [""];
+//   firebase
+//     .app()
+//     .database(firebaseDbURL)
+//     .ref(`/users/${auth().currentUser?.uid}/favoris`)
+//     .on("value", (snapshot) => {
+//       if (snapshot.exists()) {
+//         snapshot.forEach((item) => favoritesArray.push(item.key));
+//       }
+//     });
+//     return favoritesArray;
+// };
+const getFavoris = async () => {
+  let favoritesArray = [];
+  const snapshot = await firebase
+    .app()
+    .database(firebaseDbURL)
+    .ref(`/users/${auth().currentUser?.uid}/favoris`)
+    .once("value");
+
+  if (snapshot.exists()) {
+    snapshot.forEach((item) => favoritesArray.push(item.key));
+
+    return favoritesArray;
+  } else {
+    return [""];
+  }
+};
+
+const getAllFavoris = async (setCommandes) => {
+  let arr = [];
+  firebase
+    .app()
+    .database(firebaseDbURL)
+    .ref(`/users/${auth().currentUser?.uid}/favoris`)
+    .on("value", (snapshot) => {
+      if (snapshot.exists()) {
+        console.log("it exists SNAPSHOT", snapshot);
+        arr = Object?.values(snapshot.val());
+        console.log("WBOOOOOOOOOOOO", arr);
+        setCommandes(arr);
+      }
+    });
+};
 const setCommandes = (cart) => {
   let obj = [];
 
@@ -89,8 +155,9 @@ const getCommandes = async (setCommandes) => {
     .orderByChild("dateTime")
     .on("value", (snapshot) => {
       if (snapshot.exists()) {
-        console.log("it exists");
+        console.log("it exists COOOMMA", snapshot);
         arr = Object?.values(snapshot.val());
+        console.log("WBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", arr);
       }
       setCommandes(arr);
     });
@@ -156,4 +223,8 @@ export {
   setCommandes,
   getCommandes,
   auth,
+  addToFav,
+  deleteFav,
+  getFavoris,
+  getAllFavoris,
 };

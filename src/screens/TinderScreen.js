@@ -39,13 +39,14 @@ import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/core";
 const { height, width } = Dimensions.get("screen");
 import { setUser } from "../redux/slicer/userSlicer";
-import { getAdditionalInfo } from "../helpers/db";
+import { getAdditionalInfo, getFavoris } from "../helpers/db";
 import CustomButton from "../components/CustomButton";
 import { Alert } from "react-native";
 import {
   setCuisineNotification,
   setListNotification,
 } from "../redux/slicer/notificationSlicer";
+import { setFavorites } from "../redux/slicer/favoritesSlicer";
 const shuffleArray = () => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -269,7 +270,7 @@ const Notification = ({ right }) => {
       style={{
         height: 10,
         width: 10,
-        backgroundColor: "#EF5454",
+        backgroundColor: COLORS.red,
         borderRadius: 10,
         position: "absolute",
         top: 0,
@@ -304,6 +305,11 @@ const TinderScreen = ({ navigation }) => {
       .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
 
+  const getAndSetFavorites = async () => {
+    const favoris = await getFavoris();
+    console.log("THS FAAV", favoris);
+    dispatch(setFavorites(favoris));
+  };
   //To add the additional information to the store , we get them from firebase DB
   useEffect(() => {
     if (user != null) {
@@ -322,6 +328,7 @@ const TinderScreen = ({ navigation }) => {
     }
   }, []);
   useEffect(() => {
+    getAndSetFavorites();
     loadData();
   }, []);
   useEffect(() => {
@@ -445,7 +452,7 @@ const TinderScreen = ({ navigation }) => {
                 <AntDesign
                   name="closecircle"
                   size={24}
-                  color="#EF5454"
+                  color={COLORS.red}
                   style={{
                     backgroundColor: "white",
                     overflow: "hidden",

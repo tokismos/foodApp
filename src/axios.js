@@ -1,8 +1,7 @@
 import axios from "axios";
 
-
 const api = axios.create({
-  //baseURL: "http://4f54-105-154-109-13.ngrok.io",
+  //  baseURL: "http://4c34-50-100-167-5.ngrok.io",
   baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 
@@ -34,7 +33,7 @@ const getRecipe = async (_id) => {
   try {
     const res = await api.get(`/recipes/${_id}`);
     data = res.data;
-    console.log("DAAANAAA", data);
+    console.log("DAATA", data);
   } catch (e) {
     console.log("ERROR", e);
   }

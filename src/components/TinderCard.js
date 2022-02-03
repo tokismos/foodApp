@@ -155,11 +155,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
 
         <Image
           source={{ uri: recipe?.imgURL }}
-          style={
-            loaded
-              ? { ...styles.image, marginTop: -5 }
-              : { display: "none", backgroundColor: "white" }
-          }
+          style={{ ...styles.image, marginTop: -5 }}
           onLoad={() => setLoaded(true)}
         />
 
@@ -184,7 +180,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
             } */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={onSwipeLeft} style={styles.leftButton}>
-              <FontAwesome name="close" size={50} color="#EF5454" />
+              <FontAwesome name="close" size={50} color={COLORS.red} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -267,7 +263,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
-    borderColor: "#EF5454",
+    borderColor: COLORS.red,
   },
   title: {
     color: "white",

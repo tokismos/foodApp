@@ -35,39 +35,50 @@ import MyRecipesScreen from "../screens/MyRecipesScreen";
 import CommandesScreen from "../screens/CommandesScreen";
 import InfoCommandeScreen from "../screens/InfoCommandeScreen";
 
-export const TabScreen = () => {
+export const MyRecipesTabScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: "black",
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: COLORS.secondary,
+
         tabBarStyle: {
-          height: 50,
+          backgroundColor: COLORS.primary,
         },
         tabBarLabelStyle: {
           // color: "black",
+          fontSize: 12,
+          fontWeight: "bold",
         },
       }}
     >
       <Tab.Screen
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="silverware-fork-knife" size={30} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              color={focused ? "white" : COLORS.secondary}
+              name="format-list-bulleted-square"
+              size={30}
+            />
           ),
         }}
-        name="TinderNavigator"
-        component={TinderNavigator}
+        name="Recettes ajoutées"
+        component={MyRecipesScreen}
       />
 
       <Tab.Screen
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="heart" size={24} />
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome
+              name="heart"
+              size={24}
+              color={focused ? "white" : COLORS.secondary}
+            />
           ),
         }}
-        name="CartScreen"
-        component={PanierScreen}
+        name="Recettes favories"
+        component={MyRecipesScreen}
       />
     </Tab.Navigator>
   );
@@ -224,7 +235,7 @@ const LoggedStackScreen = () => {
             },
           }}
           name="MyRecipesScreen"
-          component={MyRecipesScreen}
+          component={MyRecipesTabScreen}
         />
         <Stack.Screen
           options={{
@@ -390,9 +401,8 @@ const LoginStackScreen = () => {
             },
           }}
           name="MyRecipesScreen"
-          component={MyRecipesScreen}
+          component={MyRecipesTabScreen}
         />
-
         <Stack.Screen
           options={{
             ...horizontalAnimation,

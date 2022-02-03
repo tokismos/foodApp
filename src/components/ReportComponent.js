@@ -74,6 +74,7 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
         title: reportTitle,
         message: ` ${fullName} a reporter la recette " ${recipeName} " - ${reportTitle} - ${message}`,
       });
+      Alert.alert("Merci pour votre contribution !", " Message envoyé.");
       ToastAndroid.show(
         "Merci pour votre contribution! Ca nous fait plaisir de vous avoir parmis nous .",
         ToastAndroid.LONG
@@ -91,7 +92,7 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
         <MaterialIcons
           name="report"
           size={30}
-          color="red"
+          color={COLORS.red}
           style={{ padding: 5 }}
         />
 
@@ -136,7 +137,7 @@ const ReportComponent = ({ setShowReport, recipeName }) => {
           isLoading={isLoading}
           disabled={report == ""}
           title="Signaler"
-          style={{ backgroundColor: "red", marginLeft: 10 }}
+          style={{ backgroundColor: COLORS.red, marginLeft: 10 }}
           onPress={async () => {
             await sendEmail(
               auth().currentUser?.displayName || "ANONYME",
