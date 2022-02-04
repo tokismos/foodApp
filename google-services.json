@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "768418404122-s4acs1m9nqg5qhhep8h5hrujo7sf5nme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yuzu.itten",
+            "certificate_hash": "798c52bd5f1fe10c11b10da8f295d9d69d3e79e3"
+          }
+        },
+        {
           "client_id": "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -44,14 +52,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
+              "client_id": "768418404122-obgmmoqp17nh36ng4trdfku7if0d0a2j.apps.googleusercontent.com",
               "client_type": 3
             },
             {
               "client_id": "768418404122-mjlo79ajbflatsq8ns5ut8qrtn5b1mmg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.foodApp.test"
+                "bundle_id": "com.yuzu.itten"
               }
             }
           ]

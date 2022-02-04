@@ -17,6 +17,7 @@ import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { useSelector } from "react-redux";
 
 const Skeleton = ({ title }) => {
   return (
@@ -116,20 +117,30 @@ const CommandeItem = ({ recipe }) => {
 const MyRecipesScreen = ({ route }) => {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
+  const { favorites } = useSelector((state) => state.favoritesStore);
+
+  const initialize = async () => {
     if (route.name == "Recettes favories") {
-      getAllFavoris(setRecipes);
+      await getAllFavoris(setRecipes);
+      setIsLoading(false);
     } else {
-      getCommandes(setRecipes);
+      await getCommandes(setRecipes);
+      setIsLoading(false);
     }
+  };
+  useEffect(() => {
+    initialize();
   }, []);
 
   //To detect when we set the commandes
-  useEffect(() => {
-    if (recipes.length != 0) {
-      setIsLoading(false);
-    }
-  }, [recipes]);
+  // useEffect(() => {
+  //   if (favorites.length != 0) {
+  //     setIsLoading(false);
+  //   }
+  //   if (recipes.length != 0) {
+  //     setIsLoading(false);
+  //   }
+  // }, [recipes, favorites]);
 
   const CommandeComponent = ({ item, dateTime }) => {
     let time = new Date(dateTime);
@@ -189,7 +200,7 @@ const MyRecipesScreen = ({ route }) => {
                 })}
               </View>
             </ScrollView>
-          ) : (
+          ) : favorites.length != 0 ? (
             <ScrollView style={{ flex: 1 }}>
               <View
                 style={{ alignItems: "center", height: "90%", marginTop: 10 }}
@@ -199,6 +210,16 @@ const MyRecipesScreen = ({ route }) => {
                 })}
               </View>
             </ScrollView>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>Aucune recette en favoris !</Text>
+            </View>
           )}
         </>
       )}

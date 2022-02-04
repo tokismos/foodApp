@@ -254,6 +254,7 @@ const IngredientScreen = ({ route, navigation }) => {
               <View
                 style={{
                   height: height * 0.3,
+                  marginBottom: 20,
                   backgroundColor: "black",
                 }}
               >
@@ -459,7 +460,8 @@ const IngredientScreen = ({ route, navigation }) => {
                 <CustomButton
                   style={{
                     width: "60%",
-                    marginBottom: 20,
+                    marginBottom: 5,
+                    marginTop: 10,
                     backgroundColor: COLORS.red,
                   }}
                   textStyle={{ fontSize: 18 }}
@@ -472,7 +474,7 @@ const IngredientScreen = ({ route, navigation }) => {
                 />
               ) : (
                 <CustomButton
-                  style={{ width: "60%", marginBottom: 20 }}
+                  style={{ width: "60%", marginBottom: 5, marginTop: 10 }}
                   textStyle={{ fontSize: 18 }}
                   title="Ajouter aux favoris"
                   onPress={() => {
