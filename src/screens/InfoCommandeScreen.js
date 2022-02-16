@@ -1,7 +1,9 @@
 import { format } from "date-fns";
 import React, { useLayoutEffect, useState } from "react";
 import {
+  Alert,
   Dimensions,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,29 +17,14 @@ import CustomButton from "../components/CustomButton";
 const { height, width } = Dimensions.get("screen");
 import { FontAwesome } from "@expo/vector-icons";
 import IngredientComponent from "../components/IngredientComponent";
+import CheckBox from "@react-native-community/checkbox";
 
+// Each recipe which contain ingredients
 const CartComponent = ({ imgURL, name, ingredients }) => {
   return (
     <>
-      <View
-        style={{
-          ...styles.itemComponent,
-          backgroundColor: "white",
-          padding: 10,
-          borderRadius: 10,
-          borderWidth: 1,
-          width: "90%",
-          alignSelf: "center",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            width: "100%",
-            justifyContent: "center",
-          }}
-        >
+      <View style={styles.cartComponent}>
+        <View style={styles.titleComponent}>
           <FastImage
             style={{
               backgroundColor: "red",
@@ -70,14 +57,6 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
               key={index}
               isCommandeScreen={true}
             />
-            // <Text key={index} style={{ marginLeft: 10 }}>
-            //   <Text style={{ fontWeight: "bold" }}>
-            //     {" "}
-            //     {!item.newQuantity ? item.quantity : item.newQuantity}{" "}
-            //     {item.unite == "unite" ? "" : item.unite}{" "}
-            //   </Text>
-            //   {item.name}
-            // </Text>
           ))}
         </View>
       </View>
@@ -85,23 +64,42 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
     </>
   );
 };
-const AddProduitComponent = () => {
+
+const ProductComponent = ({ product }) => {
+  const [toggle, setToggle] = useState(true);
+  return (
+    <TouchableOpacity
+      onPress={() => setToggle((p) => !p)}
+      style={styles.productItemComponent}
+    >
+      <Text style={styles.productItemText}>{product}</Text>
+      <CheckBox
+        style={[
+          {
+            transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1.2 }],
+          },
+        ]}
+        onTintColor={COLORS.primary}
+        onFillColor={COLORS.primary}
+        onCheckColor={"white"}
+        onAnimationType="fill"
+        offAnimationType="fade"
+        boxType="square"
+        disabled
+        value={toggle}
+        tintColors={{ true: COLORS.primary, false: "gray" }}
+      />
+    </TouchableOpacity>
+  );
+};
+// Component where we add a product with button
+const AddProductComponent = ({ setProducts, products }) => {
   const [isRecurrent, setIsRecurrent] = useState(true);
   const [productText, setProductText] = useState("");
   return (
-    <View
-      style={{
-        backgroundColor: "white",
-        height: height * 0.1,
-        flexDirection: "row",
-        width,
-        justifyContent: "space-around",
-        alignItems: "center",
-        padding: 10,
-      }}
-    >
+    <View style={styles.addProductComponent}>
       <TextInputColored
-        style={{ width: "50%", height: 50 }}
+        style={{ width: "50%", height: 40 }}
         label="Ajouter un produit"
         setChangeText={setProductText}
         value={productText}
@@ -116,39 +114,39 @@ const AddProduitComponent = () => {
           color={isRecurrent ? COLORS.primary : "gray"}
         />
       </TouchableOpacity>
-      <CustomButton title="Ajouter" />
+      <CustomButton
+        title="Ajouter"
+        style={{ height: 40 }}
+        onPress={() => {
+          if (products.indexOf(productText) > -1) {
+            return Alert.alert("Vous avez deja ajouté de produit !");
+          }
+          setProducts((p) => [...p, productText]);
+        }}
+      />
     </View>
   );
 };
-const AllProductComponent = () => {
+
+//List of all the products we added
+const AllProductsComponent = ({ products }) => {
   return (
-    <View
-      style={{
-        backgroundColor: "white",
-        width: "90%",
-        height: height * 0.3,
-        alignSelf: "center",
-        borderWidth: 1,
-        borderRadius: 10,
-      }}
-    >
-      <Text
-        style={{
-          textAlign: "center",
-          fontWeight: "bold",
-          fontSize: 20,
-          color: "gray",
-        }}
-      >
-        Articles Ajoutés
-      </Text>
-      <Text>Gel Douche</Text>
+    <View style={styles.productsComponent}>
+      <Text style={styles.productsTitle}>Articles Ajoutés</Text>
+      {products.map((item, i) => (
+        <ProductComponent product={item} key={i} />
+      ))}
     </View>
   );
 };
 
 const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
+
+  const [products, setProducts] = useState([]);
+
+  console.log("proooduct ", params);
+
   useLayoutEffect(() => {
     let time = new Date(params.historyDetail.dateTime);
 
@@ -159,8 +157,13 @@ const InfoCommandeScreen = ({ navigation, route }) => {
 
   return (
     <ScrollView style={{}}>
-      <AddProduitComponent />
-      <AllProductComponent />
+      <AddProductComponent setProducts={setProducts} products={products} />
+      {products.length != 0 && <AllProductsComponent products={products} />}
+      <Text style={{ fontSize: 24, fontWeight: "bold", paddingVertical: 10 }}>
+        {" "}
+        Recettes :
+      </Text>
+
       {params.historyDetail.recipes.map((item, i) => {
         return (
           <CartComponent
@@ -230,9 +233,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  itemComponent: {
+  cartComponent: {
     marginVertical: 5,
-    width,
+
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    width: "90%",
+    alignSelf: "center",
   },
   imageContainer: {
     height: 60,
@@ -243,5 +252,48 @@ const styles = StyleSheet.create({
   image: {
     height: 60,
     aspectRatio: 1.5,
+  },
+  productsComponent: {
+    backgroundColor: "white",
+    width: "70%",
+    alignSelf: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+  },
+  productsTitle: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "gray",
+  },
+  titleComponent: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
+  },
+  productItemComponent: {
+    flexDirection: "row",
+    width: "90%",
+    justifyContent: "space-between",
+    alignSelf: "center",
+    alignItems: "center",
+    marginVertical: 5,
+  },
+  addProductComponent: {
+    backgroundColor: "white",
+    height: height * 0.1,
+    flexDirection: "row",
+    width,
+    justifyContent: "space-around",
+    alignItems: "center",
+    padding: 10,
+    marginBottom: 20,
+  },
+  productItemText: {
+    fontSize: 18,
+    width: "80%",
+    fontWeight: "bold",
   },
 });

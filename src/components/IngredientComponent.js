@@ -58,13 +58,11 @@ const IngredientComponent = ({
             alignItems: "center",
           }}
         >
-          <Text style={{ marginLeft: 20, width: "85%" }}>{name}</Text>
+          <Text style={{ marginLeft: 20, width: "75%" }}>{name}</Text>
           <CheckBox
-            style={[
-              {
-                transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1 }],
-              },
-            ]}
+            style={{
+              transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1.2 }],
+            }}
             onTintColor={COLORS.primary}
             onFillColor={COLORS.primary}
             onCheckColor={"white"}
