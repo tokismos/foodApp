@@ -1,9 +1,20 @@
 import { format } from "date-fns";
-import React, { useLayoutEffect } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FastImage from "react-native-fast-image";
 import { COLORS } from "../consts/colors";
+import TextInputColored from "../components/TextInputColored";
+import CustomButton from "../components/CustomButton";
 const { height, width } = Dimensions.get("screen");
+import { FontAwesome } from "@expo/vector-icons";
+import IngredientComponent from "../components/IngredientComponent";
 
 const CartComponent = ({ imgURL, name, ingredients }) => {
   return (
@@ -19,38 +30,54 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
           alignSelf: "center",
         }}
       >
-        <View style={styles.imageContainer}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
           <FastImage
-            style={styles.image}
+            style={{
+              backgroundColor: "red",
+              height: 70,
+              borderRadius: 10,
+              aspectRatio: 1,
+            }}
             source={{
               uri: imgURL,
               headers: { Authorization: "someAuthToken" },
-              priority: FastImage.priority.normal,
+              priority: FastImage.priority.high,
             }}
-            resizeMode={FastImage.resizeMode.contain}
+            resizeMode={FastImage.resizeMode.cover}
           />
-          {/* <Image source={{ uri: imgURL }} style={styles.image} /> */}
-        </View>
-        <View style={{ flex: 1 }}>
           <Text
             style={{
               fontSize: 18,
               fontWeight: "bold",
-              marginLeft: 10,
-              width: "90%",
+              textAlign: "center",
+              width: "70%",
             }}
           >
             {name}
           </Text>
+        </View>
+        <View style={{ width: "80%", alignSelf: "center" }}>
           {ingredients?.map((item, index) => (
-            <Text key={index} style={{ marginLeft: 10 }}>
-              <Text style={{ fontWeight: "bold" }}>
-                {" "}
-                {!item.newQuantity ? item.quantity : item.newQuantity}{" "}
-                {item.unite == "unite" ? "" : item.unite}{" "}
-              </Text>
-              {item.name}
-            </Text>
+            <IngredientComponent
+              ingredient={item}
+              key={index}
+              isCommandeScreen={true}
+            />
+            // <Text key={index} style={{ marginLeft: 10 }}>
+            //   <Text style={{ fontWeight: "bold" }}>
+            //     {" "}
+            //     {!item.newQuantity ? item.quantity : item.newQuantity}{" "}
+            //     {item.unite == "unite" ? "" : item.unite}{" "}
+            //   </Text>
+            //   {item.name}
+            // </Text>
           ))}
         </View>
       </View>
@@ -58,6 +85,68 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
     </>
   );
 };
+const AddProduitComponent = () => {
+  const [isRecurrent, setIsRecurrent] = useState(true);
+  const [productText, setProductText] = useState("");
+  return (
+    <View
+      style={{
+        backgroundColor: "white",
+        height: height * 0.1,
+        flexDirection: "row",
+        width,
+        justifyContent: "space-around",
+        alignItems: "center",
+        padding: 10,
+      }}
+    >
+      <TextInputColored
+        style={{ width: "50%", height: 50 }}
+        label="Ajouter un produit"
+        setChangeText={setProductText}
+        value={productText}
+      />
+      <TouchableOpacity
+        style={{ padding: 10 }}
+        onPress={() => setIsRecurrent((p) => !p)}
+      >
+        <FontAwesome
+          name="refresh"
+          size={24}
+          color={isRecurrent ? COLORS.primary : "gray"}
+        />
+      </TouchableOpacity>
+      <CustomButton title="Ajouter" />
+    </View>
+  );
+};
+const AllProductComponent = () => {
+  return (
+    <View
+      style={{
+        backgroundColor: "white",
+        width: "90%",
+        height: height * 0.3,
+        alignSelf: "center",
+        borderWidth: 1,
+        borderRadius: 10,
+      }}
+    >
+      <Text
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          fontSize: 20,
+          color: "gray",
+        }}
+      >
+        Articles Ajoutés
+      </Text>
+      <Text>Gel Douche</Text>
+    </View>
+  );
+};
+
 const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
   useLayoutEffect(() => {
@@ -70,6 +159,8 @@ const InfoCommandeScreen = ({ navigation, route }) => {
 
   return (
     <ScrollView style={{}}>
+      <AddProduitComponent />
+      <AllProductComponent />
       {params.historyDetail.recipes.map((item, i) => {
         return (
           <CartComponent
@@ -140,7 +231,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   itemComponent: {
-    flexDirection: "row",
     marginVertical: 5,
     width,
   },
@@ -151,9 +241,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    height: "90%",
-    width: "90%",
-    borderRadius: 10,
-    resizeMode: "contain",
+    height: 60,
+    aspectRatio: 1.5,
   },
 });
