@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -18,16 +18,24 @@ const { height, width } = Dimensions.get("screen");
 import { FontAwesome } from "@expo/vector-icons";
 import IngredientComponent from "../components/IngredientComponent";
 import CheckBox from "@react-native-community/checkbox";
+import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 // Each recipe which contain ingredients
-const CartComponent = ({ imgURL, name, ingredients }) => {
+const CartComponent = ({
+  imgURL,
+  name,
+  ingredients,
+  setSelectedIngredients,
+  selectedIngredients,
+}) => {
   return (
     <>
       <View style={styles.cartComponent}>
         <View style={styles.titleComponent}>
           <FastImage
             style={{
-              backgroundColor: "red",
+              backgroundColor: COLORS.secondary,
               height: 70,
               borderRadius: 10,
               aspectRatio: 1,
@@ -53,6 +61,9 @@ const CartComponent = ({ imgURL, name, ingredients }) => {
         <View style={{ width: "80%", alignSelf: "center" }}>
           {ingredients?.map((item, index) => (
             <IngredientComponent
+              setSelectedIngredients={setSelectedIngredients}
+              selectedIngredients={selectedIngredients}
+              isSaved={selectedIngredients.indexOf(item.name) > -1}
               ingredient={item}
               key={index}
               isCommandeScreen={true}
@@ -95,7 +106,7 @@ const ProductComponent = ({ product }) => {
 // Component where we add a product with button
 const AddProductComponent = ({ setProducts, products }) => {
   const [isRecurrent, setIsRecurrent] = useState(true);
-  const [productText, setProductText] = useState("");
+  const [productText, setProductText] = useState();
   return (
     <View style={styles.addProductComponent}>
       <TextInputColored
@@ -118,8 +129,11 @@ const AddProductComponent = ({ setProducts, products }) => {
         title="Ajouter"
         style={{ height: 40 }}
         onPress={() => {
+          if (!productText) {
+            return;
+          }
           if (products.indexOf(productText) > -1) {
-            return Alert.alert("Vous avez deja ajouté de produit !");
+            return Alert.alert("Vous avez deja ajouté ce produit !");
           }
           setProducts((p) => [...p, productText]);
         }}
@@ -144,8 +158,7 @@ const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
 
   const [products, setProducts] = useState([]);
-
-  console.log("proooduct ", params);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   useLayoutEffect(() => {
     let time = new Date(params.historyDetail.dateTime);
@@ -154,7 +167,37 @@ const InfoCommandeScreen = ({ navigation, route }) => {
       title: `Liste du ${format(time, "dd/MM/yyyy")}`,
     });
   }, []);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    (async () => {
+      if (!isFocused) {
+        await AsyncStorage.setItem(
+          "selectedIngredients",
+          JSON.stringify(selectedIngredients)
+        );
+        await AsyncStorage.setItem("products", JSON.stringify(products));
+      }
+    })();
+  }, [isFocused]);
 
+  useEffect(() => {
+    (async () => {
+      const selectedIngredientsResult = await AsyncStorage.getItem(
+        "selectedIngredients"
+      );
+      if (selectedIngredientsResult != null) {
+        setSelectedIngredients(JSON.parse(selectedIngredientsResult));
+      }
+      const productsResult = await AsyncStorage.getItem("products");
+      if (productsResult != null) {
+        setProducts(JSON.parse(productsResult));
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log("PROOOOOOD", selectedIngredients);
+  }, [selectedIngredients]);
   return (
     <ScrollView style={{}}>
       <AddProductComponent setProducts={setProducts} products={products} />
@@ -167,6 +210,8 @@ const InfoCommandeScreen = ({ navigation, route }) => {
       {params.historyDetail.recipes.map((item, i) => {
         return (
           <CartComponent
+            setSelectedIngredients={setSelectedIngredients}
+            selectedIngredients={selectedIngredients}
             key={i}
             imgURL={item.imgURL}
             name={item.name}

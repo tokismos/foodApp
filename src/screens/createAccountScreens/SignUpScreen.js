@@ -115,24 +115,6 @@ const PhoneComponent = ({
     </View>
   );
 };
-const NameComponent = ({
-  refe,
-  setIndex,
-  index,
-  setPhoneNumber,
-  setCountryCode,
-  fullNumber,
-}) => {
-  const { sendPhoneVerification } = useAuth();
-  return (
-    <View style={{ width }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-        Comment vous appelez vous ?
-      </Text>
-      <NextButton onPress={async () => {}} />
-    </View>
-  );
-};
 
 const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
   const { verifyCode, signUp } = useAuth();
