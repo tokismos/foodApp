@@ -4,6 +4,7 @@ import {
   Alert,
   Dimensions,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,7 +16,7 @@ import { COLORS } from "../consts/colors";
 import TextInputColored from "../components/TextInputColored";
 import CustomButton from "../components/CustomButton";
 const { height, width } = Dimensions.get("screen");
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import IngredientComponent from "../components/IngredientComponent";
 import CheckBox from "@react-native-community/checkbox";
 import { useIsFocused } from "@react-navigation/native";
@@ -76,48 +77,23 @@ const CartComponent = ({
   );
 };
 
-const ProductComponent = ({ product }) => {
-  const [toggle, setToggle] = useState(true);
-  return (
-    <TouchableOpacity
-      onPress={() => setToggle((p) => !p)}
-      style={styles.productItemComponent}
-    >
-      <Text style={styles.productItemText}>{product}</Text>
-      <CheckBox
-        style={[
-          {
-            transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1.2 }],
-          },
-        ]}
-        onTintColor={COLORS.primary}
-        onFillColor={COLORS.primary}
-        onCheckColor={"white"}
-        onAnimationType="fill"
-        offAnimationType="fade"
-        boxType="square"
-        disabled
-        value={toggle}
-        tintColors={{ true: COLORS.primary, false: "gray" }}
-      />
-    </TouchableOpacity>
-  );
-};
 // Component where we add a product with button
 const AddProductComponent = ({ setProducts, products }) => {
-  const [isRecurrent, setIsRecurrent] = useState(true);
+  const [isRecurrent, setIsRecurrent] = useState(false);
   const [productText, setProductText] = useState();
   return (
     <View style={styles.addProductComponent}>
       <TextInputColored
         style={{ width: "50%", height: 40 }}
-        label="Ajouter un produit"
+        label="Ajouter un article"
         setChangeText={setProductText}
         value={productText}
       />
       <TouchableOpacity
         style={{ padding: 10 }}
-        onPress={() => setIsRecurrent((p) => !p)}
+        onPress={() => {
+          setIsRecurrent((p) => !p);
+        }}
       >
         <FontAwesome
           name="refresh"
@@ -132,10 +108,10 @@ const AddProductComponent = ({ setProducts, products }) => {
           if (!productText) {
             return;
           }
-          if (products.indexOf(productText) > -1) {
+          if (products.map((i) => i.name).indexOf(productText) > -1) {
             return Alert.alert("Vous avez deja ajouté ce produit !");
           }
-          setProducts((p) => [...p, productText]);
+          setProducts((p) => [...p, { name: productText, isRecurrent }]);
         }}
       />
     </View>
@@ -143,24 +119,131 @@ const AddProductComponent = ({ setProducts, products }) => {
 };
 
 //List of all the products we added
-const AllProductsComponent = ({ products }) => {
-  return (
-    <>
-      <Text style={styles.title}>Articles Ajoutés :</Text>
-      <View style={styles.productsComponent}>
-        {products.map((item, i) => (
-          <ProductComponent product={item} key={i} />
-        ))}
-      </View>
-    </>
-  );
-};
 
 const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
 
   const [products, setProducts] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+  const ProductComponent = ({ product, isSaved, isRecurrent }) => {
+    const [toggle, setToggle] = useState();
+    const [isRecu, setIsRecurrent] = useState(isRecurrent);
+
+    useEffect(() => {
+      setToggle(isSaved);
+      console.log(" NEW PROD", products);
+    }, [products]);
+
+    return (
+      <View style={{}}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={async () => {
+              var tmp = [...products];
+              const index = tmp.findIndex((i) => i.name == product);
+              tmp[index] = { name: product, isRecurrent: !isRecurrent };
+              setProducts(tmp);
+
+              setIsRecurrent((p) => !p);
+            }}
+            style={{
+              position: "absolute",
+              left: "-20%",
+              backgroundColor: "white",
+              padding: 5,
+              borderRadius: 5,
+            }}
+          >
+            <FontAwesome
+              name="refresh"
+              size={24}
+              color={isRecu ? COLORS.primary : "gray"}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (!toggle) {
+                console.log("slct ing", selectedIngredients);
+                setSelectedIngredients((p) => [...p, product]);
+              } else {
+                setSelectedIngredients((p) =>
+                  p.filter((item) => item != product)
+                );
+              }
+
+              setToggle((p) => !p);
+            }}
+            style={styles.productItemComponent}
+          >
+            <Text
+              style={{
+                ...styles.productItemText,
+                textDecorationLine: toggle ? "line-through" : null,
+              }}
+            >
+              {product}
+            </Text>
+            <CheckBox
+              style={[
+                {
+                  transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1.2 }],
+                },
+              ]}
+              onTintColor={COLORS.primary}
+              onFillColor={COLORS.primary}
+              onCheckColor={"white"}
+              onAnimationType="fill"
+              offAnimationType="fade"
+              boxType="square"
+              disabled
+              value={isSaved}
+              tintColors={{ true: COLORS.primary, false: "gray" }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setProducts(products.filter((i) => i.name != product));
+              console.log("lllllll", products);
+            }}
+            style={{
+              position: "absolute",
+              right: "-20%",
+              backgroundColor: "white",
+              padding: 5,
+              borderRadius: 5,
+            }}
+          >
+            <AntDesign name="delete" size={24} color={COLORS.red} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+  const AllProductsComponent = () => {
+    return (
+      <>
+        <Text style={styles.title}>Articles Ajoutés :</Text>
+        <View style={{ ...styles.productsComponent, overflow: "visible" }}>
+          {products.map((item, i) => {
+            return (
+              <ProductComponent
+                product={item.name}
+                isRecurrent={item.isRecurrent}
+                key={i}
+                isSaved={selectedIngredients.indexOf(item.name) > -1}
+              />
+            );
+          })}
+        </View>
+      </>
+    );
+  };
 
   useLayoutEffect(() => {
     let time = new Date(params.historyDetail.dateTime);
@@ -198,7 +281,7 @@ const InfoCommandeScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <ScrollView style={{}}>
+    <ScrollView style={{ backgroundColor: "#cecece" }}>
       <AddProductComponent setProducts={setProducts} products={products} />
 
       {products.length != 0 && <AllProductsComponent products={products} />}
@@ -227,7 +310,7 @@ const styles = StyleSheet.create({
     height: 0.4,
     width: "80%",
     alignSelf: "center",
-    backgroundColor: "gray",
+    backgroundColor: "white",
   },
   headerContainer: {
     width: "100%",
@@ -315,7 +398,7 @@ const styles = StyleSheet.create({
   },
   productItemComponent: {
     flexDirection: "row",
-    width: "90%",
+    width: "100%",
     justifyContent: "space-between",
     alignSelf: "center",
     alignItems: "center",
@@ -332,12 +415,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   productItemText: {
-    fontSize: 18,
+    fontSize: 16,
     width: "80%",
-    fontWeight: "bold",
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     paddingVertical: 10,
     marginLeft: 5,

@@ -50,6 +50,7 @@ const IngredientComponent = ({
               fontWeight: "bold",
               width: "25%",
               textAlign: "center",
+              fontSize: 16,
               textDecorationLine: toggle ? "line-through" : null,
             }}
           >
@@ -70,6 +71,7 @@ const IngredientComponent = ({
           <Text
             style={{
               marginLeft: 20,
+              fontSize: 16,
               width: "75%",
               textDecorationLine: toggle ? "line-through" : null,
             }}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   textQuantityCrossed: {
-    fontSize: 14,
+    fontSize: 16,
     width: "25%",
     textAlign: "center",
     fontWeight: "bold",
