@@ -61,7 +61,7 @@ const SignInScreen = () => {
             disabled={password.length == 0}
           />
         </View>
-        {/* <View style={{ width: "100%", flex: 1 }}>
+        <View style={{ width: "100%", flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -115,7 +115,7 @@ const SignInScreen = () => {
               </View>
             </View>
           </TouchableOpacity>
-          <AppleButton
+          {/* <AppleButton
             buttonStyle={AppleButton.Style.WHITE}
             buttonType={AppleButton.Type.SIGN_IN}
             style={{
@@ -128,8 +128,8 @@ const SignInScreen = () => {
                 console.log("Apple sign-in complete!")
               )
             }
-          />
-        </View> */}
+          /> */}
+        </View>
       </View>
     </>
   );

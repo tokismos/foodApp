@@ -145,12 +145,14 @@ const AddProductComponent = ({ setProducts, products }) => {
 //List of all the products we added
 const AllProductsComponent = ({ products }) => {
   return (
-    <View style={styles.productsComponent}>
-      <Text style={styles.productsTitle}>Articles Ajoutés</Text>
-      {products.map((item, i) => (
-        <ProductComponent product={item} key={i} />
-      ))}
-    </View>
+    <>
+      <Text style={styles.title}>Articles Ajoutés :</Text>
+      <View style={styles.productsComponent}>
+        {products.map((item, i) => (
+          <ProductComponent product={item} key={i} />
+        ))}
+      </View>
+    </>
   );
 };
 
@@ -195,17 +197,12 @@ const InfoCommandeScreen = ({ navigation, route }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log("PROOOOOOD", selectedIngredients);
-  }, [selectedIngredients]);
   return (
     <ScrollView style={{}}>
       <AddProductComponent setProducts={setProducts} products={products} />
+
       {products.length != 0 && <AllProductsComponent products={products} />}
-      <Text style={{ fontSize: 24, fontWeight: "bold", paddingVertical: 10 }}>
-        {" "}
-        Recettes :
-      </Text>
+      <Text style={styles.title}>Recettes :</Text>
 
       {params.historyDetail.recipes.map((item, i) => {
         return (
@@ -284,7 +281,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
-    borderWidth: 1,
     width: "90%",
     alignSelf: "center",
   },
@@ -302,7 +298,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "70%",
     alignSelf: "center",
-    borderWidth: 1,
     borderRadius: 10,
     padding: 10,
   },
@@ -340,5 +335,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "80%",
     fontWeight: "bold",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingVertical: 10,
+    marginLeft: 5,
   },
 });

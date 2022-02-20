@@ -46,19 +46,36 @@ const IngredientComponent = ({
         {/* We have new Quantity in the commande screen and we dont have nbrPersonne ,so we dont need to calcul it  */}
         {isCommandeScreen ? (
           <Text
-            style={{ fontWeight: "bold", width: "25%", textAlign: "center" }}
+            style={{
+              fontWeight: "bold",
+              width: "25%",
+              textAlign: "center",
+              textDecorationLine: toggle ? "line-through" : null,
+            }}
           >
             {!newQuantity ? quantity : newQuantity}{" "}
             {unite == "unite" ? "" : unite}{" "}
           </Text>
         ) : (
-          <Text style={styles.textQuantity}>{`${+(
-            (quantity * nbrPersonne) /
-            defaultNbrPersonne
-          ).toFixed(1)} ${unite == "unite" ? "" : unite}`}</Text>
+          <Text
+            style={{
+              ...styles.textQuantity,
+              textDecorationLine: toggle ? "line-through" : null,
+            }}
+          >{`${+((quantity * nbrPersonne) / defaultNbrPersonne).toFixed(1)} ${
+            unite == "unite" ? "" : unite
+          }`}</Text>
         )}
         <View style={styles.nameContainer}>
-          <Text style={{ marginLeft: 20, width: "75%" }}>{name}</Text>
+          <Text
+            style={{
+              marginLeft: 20,
+              width: "75%",
+              textDecorationLine: toggle ? "line-through" : null,
+            }}
+          >
+            {name}
+          </Text>
           <CheckBox
             style={{
               transform: [{ scale: Platform.OS === "ios" ? 0.8 : 1.2 }],
@@ -95,6 +112,13 @@ const styles = StyleSheet.create({
     width: "25%",
     textAlign: "center",
     fontWeight: "bold",
+  },
+  textQuantityCrossed: {
+    fontSize: 14,
+    width: "25%",
+    textAlign: "center",
+    fontWeight: "bold",
+    textDecorationLine: "line-through",
   },
   nameContainer: {
     width: "75%",
