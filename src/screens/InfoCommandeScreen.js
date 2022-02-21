@@ -1,3 +1,5 @@
+// setSelectedIngredient we find here every selected ing que ca soit produits or from cart
+
 import { format } from "date-fns";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
@@ -29,10 +31,13 @@ const CartComponent = ({
   ingredients,
   setSelectedIngredients,
   selectedIngredients,
+  index,
 }) => {
   return (
     <>
       <View style={styles.cartComponent}>
+        {index == 0 && <Text style={styles.title}>Recettes :</Text>}
+
         <View style={styles.titleComponent}>
           <FastImage
             style={{
@@ -43,7 +48,7 @@ const CartComponent = ({
             }}
             source={{
               uri: imgURL,
-              headers: { Authorization: "someAuthToken" },
+              // headers: { Authorization: "someAuthToken" },
               priority: FastImage.priority.high,
             }}
             resizeMode={FastImage.resizeMode.cover}
@@ -59,7 +64,7 @@ const CartComponent = ({
             {name}
           </Text>
         </View>
-        <View style={{ width: "80%", alignSelf: "center" }}>
+        <View style={{ width: "100%", alignSelf: "center" }}>
           {ingredients?.map((item, index) => (
             <IngredientComponent
               setSelectedIngredients={setSelectedIngredients}
@@ -79,7 +84,6 @@ const CartComponent = ({
 
 // Component where we add a product with button
 const AddProductComponent = ({ setProducts, products }) => {
-  const [isRecurrent, setIsRecurrent] = useState(false);
   const [productText, setProductText] = useState();
   return (
     <View style={styles.addProductComponent}>
@@ -89,18 +93,7 @@ const AddProductComponent = ({ setProducts, products }) => {
         setChangeText={setProductText}
         value={productText}
       />
-      <TouchableOpacity
-        style={{ padding: 10 }}
-        onPress={() => {
-          setIsRecurrent((p) => !p);
-        }}
-      >
-        <FontAwesome
-          name="refresh"
-          size={24}
-          color={isRecurrent ? COLORS.primary : "gray"}
-        />
-      </TouchableOpacity>
+
       <CustomButton
         title="Ajouter"
         style={{ height: 40 }}
@@ -108,10 +101,11 @@ const AddProductComponent = ({ setProducts, products }) => {
           if (!productText) {
             return;
           }
-          if (products.map((i) => i.name).indexOf(productText) > -1) {
+
+          if (products.indexOf(productText) > -1) {
             return Alert.alert("Vous avez deja ajouté ce produit !");
           }
-          setProducts((p) => [...p, { name: productText, isRecurrent }]);
+          setProducts((p) => [...p, productText]);
         }}
       />
     </View>
@@ -122,73 +116,73 @@ const AddProductComponent = ({ setProducts, products }) => {
 
 const InfoCommandeScreen = ({ navigation, route }) => {
   const { params } = route;
-
+  const idTime = params.historyDetail.dateTime;
   const [products, setProducts] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-  const ProductComponent = ({ product, isSaved, isRecurrent }) => {
+  const ProductComponent = ({ product, isSaved }) => {
     const [toggle, setToggle] = useState();
-    const [isRecu, setIsRecurrent] = useState(isRecurrent);
 
     useEffect(() => {
       setToggle(isSaved);
-      console.log(" NEW PROD", products);
+      console.log("THOSE ARE PRODUCTS", products);
     }, [products]);
 
     return (
-      <View style={{}}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={async () => {
-              var tmp = [...products];
-              const index = tmp.findIndex((i) => i.name == product);
-              tmp[index] = { name: product, isRecurrent: !isRecurrent };
-              setProducts(tmp);
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          width: "100%",
+        }}
+      >
+        <Pressable
+          onPress={() => {
+            if (!toggle) {
+              console.log("slct ing", selectedIngredients);
+              setSelectedIngredients((p) => [...p, product]);
+            } else {
+              setSelectedIngredients((p) =>
+                p.filter((item) => item != product)
+              );
+            }
 
-              setIsRecurrent((p) => !p);
-            }}
+            setToggle((p) => !p);
+          }}
+          style={styles.productItemComponent}
+        >
+          <Text
             style={{
-              position: "absolute",
-              left: "-20%",
-              backgroundColor: "white",
-              padding: 5,
-              borderRadius: 5,
+              ...styles.productItemText,
+              textDecorationLine: toggle ? "line-through" : null,
+              textDecorationStyle: "solid",
+
+              width: "65%",
             }}
           >
-            <FontAwesome
-              name="refresh"
-              size={24}
-              color={isRecu ? COLORS.primary : "gray"}
-            />
-          </TouchableOpacity>
+            {product}
+          </Text>
           <TouchableOpacity
             onPress={() => {
-              if (!toggle) {
-                console.log("slct ing", selectedIngredients);
-                setSelectedIngredients((p) => [...p, product]);
-              } else {
-                setSelectedIngredients((p) =>
-                  p.filter((item) => item != product)
-                );
-              }
-
-              setToggle((p) => !p);
+              setProducts(products.filter((i) => i != product));
             }}
-            style={styles.productItemComponent}
+            style={{
+              padding: 5,
+              borderRadius: 5,
+              width: "10%",
+              alignItems: "center",
+            }}
           >
-            <Text
-              style={{
-                ...styles.productItemText,
-                textDecorationLine: toggle ? "line-through" : null,
-              }}
-            >
-              {product}
-            </Text>
+            <AntDesign name="delete" size={24} color={COLORS.red} />
+          </TouchableOpacity>
+          <View
+            style={{
+              width: "10%",
+              left: 5,
+              top: 2,
+            }}
+          >
             <CheckBox
               style={[
                 {
@@ -205,38 +199,23 @@ const InfoCommandeScreen = ({ navigation, route }) => {
               value={isSaved}
               tintColors={{ true: COLORS.primary, false: "gray" }}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setProducts(products.filter((i) => i.name != product));
-              console.log("lllllll", products);
-            }}
-            style={{
-              position: "absolute",
-              right: "-20%",
-              backgroundColor: "white",
-              padding: 5,
-              borderRadius: 5,
-            }}
-          >
-            <AntDesign name="delete" size={24} color={COLORS.red} />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </Pressable>
       </View>
     );
   };
   const AllProductsComponent = () => {
     return (
       <>
-        <Text style={styles.title}>Articles Ajoutés :</Text>
-        <View style={{ ...styles.productsComponent, overflow: "visible" }}>
+        <View style={styles.productsComponent}>
+          <Text style={styles.title}>Articles Ajoutés :</Text>
+
           {products.map((item, i) => {
             return (
               <ProductComponent
-                product={item.name}
-                isRecurrent={item.isRecurrent}
+                product={item}
                 key={i}
-                isSaved={selectedIngredients.indexOf(item.name) > -1}
+                isSaved={selectedIngredients.indexOf(item) > -1}
               />
             );
           })}
@@ -260,7 +239,11 @@ const InfoCommandeScreen = ({ navigation, route }) => {
           "selectedIngredients",
           JSON.stringify(selectedIngredients)
         );
-        await AsyncStorage.setItem("products", JSON.stringify(products));
+        await AsyncStorage.setItem(idTime.toString(), JSON.stringify(products));
+        // await AsyncStorage.setItem(
+        //   "recurrentProducts",
+        //   JSON.stringify(recurrentProducts)
+        // );
       }
     })();
   }, [isFocused]);
@@ -273,7 +256,7 @@ const InfoCommandeScreen = ({ navigation, route }) => {
       if (selectedIngredientsResult != null) {
         setSelectedIngredients(JSON.parse(selectedIngredientsResult));
       }
-      const productsResult = await AsyncStorage.getItem("products");
+      const productsResult = await AsyncStorage.getItem(idTime.toString());
       if (productsResult != null) {
         setProducts(JSON.parse(productsResult));
       }
@@ -285,11 +268,12 @@ const InfoCommandeScreen = ({ navigation, route }) => {
       <AddProductComponent setProducts={setProducts} products={products} />
 
       {products.length != 0 && <AllProductsComponent products={products} />}
-      <Text style={styles.title}>Recettes :</Text>
 
       {params.historyDetail.recipes.map((item, i) => {
         return (
           <CartComponent
+            index={i}
+            idTime={params.historyDetail.dateTime}
             setSelectedIngredients={setSelectedIngredients}
             selectedIngredients={selectedIngredients}
             key={i}
@@ -323,6 +307,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
   },
   bottomComponent: {
     width: "100%",
@@ -379,10 +364,11 @@ const styles = StyleSheet.create({
   },
   productsComponent: {
     backgroundColor: "white",
-    width: "70%",
+    width: "90%",
     alignSelf: "center",
     borderRadius: 10,
     padding: 10,
+    marginBottom: 20,
   },
   productsTitle: {
     textAlign: "center",
@@ -399,7 +385,7 @@ const styles = StyleSheet.create({
   productItemComponent: {
     flexDirection: "row",
     width: "100%",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignSelf: "center",
     alignItems: "center",
     marginVertical: 5,
@@ -415,13 +401,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   productItemText: {
-    fontSize: 16,
-    width: "80%",
+    fontSize: 18,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
     paddingVertical: 10,
     marginLeft: 5,
+    textAlign: "center",
   },
 });

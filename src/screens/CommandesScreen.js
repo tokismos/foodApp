@@ -62,6 +62,7 @@ const CommandesScreen = () => {
     getCommandes(setCommandes);
   }, []);
 
+  console.log("commaaaaandes", commandes);
   return (
     <ScrollView>
       {commandes.map((item, i) => {

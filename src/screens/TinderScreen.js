@@ -217,7 +217,7 @@ const BarHeader = () => {
         }}
       >
         <Entypo name="home" size={24} color="black" />
-        <Text>Avenue Jomini 5, Lausanne, 1004</Text>
+        <Text>Adresse: Disponible prochainement</Text>
         <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
       </View>
       <View
