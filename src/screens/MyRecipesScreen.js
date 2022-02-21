@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import { getAllFavoris, getCommandes } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");

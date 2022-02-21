@@ -297,6 +297,11 @@ const TinderScreen = ({ navigation }) => {
   const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarStyle: { display: showButton ? "none" : "flex" },
+    });
+  }, [showButton]);
   const loadData = async (item) => {
     getAllRecipes(item)
       .then((result) => {
@@ -401,7 +406,7 @@ const TinderScreen = ({ navigation }) => {
         <LoadingComponent />
       ) : (
         <>
-          <View style={{ height: "63%", width: "100%" }}>
+          <View style={{ height: height * 0.6, width: "100%" }}>
             <AnimatedStack
               data={recipes}
               renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
@@ -417,7 +422,7 @@ const TinderScreen = ({ navigation }) => {
               onSwipeRight={onSwipeRight}
             />
           </View>
-          {showButton ? (
+          {showButton && (
             <View style={styles.button}>
               <Pressable
                 onPress={() => {
@@ -467,8 +472,6 @@ const TinderScreen = ({ navigation }) => {
                 textStyle={{ fontSize: 20, textAlign: "center" }}
               />
             </View>
-          ) : (
-            <BottomContainer />
           )}
         </>
       )}

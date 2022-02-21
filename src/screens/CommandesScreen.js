@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   Dimensions,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -64,11 +65,13 @@ const CommandesScreen = () => {
 
   console.log("commaaaaandes", commandes);
   return (
-    <ScrollView>
-      {commandes.map((item, i) => {
-        return <CommandeItem item={item} key={i} />;
-      })}
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        {commandes.map((item, i) => {
+          return <CommandeItem item={item} key={i} />;
+        })}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

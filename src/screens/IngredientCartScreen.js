@@ -117,7 +117,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
                 margin: 10,
                 fontSize: 16,
                 fontWeight: "bold",
-                marginBottom: -5,
               }}
             >
               {item.name}

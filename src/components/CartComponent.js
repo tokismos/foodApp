@@ -19,7 +19,6 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
   const [nbrPersonne, setNbrPersonne] = useState(+item.nbrPersonne);
   const { matches } = useSelector((state) => state.matchStore);
 
-
   const NbrPersonneComponent = () => {
     return (
       <View
@@ -50,7 +49,7 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
           {item.nbrPersonne}
         </Text>
         <MaterialCommunityIcons
-          name="snowman"
+          name="human-male"
           size={24}
           color="gray"
           style={{ marginRight: 5 }}
@@ -131,19 +130,16 @@ const CartComponent = ({ item, onPress, finalCart, setFinalCart, index }) => {
         </View>
         <View style={styles.checkBoxContainer}>
           <CheckBox
-
-
-
-onTintColor={COLORS.primary}
-onFillColor={COLORS.primary}
-onCheckColor={'white'}
-onAnimationType='fill'
-
-boxType='square'
-
-style={[ {
-  transform: [{ scale: .8 }]
-}]}
+            onTintColor={COLORS.primary}
+            onFillColor={COLORS.primary}
+            onCheckColor={"white"}
+            onAnimationType="fill"
+            boxType="square"
+            style={[
+              {
+                transform: [{ scale: 0.8 }],
+              },
+            ]}
             value={toggle}
             onValueChange={(newValue) => setToggle(newValue)}
             disabled

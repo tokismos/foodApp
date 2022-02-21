@@ -1,11 +1,15 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, Image, SafeAreaView, StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {
+  MaterialCommunityIcons,
+  FontAwesome,
+  Entypo,
+} from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { StatusBar } from "expo-status-bar";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import { COLORS } from "../consts/colors";
 import IngredientScreen from "../screens/IngredientScreen";
@@ -15,8 +19,9 @@ import IngredientCartScreen from "../screens/IngredientCartScreen";
 import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
-
 const Stack = createStackNavigator();
+import Recipe from "../assets/recipe.svg";
+import MyRecipes from "../assets/MyRecipes.svg";
 const LoginStac = createStackNavigator();
 const Tab = createBottomTabNavigator();
 import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
@@ -34,6 +39,8 @@ import PhoneScreen from "../screens/PhoneScreen";
 import MyRecipesScreen from "../screens/MyRecipesScreen";
 import CommandesScreen from "../screens/CommandesScreen";
 import InfoCommandeScreen from "../screens/InfoCommandeScreen";
+
+const TopTab = createMaterialTopTabNavigator();
 
 export const MyRecipesTabScreen = () => {
   return (
@@ -79,6 +86,104 @@ export const MyRecipesTabScreen = () => {
         }}
         name="Recettes favories"
         component={MyRecipesScreen}
+      />
+    </Tab.Navigator>
+  );
+};
+const TopTabScreen = () => {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopTab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: { backgroundColor: "white" },
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarLabelStyle: { fontWeight: "bold", fontSize: 16 },
+        }}
+      >
+        <TopTab.Screen name="Mes recettes" component={MyRecipesScreen} />
+        <TopTab.Screen name="Recettes favories" component={MyRecipesScreen} />
+      </TopTab.Navigator>
+    </SafeAreaView>
+  );
+};
+const BottomTabScreen = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        // tabBarStyle: { padding:10},
+      }}
+    >
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Recipe
+              width={"100%"}
+              height={"100%"}
+              fill={focused ? COLORS.primary : "gray"}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              style={{
+                color: focused ? COLORS.primary : "gray",
+                fontWeight: focused ? "bold" : null,
+              }}
+            >
+              Recettes
+            </Text>
+          ),
+        }}
+        name="Recettes"
+        component={TinderScreen}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="list"
+              size={30}
+              color={focused ? COLORS.primary : "gray"}
+            />
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text
+              style={{
+                color: focused ? COLORS.primary : "gray",
+                fontWeight: focused ? "bold" : null,
+              }}
+            >
+              Liste de courses
+            </Text>
+          ),
+        }}
+        name="Liste de courses"
+        component={CommandesScreen}
+      />
+
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MyRecipes
+              width={"90%"}
+              height={"90%"}
+              fill={focused ? COLORS.primary : "gray"}
+            />
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text
+              style={{
+                color: focused ? COLORS.primary : "gray",
+                fontWeight: focused ? "bold" : null,
+              }}
+            >
+              En cuisine
+            </Text>
+          ),
+        }}
+        name="En cuisine"
+        component={TopTabScreen}
       />
     </Tab.Navigator>
   );
@@ -202,7 +307,7 @@ const LoggedStackScreen = () => {
             headerShown: false,
           }}
           name="TinderScreen"
-          component={TinderScreen}
+          component={BottomTabScreen}
         />
         <Stack.Screen
           options={{
@@ -351,7 +456,7 @@ const LoginStackScreen = () => {
             headerShown: false,
           }}
           name="IntroScreen"
-          component={IntroScreen}
+          component={BottomTabScreen}
         />
         <Stack.Screen
           options={{
@@ -555,7 +660,7 @@ const RootNavigation = () => {
 
   return (
     <>
-      <StatusBar translucent />
+      <StatusBar />
       {user ? <LoggedStackScreen /> : <LoginStackScreen />}
     </>
   );
