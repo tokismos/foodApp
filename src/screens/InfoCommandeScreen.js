@@ -88,7 +88,7 @@ const AddProductComponent = ({ setProducts, products }) => {
   return (
     <View style={styles.addProductComponent}>
       <TextInputColored
-        style={{ width: "50%", height: 40 }}
+        style={{ width: "50%", height: 40, marginBottom: 10 }}
         label="Ajouter un article"
         setChangeText={setProductText}
         value={productText}

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Pressable,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { getAllFavoris, getCommandes } from "../helpers/db";
 const { width, height } = Dimensions.get("screen");
@@ -282,5 +283,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     transform: [{ scale: 0.8 }],
+  },
+  safeAreaView: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

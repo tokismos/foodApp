@@ -12,12 +12,15 @@ import {
   ImageBackground,
   requireNativeComponent,
   ToastAndroid,
+  StatusBar,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import users from "../helpers/data/";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
-
+import Oven from "../assets/oven.svg";
+import Time from "../assets/time.svg";
+import Livre from "../assets/livre.svg";
 import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,7 +30,7 @@ import {
 } from "../redux/slicer/MatchSlicer";
 import { COLORS } from "../consts/colors";
 
-import { getAllRecipes } from "../axios";
+import { getAllRecipes, incrementLeft, incrementRight } from "../axios";
 // import { setRecipes } from "../redux/slicer/recipeSlicer";
 import { Avatar } from "react-native-paper";
 
@@ -42,260 +45,61 @@ import { setUser } from "../redux/slicer/userSlicer";
 import { getAdditionalInfo, getFavoris } from "../helpers/db";
 import CustomButton from "../components/CustomButton";
 import { Alert } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import {
   setCuisineNotification,
   setListNotification,
 } from "../redux/slicer/notificationSlicer";
 import { setFavorites } from "../redux/slicer/favoritesSlicer";
-const shuffleArray = () => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-};
+
 const Header = () => {
-  const navigation = useNavigation();
-  const { user } = useSelector((state) => state.userStore);
-
   return (
-    <ImageBackground
-      source={require("../assets/logoNoel.png")}
-      resizeMode="contain"
-      style={{
-        flexDirection: "row",
-        height: height * 0.08,
-        width: "100%",
-        marginTop: 20,
-        justifyContent: "space-between",
-      }}
-    >
-      <View
-        style={{
-          width: "100%",
-          position: "absolute",
-          bottom: 0,
-        }}
-      >
-        <LottieView
-          source={require("../assets/snow.json")}
-          speed={0.4}
-          autoPlay
-          style={{
-            width: "100%",
-          }}
-        />
-        <LottieView
-          source={require("../assets/snow.json")}
-          autoPlay
-          speed={0.6}
-          style={{
-            width: "80%",
-            marginLeft: 15,
-            position: "absolute",
-            bottom: -20,
-          }}
-        />
-      </View>
-      <TouchableOpacity
-        onPress={() =>
-          auth().currentUser
-            ? navigation.navigate("Mon profile")
-            : navigation.navigate("SignUpScreen")
-        }
-        style={{
-          width: "25%",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Avatar.Image
-          theme={{ color: "red", backgroundColor: "red" }}
-          style={{ backgroundColor: COLORS.primary }}
-          size={40}
-          source={
-            user?.photoURL != null
-              ? {
-                  uri: user?.photoURL,
-                }
-              : require("../assets/avatar.png")
-          }
-        />
-
-        {/* <Image
-          source={
-            user?.photoURL != null
-              ? {
-                  uri: user?.photoURL,
-                }
-              : require("../assets/avatar.png")
-          }
-          style={{
-            height: "60%",
-            width: "60%",
-            resizeMode: "contain",
-            borderRadius: 50,
-          }}
-        /> */}
-      </TouchableOpacity>
-
-      <View
-        style={{
-          width: "100%",
-          alignItems: "center",
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          left: 0,
-          zIndex: 99,
-        }}
-      >
-        <Image
-          source={require("../assets/logoNoel.png")}
-          style={{
-            height: "100%",
-            width: "100%",
-            resizeMode: "contain",
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: "30%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("FeedBackScreen")}
-          style={{
-            backgroundColor: COLORS.primary,
-            width: "70%",
-            height: "50%",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 10,
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 16,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            FeedBack
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
-  );
-};
-const BarHeader = () => {
-  const { user } = useSelector((state) => state.userStore);
-  const navigation = useNavigation();
-  return user?.phoneNumber || user == null ? (
     <View
       style={{
-        height: "5%",
-        width: "100%",
+        backgroundColor: COLORS.primary,
+        width,
+        height: height * 0.12,
         flexDirection: "row",
-        backgroundColor: "#f5f4f4",
+        alignItems: "center",
+        justifyContent: "space-around",
       }}
     >
       <View
         style={{
-          width: "75%",
-          height: "100%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 10,
-          borderBottomRightRadius: 10,
-          borderBottomLeftRadius: 10,
-          backgroundColor: "white",
-        }}
-      >
-        <Entypo name="home" size={24} color="black" />
-        <Text>Adresse: Disponible prochainement</Text>
-        <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
-      </View>
-      <View
-        style={{
-          width: "25%",
-          height: "100%",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "row",
-          backgroundColor: "white",
-          marginLeft: 1,
-          borderBottomLeftRadius: 10,
         }}
       >
-        <Image
-          source={require("../assets/marcher.png")}
-          style={{
-            resizeMode: "contain",
-            aspectRatio: 1,
-            height: "30%",
-            width: "30%",
-          }}
-        />
-        <AntDesign name="downcircleo" size={15} color={COLORS.primary} />
+        <Livre height={40} width={40} fill="white" />
+        <Text style={styles.categorieTitle}>Types de plats </Text>
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Time height={40} width={40} fill="white" />
+
+        <Text style={styles.categorieTitle}>Temps </Text>
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <MaterialCommunityIcons name="fish-off" size={40} color="white" />
+
+        <Text style={styles.categorieTitle}>Régimes </Text>
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Oven height={40} width={40} fill="white" />
+        <Text style={styles.categorieTitle}>Materiel </Text>
       </View>
     </View>
-  ) : (
-    <Pressable
-      onPress={() => navigation.navigate("Mon profile")}
-      style={{
-        height: "5%",
-        width: "100%",
-        backgroundColor: "#b20000",
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text style={{ textAlign: "center", color: "white", fontWeight: "bold" }}>
-        Vous avez des informations manquantes dans votre profile.
-      </Text>
-    </Pressable>
   );
 };
 
-const Notification = ({ right }) => {
-  return (
-    <View
-      style={{
-        height: 10,
-        width: 10,
-        backgroundColor: COLORS.red,
-        borderRadius: 10,
-        position: "absolute",
-        top: 0,
-        right: right ?? "25%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    />
-  );
-};
 const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userStore);
 
-  const [notificationList, setNotificationList] = useState(true);
-  const [notificationCuisine, setNotificationCuisine] = useState(true);
-
   const [recipes, setRecipes] = useState([]);
-  const [headerIsLoading, setHeaderLoading] = useState(true);
   const [showButton, setShowButton] = useState(false);
-  const { listNotification, cuisineNotification } = useSelector(
-    (state) => state.notificationStore
-  );
-  const { nbrOfRecipes, matches } = useSelector((state) => state.matchStore);
-  const { activeFilters } = useSelector((state) => state.recipeStore);
+
+  const { matches } = useSelector((state) => state.matchStore);
 
   useEffect(() => {
     navigation.setOptions({
@@ -319,15 +123,11 @@ const TinderScreen = ({ navigation }) => {
       getAdditionalInfo().then((e) => {
         console.log("W", e);
         if (!e.phoneNumber) {
-          setHeaderLoading(false);
-
           return navigation.navigate("PhoneScreen");
         }
         dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
-        setHeaderLoading(false);
       });
     } else {
-      setHeaderLoading(false);
     }
   }, []);
   useEffect(() => {
@@ -339,88 +139,62 @@ const TinderScreen = ({ navigation }) => {
       setShowButton(true);
     }
   }, [matches]);
-  const onSwipeLeft = (item) => {
+  const onSwipeLeft = async (item) => {
     // console.warn("swipe left", user.name);
     console.log("swiped left", item);
+    await incrementLeft(item._id);
   };
 
-  const onSwipeRight = (item) => {
+  const onSwipeRight = async (item) => {
     item.defaultNbrPersonne = item.nbrPersonne;
     item.isChecked = true;
     dispatch(addMatch(item));
-  };
-  const BottomContainer = () => {
-    return (
-      <View style={styles.bottomContainer}>
-        <View style={styles.bottomView}>
-          <TouchableOpacity style={{ alignItems: "center" }}>
-            <Image source={require("../assets/recette.png")} />
-            <Text style={{ color: "#cccccc" }}>Recettes</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("CommandesScreen");
-              listNotification && dispatch(setListNotification(false));
-            }}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {listNotification && <Notification />}
-            <Entypo name="list" size={45} color="#cccccc" />
-            <Text style={{ color: "#cccccc" }}>Liste de courses</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={() => {
-              navigation.navigate("MyRecipesScreen");
-              cuisineNotification && dispatch(setCuisineNotification(false));
-            }}
-          >
-            {cuisineNotification && <Notification right={0} />}
-            <Image source={require("../assets/cuisine.png")} />
-            <Text style={{ color: "#cccccc" }}>Cuisine</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+    console.log("hahaaaaawaawa", item._id);
+    await incrementRight(item._id);
+    console.log("daz INCREMENT");
   };
 
   return (
     <View style={styles.pageContainer}>
+      <StatusBar translucent backgroundColor={COLORS.primary} />
+
       <Header />
-      {headerIsLoading ? (
-        <ActivityIndicator size="small" color="#0000ff" />
-      ) : (
-        <BarHeader />
-      )}
-      <HeaderComponent
-        yes
-        page="1"
-        style={{ justifyContent: "center", height: height * 0.1 }}
-      />
 
       {recipes.length == 0 ? (
         <LoadingComponent />
       ) : (
         <>
-          <View style={{ height: height * 0.6, width: "100%" }}>
-            <AnimatedStack
-              data={recipes}
-              renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
-                <TinderCard
-                  height="100%"
-                  width="100%"
-                  recipe={item}
-                  onSwipeRight={onSwipeRight}
-                  onSwipeLeft={onSwipeLeft}
-                />
-              )}
-              onSwipeLeft={onSwipeLeft}
-              onSwipeRight={onSwipeRight}
-            />
+          <View
+            style={{
+              height: height * 0.85,
+              width: "100%",
+              backgroundColor: COLORS.primary,
+            }}
+          >
+            <View
+              style={{
+                height: "100%",
+                backgroundColor: "white",
+                borderTopRightRadius: 20,
+                borderTopLeftRadius: 20,
+                paddingTop: 20,
+              }}
+            >
+              <AnimatedStack
+                data={recipes}
+                renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
+                  <TinderCard
+                    height="100%"
+                    width="100%"
+                    recipe={item}
+                    onSwipeRight={onSwipeRight}
+                    onSwipeLeft={onSwipeLeft}
+                  />
+                )}
+                onSwipeLeft={onSwipeLeft}
+                onSwipeRight={onSwipeRight}
+              />
+            </View>
           </View>
           {showButton && (
             <View style={styles.button}>
@@ -481,11 +255,8 @@ const TinderScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   pageContainer: {
-    alignItems: "center",
     flex: 1,
-    width: "100%",
-    backgroundColor: "#f5f4f4",
-    paddingTop: 10,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   container: {
     flex: 1,
@@ -540,6 +311,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     transform: [{ scale: 0.8 }],
+  },
+  categorieTitle: {
+    flex: 1 / 4,
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

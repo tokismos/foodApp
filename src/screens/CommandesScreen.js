@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Dimensions,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -65,7 +67,7 @@ const CommandesScreen = () => {
 
   console.log("commaaaaandes", commandes);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
         {commandes.map((item, i) => {
           return <CommandeItem item={item} key={i} />;
@@ -77,4 +79,8 @@ const CommandesScreen = () => {
 
 export default CommandesScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  safeAreaView: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+});

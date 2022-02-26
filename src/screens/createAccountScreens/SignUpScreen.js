@@ -95,7 +95,6 @@ const PhoneComponent = ({
       <PhoneInputComponent
         setPhoneNumber={setPhoneNumber}
         setCountryCode={setCountryCode}
-        style={{}}
       />
       <CustomButton
         isLoading={isLoading}

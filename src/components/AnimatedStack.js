@@ -25,7 +25,6 @@ const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
 
 const AnimatedStack = (props) => {
-  const dispatch = useDispatch();
   const { data, renderItem, onSwipeRight, onSwipeLeft } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [swiped, setSwipe] = useState();
@@ -138,6 +137,11 @@ const AnimatedStack = (props) => {
     if (swiped == "right") {
       onSwipeRight(currentProfile);
       console.log("swiped right");
+      setSwipe("");
+    }
+    if (swiped == "left") {
+      onSwipeLeft(currentProfile);
+      console.log("swiped leeft");
       setSwipe("");
     }
   }, [swiped]);

@@ -1,6 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Animated, Image, SafeAreaView, StyleSheet, Text } from "react-native";
+import {
+  Animated,
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  StatusBar,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   MaterialCommunityIcons,
@@ -8,7 +16,6 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
-import { StatusBar } from "expo-status-bar";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import { COLORS } from "../consts/colors";
@@ -96,9 +103,12 @@ const TopTabScreen = () => {
       <TopTab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { backgroundColor: "white" },
+          tabBarStyle: {
+            backgroundColor: "white",
+            marginTop: StatusBar.currentHeight,
+          },
           tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
-          tabBarLabelStyle: { fontWeight: "bold", fontSize: 16 },
+          tabBarLabelStyle: { fontWeight: "bold", fontSize: 14 },
         }}
       >
         <TopTab.Screen name="Mes recettes" component={MyRecipesScreen} />
@@ -112,7 +122,7 @@ const BottomTabScreen = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        // tabBarStyle: { padding:10},
+        tabBarStyle: {},
       }}
     >
       <Tab.Screen
@@ -450,12 +460,21 @@ const LoggedStackScreen = () => {
 const LoginStackScreen = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: true }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false, tabBarStyle: { height: 120 } }}
+      >
         <Stack.Screen
           options={{
             headerShown: false,
           }}
           name="IntroScreen"
+          component={IntroScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="TinderScreen"
           component={BottomTabScreen}
         />
         <Stack.Screen
@@ -555,7 +574,7 @@ const LoginStackScreen = () => {
             ...horizontalAnimation,
             headerShown: false,
           }}
-          name="TinderScreen"
+          name="TinderScreen2"
           component={TinderScreen}
         />
 
@@ -658,12 +677,7 @@ const RootNavigation = () => {
     return sub;
   }, []);
 
-  return (
-    <>
-      <StatusBar />
-      {user ? <LoggedStackScreen /> : <LoginStackScreen />}
-    </>
-  );
+  return <>{user ? <LoggedStackScreen /> : <LoginStackScreen />}</>;
 };
 export default RootNavigation;
 const styles = StyleSheet.create({});

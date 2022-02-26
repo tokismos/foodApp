@@ -37,7 +37,7 @@ const PhoneInputComponent = ({
       />
       {error ? (
         <Text style={{ color: "red", marginTop: 10 }}>
-          Please enter a valid phone number !{" "}
+          Veuillez entrer un numéro de téléphone valide !{" "}
         </Text>
       ) : null}
       <View style={{ margin: 40 }}>
