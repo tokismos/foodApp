@@ -28,6 +28,7 @@ import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
 const Stack = createStackNavigator();
 import Recipe from "../assets/recipe.svg";
+import ProfileIcon from "../assets/profile.svg";
 import MyRecipes from "../assets/MyRecipes.svg";
 const LoginStac = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,6 +47,8 @@ import PhoneScreen from "../screens/PhoneScreen";
 import MyRecipesScreen from "../screens/MyRecipesScreen";
 import CommandesScreen from "../screens/CommandesScreen";
 import InfoCommandeScreen from "../screens/InfoCommandeScreen";
+import FilterScreen from "../screens/FilterScreen";
+import RateScreen from "../screens/RateScreen";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -195,6 +198,31 @@ const BottomTabScreen = () => {
         name="En cuisine"
         component={TopTabScreen}
       />
+      {auth().currentUser && (
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <ProfileIcon
+                width={"90%"}
+                height={"90%"}
+                fill={focused ? COLORS.primary : "gray"}
+              />
+            ),
+            tabBarLabel: ({ focused, color, size }) => (
+              <Text
+                style={{
+                  color: focused ? COLORS.primary : "gray",
+                  fontWeight: focused ? "bold" : null,
+                }}
+              >
+                Mon profil
+              </Text>
+            ),
+          }}
+          name="Profile"
+          component={ProfileScreen}
+        />
+      )}
     </Tab.Navigator>
   );
 };
@@ -321,6 +349,14 @@ const LoggedStackScreen = () => {
         />
         <Stack.Screen
           options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="RateScreen"
+          component={RateScreen}
+        />
+        <Stack.Screen
+          options={{
             headerShown: true,
             headerTitleAlign: "center",
             headerTintColor: "white",
@@ -417,6 +453,14 @@ const LoggedStackScreen = () => {
           name="SignUpScreen"
           component={SignUpScreen}
         />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="FilterScreen"
+          component={FilterScreen}
+        />
 
         <Stack.Screen
           options={{
@@ -472,6 +516,14 @@ const LoginStackScreen = () => {
         />
         <Stack.Screen
           options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="RateScreen"
+          component={RateScreen}
+        />
+        <Stack.Screen
+          options={{
             headerShown: false,
           }}
           name="TinderScreen"
@@ -493,6 +545,14 @@ const LoginStackScreen = () => {
           }}
           name="PhoneScreen"
           component={PhoneScreen}
+        />
+        <Stack.Screen
+          options={{
+            // header: () => <HeaderComponent page="1" />,
+            headerShown: false,
+          }}
+          name="FilterScreen"
+          component={FilterScreen}
         />
         <Stack.Screen
           options={{

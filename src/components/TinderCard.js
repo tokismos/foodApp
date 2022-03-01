@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
 
   headComponent: {
     backgroundColor: COLORS.darkGray,
-    height: "10%",
+    height: "11%",
     flexDirection: "row",
     alignItems: "center",
     borderTopRightRadius: 15,

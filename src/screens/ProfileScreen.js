@@ -39,16 +39,16 @@ const ProfileScreen = () => {
 
   //When we change the email for the first time because of google null email
   useEffect(() => {
-    if (user.email != auth().currentUser.email) {
+    if (user?.email != auth().currentUser?.email) {
       console.log("not same");
-      dispatch(setUser({ ...user, email: auth().currentUser.email }));
+      dispatch(setUser({ ...user, email: auth().currentUser?.email }));
     }
   }, []);
 
   const updateName = async () => {
     try {
       setIsLoading(true);
-      await auth().currentUser.updateProfile({
+      await auth().currentUser?.updateProfile({
         displayName: name,
       });
       dispatch(setUser({ ...user, displayName: name }));
@@ -100,7 +100,7 @@ const ProfileScreen = () => {
             marginBottom: 20,
           }}
         >
-          {user.email}
+          {user?.email}
         </Text>
         <View style={{ backgroundColor: "gray", width: "90%", height: 0.3 }} />
         <View
@@ -136,7 +136,7 @@ const ProfileScreen = () => {
                   flex: 1,
                 }}
               >
-                {user.displayName}
+                {user?.displayName}
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -147,7 +147,7 @@ const ProfileScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          {user.phoneNumber && (
+          {user?.phoneNumber && (
             <View
               style={{
                 alignSelf: "flex-start",
@@ -172,7 +172,7 @@ const ProfileScreen = () => {
                     flex: 1,
                   }}
                 >
-                  {user.phoneNumber}
+                  {user?.phoneNumber}
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
@@ -186,7 +186,7 @@ const ProfileScreen = () => {
           )}
         </View>
         <View style={{ width: "100%", padding: 20 }}>
-          {!user.phoneNumber && (
+          {!user?.phoneNumber && (
             <TouchableOpacity
               onPress={() => navigation.navigate("PhoneScreen")}
               style={{
@@ -263,7 +263,7 @@ const ProfileScreen = () => {
               color="black"
             />
           </TouchableOpacity>
-          {user.phoneNumber && (
+          {user?.phoneNumber && (
             <TouchableOpacity
               onPress={() => navigation.navigate("PhoneScreen")}
               style={{

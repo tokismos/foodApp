@@ -1,304 +1,481 @@
-import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { forwardRef, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../consts/colors";
-import { MaterialIcons, AntDesign, FontAwesome } from "@expo/vector-icons";
-import Animated, {
-  FadeInLeft,
-  Layout,
-  StretchOutY,
-  ZoomOut,
-} from "react-native-reanimated";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFilters, setFilters } from "../redux/slicer/recipeSlicer";
-import { CATEGORIES } from "../helpers/categories";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-//Filter component in Top
-const ActiveFilterComponent = ({ activeFilters, setActiveFilters }) => {
-  return (
-    activeFilters.length != 0 && (
-      <Animated.View
-        layout={Layout.easing()}
-        exiting={StretchOutY}
-        style={styles.activeFilterContainer}
+import Oven from "../assets/oven.svg";
+import Time from "../assets/time.svg";
+import Livre from "../assets/livre.svg";
+import Slider from "@react-native-community/slider";
+import { ScrollView } from "react-native";
+import { useRef } from "react";
+import { useMemo } from "react";
+import { useCallback } from "react";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+
+const { width, height } = Dimensions.get("screen");
+// const Header = () => {
+//   const navigation = useNavigation();
+//   return (
+//     <View
+//       style={{
+//         backgroundColor: COLORS.primary,
+//         width,
+//         height: height * 0.2,
+//         flexDirection: "row",
+//         alignItems: "center",
+//         justifyContent: "space-around",
+//       }}
+//     >
+//       <Pressable
+//         onPress={() => navigation.navigate("FilterScreen")}
+//         style={{
+//           justifyContent: "center",
+//           alignItems: "center",
+//           height: "110%",
+//         }}
+//       >
+//         <Livre height={40} width={40} fill="white" />
+//         <Text style={styles.categorieTitle}>Types de plats {"\n"} (2)</Text>
+//       </Pressable>
+//       <View
+//         style={{
+//           justifyContent: "center",
+//           alignItems: "center",
+
+//           height: "110%",
+//         }}
+//       >
+//         <Time height={40} width={40} fill="white" />
+
+//         <Text style={styles.categorieTitle}>Temps </Text>
+//       </View>
+//       <View
+//         style={{
+//           justifyContent: "center",
+//           alignItems: "center",
+
+//           height: "110%",
+//         }}
+//       >
+//         <MaterialCommunityIcons name="fish-off" size={40} color="white" />
+
+//         <Text style={styles.categorieTitle}>Régimes </Text>
+//       </View>
+//       <View
+//         style={{
+//           justifyContent: "center",
+//           alignItems: "center",
+
+//           height: "110%",
+//         }}
+//       >
+//         <Oven height={40} width={40} fill="white" />
+//         <Text style={styles.categorieTitle}>Materiel </Text>
+//       </View>
+//     </View>
+//   );
+// };
+
+const typesPlatArray = [
+  "Entrée",
+  "Plat",
+  "Sauce",
+  "Dessert",
+  "Petit dejeuner",
+  "Sucré",
+  "Salé",
+];
+const regimesArray = ["Viande", "Vegan", "Poisson", "Végétarien"];
+const materielsArray = [
+  "Four",
+  "Four à micro-ondes",
+  "Mixeur",
+  "Robot Cuiseur",
+  "Poisson",
+  "Batteur ou fouet",
+];
+
+const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
+  const [height, setHeight] = useState(0);
+  const snapPoints = [height + 50, "85%"];
+
+  useEffect(() => {
+    console.log("HEIG", height);
+  }, [height]);
+  const onLayout = (e) => {
+    setHeight(e.nativeEvent.layout.height);
+  };
+
+  const TypePlatsComponent = () => {
+    const [plats, setPlats] = useState([]);
+
+    useEffect(() => {
+      console.log("PLAAAATS", plats);
+    }, [plats]);
+    return (
+      <View
+        onLayout={onLayout}
+        style={{
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: 10,
+          alignItems: "center",
+          paddingBottom: 20,
+          marginVertical: 10,
+        }}
       >
-        <Text style={styles.titleActiveFilter}>Active filters:</Text>
-        <Animated.View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          {activeFilters.map((item) => {
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "95%",
+            margin: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 24 }}>Types plats </Text>
+          <Livre height={40} width={40} fill="black" />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {typesPlatArray.map((item, i) => {
             return (
-              <AnimatedPressable
+              <Pressable
+                key={i}
                 onPress={() => {
-                  const newActiveFilters = activeFilters.filter(
-                    (filter) => filter.value != item.value
-                  );
-                  return setActiveFilters(newActiveFilters);
+                  if (plats.includes(item)) {
+                    const filteredArray = plats.filter((elmt) => elmt != item);
+                    return setPlats(filteredArray);
+                  }
+
+                  setPlats((p) => [...p, item]);
                 }}
-                key={item.value}
-                entering={FadeInLeft}
-                exiting={ZoomOut}
-                layout={Layout.easing()}
-                style={[
-                  styles.filterItem,
-                  {
-                    borderColor: "red",
-                    marginHorizontal: 3,
-                  },
-                ]}
+                style={{
+                  backgroundColor: plats.includes(item)
+                    ? COLORS.primary
+                    : "white",
+                  borderWidth: 3,
+                  borderColor: COLORS.primary,
+                  borderRadius: 5,
+                  width: "45%",
+                  marginHorizontal: 5,
+                  marginVertical: 2,
+                  padding: 5,
+                }}
               >
-                <View style={styles.filterItemContainer}>
-                  <Text style={{ marginHorizontal: 5 }}>{item.value}</Text>
-                  <AntDesign name="closecircleo" size={24} color="red" />
-                </View>
-              </AnimatedPressable>
+                <Text
+                  style={{
+                    color: plats.includes(item) ? "white" : COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: 18,
+                    textAlign: "center",
+                  }}
+                >
+                  {item}
+                </Text>
+              </Pressable>
             );
           })}
-        </Animated.View>
-      </Animated.View>
-    )
-  );
-};
-//Create the accordeon item
-const AccordeonItem = ({ setActiveFilters, activeFilters, name, data }) => {
-  return CATEGORIES.map((item) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    //To know how many filters are activated (number in header)
-    const num = activeFilters.filter(
-      (elmt) => elmt.categorie == item.name
-    ).length;
-    return (
-      <Animated.View layout={Layout.easing()} key={item.name}>
-        <Pressable
-          style={styles.headerAccordeon}
-          onPress={() => setIsExpanded(!isExpanded)}
-        >
-          <View style={styles.headerContainer}>
-            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
-              {item.title}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              {!isExpanded && num != 0 && (
-                <View
-                  style={{
-                    backgroundColor: COLORS.primary,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 10,
-                    height: 20,
-                    width: 20,
-                  }}
-                >
-                  <Text style={{ color: "white" }}>{num}</Text>
-                </View>
-              )}
-              <MaterialIcons
-                name={!isExpanded ? "keyboard-arrow-down" : "keyboard-arrow-up"}
-                size={24}
-                color="black"
-              />
-            </View>
-          </View>
-        </Pressable>
-        {isExpanded && (
-          <Animated.View
-            entering={FadeInLeft}
-            exiting={ZoomOut}
-            style={styles.filterContainer}
-          >
-            {/* Map throw the TYPES */}
-            {item.values.map((val) => {
-              const result = activeFilters.find((elmt) => {
-                return elmt.value == val;
-              });
-
-              return (
-                <Pressable
-                  key={val}
-                  style={[
-                    styles.filterItem,
-                    result != undefined
-                      ? { borderColor: COLORS.primary, borderWidth: 2 }
-                      : null,
-                  ]}
-                  //when we click on the item if it exists in the state of activeFilters so we remove
-                  onPress={() => {
-                    if (result != undefined) {
-                      const newActiveFilters = activeFilters.filter(
-                        (elmt) => elmt.value != result.value
-                      );
-                      return setActiveFilters(newActiveFilters);
-                    }
-                    setActiveFilters((prev) => [
-                      ...prev,
-                      { categorie: item.name, value: val },
-                    ]);
-                  }}
-                >
-                  <Text>{val}</Text>
-                </Pressable>
-              );
-            })}
-          </Animated.View>
-        )}
-        {!isExpanded && <View style={styles.separatorView} />}
-      </Animated.View>
-    );
-  });
-};
-const filterScreen = ({ navigation }) => {
-  // activeFiltersOut is state of activeFilters of redux
-  const { activeFilters: activeFiltersOut } = useSelector(
-    (state) => state.recipeStore
-  );
-  //   if the outside active filterScreen(redux) exists we set the current state of activeFilter to its value to show it in the active Filter Component
-  useEffect(() => {
-    if (activeFiltersOut) {
-      setActiveFilters(activeFiltersOut);
-    }
-  }, []);
-  const [activeFilters, setActiveFilters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-  return (
-    <View style={{ flex: 1, justifyContent: "space-between" }}>
-      <View>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <FontAwesome name="arrow-left" size={30} color="white" />
-          </TouchableOpacity>
-          {(activeFiltersOut.length != 0 || activeFilters.length != 0) && (
-            <TouchableOpacity
-              onPress={() => {
-                setActiveFilters([]);
-                dispatch(removeFilters());
-              }}
-            >
-              <Text style={{ marginRight: 15, fontSize: 18, color: "white" }}>
-                Reinitialiser
-              </Text>
-            </TouchableOpacity>
-          )}
         </View>
+      </View>
+    );
+  };
+  const RegimeComponent = () => {
+    const [regimes, setRegimes] = useState([]);
 
-        <ActiveFilterComponent
-          activeFilters={activeFilters}
-          setActiveFilters={setActiveFilters}
-        />
-        <AccordeonItem
-          setActiveFilters={setActiveFilters}
-          activeFilters={activeFilters}
+    useEffect(() => {
+      console.log("REEEGIIMES", regimes);
+    }, [regimes]);
+    return (
+      <View
+        onLayout={onLayout}
+        style={{
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: 10,
+          alignItems: "center",
+          paddingBottom: 20,
+          marginVertical: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "95%",
+            margin: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 24 }}>
+            Régime particulier{" "}
+          </Text>
+          <MaterialCommunityIcons name="fish-off" size={40} color="black" />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {regimesArray.map((item, i) => {
+            return (
+              <Pressable
+                key={i}
+                onPress={() => {
+                  if (regimes.includes(item)) {
+                    const filteredArray = regimes.filter(
+                      (elmt) => elmt != item
+                    );
+                    return setRegimes(filteredArray);
+                  }
+
+                  setRegimes((p) => [...p, item]);
+                }}
+                style={{
+                  backgroundColor: regimes.includes(item)
+                    ? COLORS.primary
+                    : "white",
+                  borderWidth: 3,
+                  borderColor: COLORS.primary,
+                  borderRadius: 5,
+                  width: "45%",
+                  marginHorizontal: 5,
+                  marginVertical: 2,
+                  padding: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: regimes.includes(item) ? "white" : COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: 18,
+                    textAlign: "center",
+                  }}
+                >
+                  {item}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+  const MaterielsComponent = () => {
+    const [materiels, setMateriels] = useState([]);
+
+    useEffect(() => {
+      console.log("REEEGIIMES", materiels);
+    }, [materiels]);
+    return (
+      <View
+        style={{
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: 10,
+          alignItems: "center",
+          paddingBottom: 20,
+          marginVertical: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "95%",
+            margin: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 24 }}>Materiels</Text>
+          <Oven height={40} width={40} fill="black" />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {materielsArray.map((item, i) => {
+            return (
+              <Pressable
+                key={i}
+                onPress={() => {
+                  if (materiels.includes(item)) {
+                    const filteredArray = materiels.filter(
+                      (elmt) => elmt != item
+                    );
+                    return setMateriels(filteredArray);
+                  }
+
+                  setMateriels((p) => [...p, item]);
+                }}
+                style={{
+                  backgroundColor: materiels.includes(item)
+                    ? COLORS.primary
+                    : "white",
+                  borderWidth: 3,
+                  borderColor: COLORS.primary,
+                  borderRadius: 5,
+                  width: "45%",
+                  marginHorizontal: 5,
+                  marginVertical: 2,
+                  padding: 5,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: materiels.includes(item) ? "white" : COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: 18,
+                    textAlign: "center",
+                  }}
+                >
+                  {item}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+  const TempsComponent = () => {
+    const [temps, setTemps] = useState(0);
+    return (
+      <View
+        onLayout={onLayout}
+        style={{
+          backgroundColor: "white",
+          width: "90%",
+          borderRadius: 10,
+          alignItems: "center",
+          paddingBottom: 20,
+          marginVertical: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            justifyContent: "space-between",
+            margin: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 24 }}>Temps max </Text>
+          {temps !== 0 && (
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 24,
+                color: COLORS.primary,
+              }}
+            >
+              {parseInt(temps)} min
+            </Text>
+          )}
+          <Time height={40} width={40} fill="black" />
+        </View>
+        <Slider
+          step={10}
+          size={2}
+          onSlidingComplete={(i) => setTemps(i)}
+          thumbTintColor={COLORS.primary}
+          onValueChange={(i) => setTemps(i)}
+          style={{
+            width: "90%",
+            height: 40,
+          }}
+          minimumValue={0}
+          maximumValue={120}
+          minimumTrackTintColor={COLORS.primary}
+          maximumTrackTintColor="#000000"
+          thumbStyle={{ width: 50, height: 50 }}
+          thumbSize={60}
         />
       </View>
-      <TouchableOpacity
-        // disabled={activeFilters.length == 0}
-        onPress={() => {
-          setIsLoading(true);
-          dispatch(setFilters(activeFilters));
-          setTimeout(() => {
-            navigation.goBack();
-            setIsLoading(false);
-          }, 1000);
+    );
+  };
+  const [array, setArray] = useState([
+    <TypePlatsComponent key={1} />,
+    <RegimeComponent key={2} />,
+    <TempsComponent key={4} />,
+    <MaterielsComponent key={3} />,
+  ]);
+
+  useEffect(() => {
+    if (pressedFilter === "types") {
+      setArray([
+        <TypePlatsComponent key={1} />,
+        <RegimeComponent key={2} />,
+        <TempsComponent key={4} />,
+        <MaterielsComponent key={3} />,
+      ]);
+    } else if (pressedFilter === "temps") {
+      setArray([
+        <TempsComponent key={4} />,
+        <TypePlatsComponent key={1} />,
+        <RegimeComponent key={2} />,
+        <MaterielsComponent key={3} />,
+      ]);
+    } else if (pressedFilter === "regimes") {
+      setArray([
+        <RegimeComponent key={2} />,
+        <TempsComponent key={4} />,
+        <TypePlatsComponent key={1} />,
+        <MaterielsComponent key={3} />,
+      ]);
+    } else if (pressedFilter === "materiel") {
+      setArray([
+        <MaterielsComponent key={3} />,
+        <RegimeComponent key={2} />,
+        <TempsComponent key={4} />,
+        <TypePlatsComponent key={1} />,
+      ]);
+    }
+  }, [pressedFilter]);
+
+  return (
+    <BottomSheet
+      enablePanDownToClose
+      enableContentPanningGesture
+      ref={ref}
+      index={0}
+      snapPoints={snapPoints}
+      handleStyle={{
+        backgroundColor: COLORS.primary,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 15,
+      }}
+      handleIndicatorStyle={{
+        backgroundColor: "white",
+      }}
+      backgroundComponent={() => {
+        return (
+          <View style={{ backgroundColor: "red", height: 300, width }}></View>
+        );
+      }}
+    >
+      <BottomSheetScrollView
+        contentContainerStyle={{
+          backgroundColor: COLORS.lightGrey,
+          alignItems: "center",
         }}
-        style={[
-          styles.button,
-          {
-            backgroundColor: COLORS.primary,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            //   activeFilters.length == 0 ? "#ffdf6b" : COLORS.primary,
-          },
-        ]}
       >
-        {isLoading && (
-          <ActivityIndicator
-            size="large"
-            color="white"
-            style={{ marginLeft: -10 }}
-          />
-        )}
-        <Text style={{ fontSize: 20, color: "white" }}>Apply</Text>
-      </TouchableOpacity>
-    </View>
+        {array}
+      </BottomSheetScrollView>
+    </BottomSheet>
   );
-};
-
-export default filterScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLORS.primary,
-    width: "100%",
-    height: 100,
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingTop: 20,
-    flexDirection: "row",
-  },
-  headerAccordeon: {
-    width: "100%",
-    padding: 20,
-    marginTop: 5,
-  },
-  headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  filterItem: {
-    borderWidth: 1,
-    backgroundColor: "white",
-    padding: 10,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 15,
-  },
-  filterContainer: {
-    flexDirection: "row",
-    marginLeft: 20,
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  separatorView: {
-    height: 0.2,
-    width: "70%",
-    backgroundColor: "grey",
-    alignSelf: "center",
-  },
-  activeFilterContainer: {
-    marginVertical: 20,
-    padding: 3,
-    backgroundColor: "white",
-  },
-  titleActiveFilter: {
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 10,
-  },
-  filterItemContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  button: {
-    height: 70,
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 20,
-    borderRadius: 10,
-  },
 });
+
+export default FilterScreen;
+
+const styles = StyleSheet.create({});

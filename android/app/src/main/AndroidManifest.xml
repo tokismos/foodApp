@@ -40,6 +40,7 @@
         <data android:scheme="fb593620908653647"/>
       </intent-filter>
     </activity>
+    
   </application>
   
 </manifest>

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import {
+  Platform,
+  SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -44,7 +47,7 @@ const PanierScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <Text style={styles.title}>Les recettes sélectionnées :</Text>
       <ScrollView>
         <View style={{ width: "100%" }}>
@@ -85,7 +88,7 @@ const PanierScreen = ({ navigation }) => {
           textStyle={{ fontSize: 20 }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -101,6 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mainContainer: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     height: "100%",
     backgroundColor: "white",
   },

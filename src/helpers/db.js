@@ -99,7 +99,6 @@ const getFavoris = async (tmp) => {
     .database(firebaseDbURL)
     .ref(`/users/${auth().currentUser?.uid}/favoris`)
     .once("value", (snapshot) => {
-      console.log("User data: ", snapshot.val());
       if (snapshot.exists()) {
         snapshot.forEach((item) => favoritesArray.push(item.key));
         tmp(favoritesArray);
