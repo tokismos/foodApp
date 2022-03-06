@@ -707,7 +707,7 @@ const RootNavigation = () => {
 
   const config = {
     webClientId:
-      "768418404122-out2q1cfkp99u5bs6sb5gsnhs9tl98sl.apps.googleusercontent.com",
+      "246034960415-88hrrb30cvbficqm01le7hh121juj8jl.apps.googleusercontent.com",
 
     scopes: ["profile", "email"],
     permissions: ["public_profile", "location", "email"],
