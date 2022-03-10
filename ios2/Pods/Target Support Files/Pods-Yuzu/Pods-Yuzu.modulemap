@@ -1,6 +1,0 @@
-module Pods_Yuzu {
-  umbrella header "Pods-Yuzu-umbrella.h"
-
-  export *
-  module * { export * }
-}
