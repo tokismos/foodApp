@@ -1,4 +1,7 @@
-import React, { createRef, useEffect, useState } from "react";
+//La page d'acceuil'c'Est la où la plus part de l'application arrive,Lors du chargement on recupere toute les recettes,
+//Quand l'utilisateur swipe le bouton apparait et on cache le bottom tab nav,et apres quand il le supprime il reaparait.
+
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,11 +9,10 @@ import {
   Dimensions,
   Pressable,
   StatusBar,
-  LayoutAnimation,
   SafeAreaView,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Oven from "../assets/oven.svg";
 import Time from "../assets/time.svg";
 import Livre from "../assets/livre.svg";
@@ -18,11 +20,9 @@ import AnimatedStack from "../components/AnimatedStack";
 import { useDispatch, useSelector } from "react-redux";
 import { addMatch, resetMatches } from "../redux/slicer/MatchSlicer";
 import { COLORS } from "../consts/colors";
-import BottomSheet from "@gorhom/bottom-sheet";
 
 import { getAllRecipes, incrementLeft, incrementRight } from "../axios";
 
-import LoadingComponent from "../components/LoadingComponent";
 const { height, width } = Dimensions.get("screen");
 import { setUser } from "../redux/slicer/userSlicer";
 import { getAdditionalInfo, getFavoris } from "../helpers/db";
@@ -31,15 +31,7 @@ import { Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { setFavorites } from "../redux/slicer/favoritesSlicer";
-import Animated, {
-  FadeIn,
-  FadeInDown,
-  FadeInRight,
-  FadeInUp,
-  Layout,
-} from "react-native-reanimated";
-import { useNavigation } from "@react-navigation/native";
-import { Keyboard } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { useMemo } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
@@ -60,11 +52,8 @@ const TinderScreen = ({ navigation }) => {
       >
         <Pressable
           onPress={() => {
-            navigation.setOptions({
-              tabBarStyle: { display: "none" },
-            });
             setPressedFilter("types");
-            bottomSheetRef.current.expand();
+            bottomSheetRef.current.open();
           }}
           style={{
             justifyContent: "center",
@@ -77,11 +66,8 @@ const TinderScreen = ({ navigation }) => {
         </Pressable>
         <Pressable
           onPress={() => {
-            navigation.setOptions({
-              tabBarStyle: { display: "none" },
-            });
             setPressedFilter("temps");
-            bottomSheetRef.current.expand();
+            bottomSheetRef.current.open();
           }}
           style={{
             justifyContent: "center",
@@ -96,11 +82,8 @@ const TinderScreen = ({ navigation }) => {
         </Pressable>
         <Pressable
           onPress={() => {
-            navigation.setOptions({
-              tabBarStyle: { display: "none" },
-            });
             setPressedFilter("regimes");
-            bottomSheetRef.current.expand();
+            bottomSheetRef.current.open();
           }}
           style={{
             justifyContent: "center",
@@ -115,11 +98,8 @@ const TinderScreen = ({ navigation }) => {
         </Pressable>
         <Pressable
           onPress={() => {
-            navigation.setOptions({
-              tabBarStyle: { display: "none" },
-            });
             setPressedFilter("materiel");
-            bottomSheetRef.current.expand();
+            bottomSheetRef.current.open();
           }}
           style={{
             justifyContent: "center",

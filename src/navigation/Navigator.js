@@ -1,9 +1,9 @@
+// Tout simplement c'est ici ou on gere tous les screens de la navigation
+
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Animated,
-  Image,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -23,21 +23,16 @@ import IngredientScreen from "../screens/IngredientScreen";
 import TinderScreen from "../screens/TinderScreen";
 import PanierScreen from "../screens/PanierScreen";
 import IngredientCartScreen from "../screens/IngredientCartScreen";
-import HeaderComponent from "../components/HeaderComponent";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
 const Stack = createStackNavigator();
 import Recipe from "../assets/recipe.svg";
 import ProfileIcon from "../assets/profile.svg";
 import MyRecipes from "../assets/MyRecipes.svg";
-const LoginStac = createStackNavigator();
 const Tab = createBottomTabNavigator();
-import { setUser, setAccessToken } from "../redux/slicer/userSlicer";
+import { setUser } from "../redux/slicer/userSlicer";
 import { useDispatch, useSelector } from "react-redux";
-import AsyncStorage from "@react-native-community/async-storage";
-// import { GraphRequest, GraphRequestManager } from "react-native-fbsdk-next";
 import SignUpScreen from "../screens/createAccountScreens/SignUpScreen";
-import PasswordScreen from "../screens/createAccountScreens/PasswordScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -121,6 +116,9 @@ const TopTabScreen = () => {
   );
 };
 const BottomTabScreen = () => {
+  const { listNotification, cuisineNotification } = useSelector(
+    (state) => state.notificationStore
+  );
   return (
     <Tab.Navigator
       screenOptions={{
@@ -153,6 +151,12 @@ const BottomTabScreen = () => {
       />
       <Tab.Screen
         options={{
+          tabBarBadge: listNotification,
+          tabBarBadgeStyle: {
+            backgroundColor: COLORS.red,
+            top: 0,
+            transform: [{ scale: 0.5 }],
+          },
           tabBarIcon: ({ focused }) => (
             <Entypo
               name="list"
@@ -167,7 +171,7 @@ const BottomTabScreen = () => {
                 fontWeight: focused ? "bold" : null,
               }}
             >
-              Liste de courses
+              Courses
             </Text>
           ),
         }}
@@ -177,6 +181,12 @@ const BottomTabScreen = () => {
 
       <Tab.Screen
         options={{
+          tabBarBadge: cuisineNotification,
+          tabBarBadgeStyle: {
+            backgroundColor: COLORS.red,
+            top: 0,
+            transform: [{ scale: 0.5 }],
+          },
           tabBarIcon: ({ focused }) => (
             <MyRecipes
               width={"90%"}
@@ -266,77 +276,6 @@ const horizontalAnimation = {
 };
 
 const LoggedStackScreen = () => {
-  const [accessTokenFb, setAccessTokenFb] = useState(null);
-  const [info, setInfo] = useState(null);
-  const dispatch = useDispatch();
-  // const { accessTokenFb } = useSelector((state) => state.userStore);
-
-  //Get the information from the token we get after connecting to fb
-  // const getInfoFromTokenFb = (token) => {
-  //   const PROFILE_REQUEST_PARAMS = {
-  //     fields: {
-  //       string: "id,name,first_name,last_name,email,picture.type(large)",
-  //     },
-  //   };
-  //   const profileRequest = new GraphRequest(
-  //     "/me",
-  //     { token, parameters: PROFILE_REQUEST_PARAMS },
-  //     (error, user) => {
-  //       if (error) {
-  //         console.log("login info has error: " + error);
-  //       } else {
-  //         setInfo(user);
-  //       }
-  //     }
-  //   );
-  //   new GraphRequestManager().addRequest(profileRequest).start();
-  // };
-
-  //Get the access Token of Fb from the storage if it exists
-  useEffect(() => {
-    const getAccessToken = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem("accessTokenFb");
-        if (accessToken !== null) {
-          setAccessTokenFb(accessToken);
-        } else {
-          console.log("noo toooken");
-        }
-      } catch (e) {
-        // error reading value
-      }
-    };
-    getAccessToken();
-  }, []);
-
-  //Get the authenticated user and set it to the redux store in user state
-
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!HADCHI N9DER NHTAJO MNB3D!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // useEffect(() => {
-  //   const func = async () => {
-  //     const user = await auth().currentUser;
-  //     console.log("hna UUUUUUSERRR0", user);
-  //     const userObj = {
-  //       uid: user.uid,
-  //       displayName: user.displayName,
-  //       email: info ? info.email : user.email, //if we log with FB we get the info
-  //       phoneNumber: user.phoneNumber,
-  //       photoURL: info ? info.picture.data.url : user.photoURL,
-  //     };
-
-  //     dispatch(setUser(userObj));
-  //   };
-  //   func();
-  // }, [info]);
-
-  //Get the info from facebook API if the access token exists in storage
-  // useEffect(() => {
-  //   if (accessTokenFb) {
-  //     getInfoFromTokenFb(accessTokenFb);
-  //     console.log("laast effect ", info);
-  //   }
-  // }, [accessTokenFb]);
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: true }}>
@@ -349,7 +288,6 @@ const LoggedStackScreen = () => {
         />
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="RateScreen"
@@ -407,16 +345,13 @@ const LoggedStackScreen = () => {
         />
 
         <Stack.Screen
-          options={{
-            header: () => <HeaderComponent page="2" />,
-          }}
+          options={{}}
           name="PanierScreen"
           component={PanierScreen}
         />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
-            header: () => <HeaderComponent page="3" />,
           }}
           name="IngredientsCartScreen"
           component={IngredientCartScreen}
@@ -431,14 +366,12 @@ const LoggedStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
-            header: () => <HeaderComponent page="4" />,
           }}
           name="SummarizeScreen"
           component={SummarizeScreen}
         />
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="IngredientScreen"
@@ -447,7 +380,6 @@ const LoggedStackScreen = () => {
 
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="SignUpScreen"
@@ -455,7 +387,6 @@ const LoggedStackScreen = () => {
         />
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="FilterScreen"
@@ -516,7 +447,6 @@ const LoginStackScreen = () => {
         />
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="RateScreen"
@@ -548,7 +478,6 @@ const LoginStackScreen = () => {
         />
         <Stack.Screen
           options={{
-            // header: () => <HeaderComponent page="1" />,
             headerShown: false,
           }}
           name="FilterScreen"
@@ -622,13 +551,7 @@ const LoginStackScreen = () => {
           name="SignUpScreen"
           component={SignUpScreen}
         />
-        <Stack.Screen
-          options={{
-            ...horizontalAnimation,
-          }}
-          name="PasswordScreen"
-          component={PasswordScreen}
-        />
+
         <Stack.Screen
           options={{
             ...horizontalAnimation,
@@ -649,7 +572,6 @@ const LoginStackScreen = () => {
 
         <Stack.Screen
           options={{
-            header: () => <HeaderComponent page="2" />,
             headerLeft: null,
           }}
           name="PanierScreen"
@@ -658,7 +580,6 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
-            header: () => <HeaderComponent page="3" />,
           }}
           name="IngredientsCartScreen"
           component={IngredientCartScreen}
@@ -690,7 +611,6 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
-            header: () => <HeaderComponent page="4" />,
           }}
           name="SummarizeScreen"
           component={SummarizeScreen}

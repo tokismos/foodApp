@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 
@@ -10,10 +10,6 @@ const PhoneInputComponent = ({
   error,
   setPhoneNumber,
 }) => {
-  // useEffect(() => {
-  //   if (ref?.isValidNumber(number)) setError(true);
-  // }, [number]);
-
   return (
     <View style={[{ width, alignItems: "center" }, { ...style }]}>
       <Text

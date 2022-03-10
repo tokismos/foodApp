@@ -1,30 +1,18 @@
-import React, {
-  createRef,
-  forwardRef,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+//The first screen where you sign up ,where there's four components Email,p
+
+import React, { createRef, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  FlatList,
   Dimensions,
-  BackHandler,
-  Button,
-  Alert,
 } from "react-native";
 import PagerView from "react-native-pager-view";
-import database from "@react-native-firebase/database";
 
-import HeaderComponent from "../../components/HeaderComponent";
 import LoginHeaderScreen from "../../components/LoginHeaderScreen";
 import TextInputColored from "../../components/TextInputColored";
-import { COLORS } from "../../consts/colors";
 import auth from "@react-native-firebase/auth";
 import useAuth from "../../hooks/useAuth";
 import PhoneInputComponent from "../../components/PhoneInputComponent";

@@ -1,3 +1,7 @@
+//La page  quand on clique sur le 'i' dans la premiere page,c'est ici qu'on trouve toutes les etapes ainsi qu'ingredients
+//Avant le chargement de cette page, on recupere les favoris a partir de notre redux store, et si l'id de ce dernier existe
+//on montre le bouton supprimer des favoris,sinon ajouter aux favoris.
+
 import React, { useEffect, useState } from "react";
 import {
   Dimensions,
@@ -24,7 +28,7 @@ import Dialog, {
 import CustomButton from "../components/CustomButton";
 import ReportComponent from "../components/ReportComponent";
 import { getRecipe } from "../axios";
-import { addToFav, deleteFav, getFavoris } from "../helpers/db";
+import { addToFav, deleteFav } from "../helpers/db";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, deleteFavorite } from "../redux/slicer/favoritesSlicer";
 import IngredientComponent from "../components/IngredientComponent";
@@ -123,7 +127,6 @@ const IngredientScreen = ({ route, navigation }) => {
   const [recipe, setRecipe] = useState();
   const [nbr, setNbr] = useState(+route.params.recipe?.nbrPersonne);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showVote, setShowVote] = useState(false);
   const { favorites } = useSelector((state) => state.favoritesStore);
@@ -415,7 +418,6 @@ const IngredientScreen = ({ route, navigation }) => {
                   onPress={() => {
                     deleteFav(recipe._id);
                     dispatch(deleteFavorite(recipe._id));
-                    setIsFavorite(false);
                   }}
                 />
               ) : (
@@ -431,7 +433,6 @@ const IngredientScreen = ({ route, navigation }) => {
                       recipe.dateTime
                     );
                     dispatch(addFavorite(recipe._id));
-                    setIsFavorite(true);
                   }}
                 />
               )}

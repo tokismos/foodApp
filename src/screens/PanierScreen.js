@@ -1,3 +1,8 @@
+//L'ecran où on choisit les differents ingredient qu'on veut, la logique derriere c'est qu'on recupere les differents ingredients
+// depuis la Base de données, et on ajoute un champ qui est isChecked, quand on clique sur un ingredient isChecked est true sinon c'est false,
+// et à la fin lorsqu'on clique sur creer la liste de recette,on parcours tous les ingredients avec ichecked true pour qu'on filtre ceux qui
+// ne sont pas checkés, et on ne garde que ceux checkés
+
 import React, { useState } from "react";
 import {
   Platform,

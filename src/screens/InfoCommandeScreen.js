@@ -1,3 +1,6 @@
+//Ecran ou l'on peut checker tous les ingredients qu'on a commandé , et on peut ajouter des ingredients
+// que l'on a pas avant
+
 // setSelectedIngredient we find here every selected ing que ca soit produits or from cart
 
 import { format } from "date-fns";
@@ -17,13 +20,13 @@ import FastImage from "react-native-fast-image";
 import { COLORS } from "../consts/colors";
 import TextInputColored from "../components/TextInputColored";
 import CustomButton from "../components/CustomButton";
-const { height, width } = Dimensions.get("screen");
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import IngredientComponent from "../components/IngredientComponent";
 import CheckBox from "@react-native-community/checkbox";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
 
+const { height, width } = Dimensions.get("screen");
 // Each recipe which contain ingredients
 const CartComponent = ({
   imgURL,
@@ -206,24 +209,23 @@ const InfoCommandeScreen = ({ navigation, route }) => {
   };
   const AllProductsComponent = () => {
     return (
-      <>
-        <View style={styles.productsComponent}>
-          <Text style={styles.title}>Articles Ajoutés :</Text>
+      <View style={styles.productsComponent}>
+        <Text style={styles.title}>Articles Ajoutés :</Text>
 
-          {products.map((item, i) => {
-            return (
-              <ProductComponent
-                product={item}
-                key={i}
-                isSaved={selectedIngredients.indexOf(item) > -1}
-              />
-            );
-          })}
-        </View>
-      </>
+        {products.map((item, i) => {
+          return (
+            <ProductComponent
+              product={item}
+              key={i}
+              isSaved={selectedIngredients.indexOf(item) > -1}
+            />
+          );
+        })}
+      </View>
     );
   };
 
+  //Calcul la date et l'affiche dans le header et cela avant que l'ecran ne se render
   useLayoutEffect(() => {
     let time = new Date(params.historyDetail.dateTime);
 
@@ -240,10 +242,6 @@ const InfoCommandeScreen = ({ navigation, route }) => {
           JSON.stringify(selectedIngredients)
         );
         await AsyncStorage.setItem(idTime.toString(), JSON.stringify(products));
-        // await AsyncStorage.setItem(
-        //   "recurrentProducts",
-        //   JSON.stringify(recurrentProducts)
-        // );
       }
     })();
   }, [isFocused]);

@@ -1,3 +1,5 @@
+//L'ecran qui gere le rating de chaque recette
+
 import {
   Dimensions,
   Image,

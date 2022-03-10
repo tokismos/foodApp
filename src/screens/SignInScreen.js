@@ -1,3 +1,4 @@
+//La possibilite de se connecter avec email ou avec google,ici on fait appel aux fonctions crees dans useAuth , pour gerer la connexion
 import React, { useState } from "react";
 import {
   Dimensions,

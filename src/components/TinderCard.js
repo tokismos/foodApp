@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+// Notre component qui affiche les tinder Swipe c'est  ici qu'on regle le design est tous ses composants
+
+import React from "react";
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TouchableOpacity,
-  Alert,
   Pressable,
 } from "react-native";
 import { COLORS } from "../consts/colors";
-import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
+import { Swipeable } from "react-native-gesture-handler";
 
-const Imagee = ({ uri, setLoaded }) => {
+const ImageFast = ({ uri }) => {
   return (
     <FastImage
       style={{ ...styles.image }}
@@ -29,7 +29,11 @@ const HeadComponent = ({ name, like }) => {
   return (
     <View style={styles.headComponent}>
       <View style={styles.leftHeaderComponent}>
-        <Avatar.Image size={50} source={require("../assets/avatar.png")} />
+        <Avatar.Image
+          size={50}
+          source={require("../assets/avatar.png")}
+          theme={{ colors: { backgroundColor: COLORS.primary } }}
+        />
         <View style={{ flex: 1 }}>
           <Text numberOfLines={2} style={styles.titleName}>
             {name}
@@ -42,7 +46,7 @@ const HeadComponent = ({ name, like }) => {
       <View style={styles.rightHeaderComponent}>
         <View style={{ alignItems: "center" }}>
           <FontAwesome name="heart" size={25} color={COLORS.primary} />
-          <Text style={styles.nbrHeader}>{like}%</Text>
+          <Text style={styles.nbrHeader}>{like}</Text>
         </View>
         <View style={{ alignItems: "center" }}>
           <FontAwesome name="star" size={25} color={COLORS.primary} />
@@ -64,34 +68,11 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
           width: "100%",
         }}
       >
-        <HeadComponent
-          name={recipe.name}
-          like={parseInt(
-            (recipe.stats.nbrRight * 100) /
-              (recipe.stats.nbrLeft + recipe.stats.nbrRight)
-          )}
-        />
+        <HeadComponent name={recipe.name} like={recipe.stats?.nbrRight} />
 
-        <Imagee uri={recipe?.imgURL} />
-        <View
-          style={{
-            backgroundColor: COLORS.darkGray,
-            height: "22%",
-            justifyContent: "center",
-            marginTop: -3,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "black",
-              height: "40%",
-              width: "90%",
-              alignSelf: "center",
-              borderRadius: 5,
-              padding: 10,
-              justifyContent: "center",
-            }}
-          >
+        <ImageFast uri={recipe?.imgURL} />
+        <View style={styles.bottomContainer}>
+          <View style={styles.descriptionContainer}>
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -216,5 +197,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "20%",
     justifyContent: "space-around",
+  },
+  descriptionContainer: {
+    backgroundColor: "black",
+    height: "40%",
+    width: "90%",
+    alignSelf: "center",
+    borderRadius: 5,
+    padding: 10,
+    justifyContent: "center",
+  },
+  bottomContainer: {
+    backgroundColor: COLORS.darkGray,
+    height: "22%",
+    justifyContent: "center",
+    marginTop: -3,
   },
 });

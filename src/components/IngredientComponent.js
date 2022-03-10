@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from "react";
 import CheckBox from "@react-native-community/checkbox";
 import { COLORS } from "../consts/colors";
-import AsyncStorage from "@react-native-community/async-storage";
 
 const IngredientComponent = ({
   ingredient: { name, quantity, unite, newQuantity },

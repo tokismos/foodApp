@@ -1,7 +1,6 @@
 import CheckBox from "@react-native-community/checkbox";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   Platform,
   SafeAreaView,
   StatusBar,

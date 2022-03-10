@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from "react";
+//L'Ecran des recettes commandées et des recettes mis en favoris.Ici la logique que c'Est suivi c'est j'ai utilisé
+// la me epage pour deux composants, si le nom de la page est Recette Favories alors on montre le component des favoris
+// snn on montre le componant des recettes commandés
+
+import React, { Component, useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -18,8 +22,12 @@ import FastImage from "react-native-fast-image";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { useSelector } from "react-redux";
+import {
+  Colors,
+  ReloadInstructions,
+} from "react-native/Libraries/NewAppScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { setCuisineNotification } from "../redux/slicer/notificationSlicer";
 
 const Skeleton = ({ title }) => {
   return (
@@ -120,7 +128,7 @@ const MyRecipesScreen = ({ route }) => {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { favorites } = useSelector((state) => state.favoritesStore);
-
+  const dispatch = useDispatch();
   const initialize = async () => {
     if (route.name == "Recettes favories") {
       await getAllFavoris(setRecipes);
@@ -131,6 +139,7 @@ const MyRecipesScreen = ({ route }) => {
     }
   };
   useEffect(() => {
+    dispatch(setCuisineNotification(null));
     initialize();
   }, []);
 

@@ -48,20 +48,20 @@ PODS:
     - React-Core (= 0.64.3)
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
-  - Firebase/Auth (8.11.0):
+  - Firebase/Auth (8.12.1):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 8.11.0)
-  - Firebase/CoreOnly (8.11.0):
-    - FirebaseCore (= 8.11.0)
-  - Firebase/Database (8.11.0):
+    - FirebaseAuth (~> 8.12.0)
+  - Firebase/CoreOnly (8.12.1):
+    - FirebaseCore (= 8.12.1)
+  - Firebase/Database (8.12.1):
     - Firebase/CoreOnly
-    - FirebaseDatabase (~> 8.11.0)
-  - FirebaseAuth (8.11.0):
+    - FirebaseDatabase (~> 8.12.0)
+  - FirebaseAuth (8.12.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/Environment (~> 7.7)
     - GTMSessionFetcher/Core (~> 1.5)
-  - FirebaseCore (8.11.0):
+  - FirebaseCore (8.12.1):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
@@ -70,7 +70,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
-  - FirebaseDatabase (8.11.0):
+  - FirebaseDatabase (8.12.0):
     - FirebaseCore (~> 8.0)
     - leveldb-library (~> 1.22)
   - glog (0.3.5)
@@ -400,15 +400,15 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBApp (14.3.0):
-    - Firebase/CoreOnly (= 8.11.0)
+  - RNFBApp (14.5.1):
+    - Firebase/CoreOnly (= 8.12.1)
     - React-Core
-  - RNFBAuth (14.3.0):
-    - Firebase/Auth (= 8.11.0)
+  - RNFBAuth (14.5.1):
+    - Firebase/Auth (= 8.12.1)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (14.3.0):
-    - Firebase/Database (= 8.11.0)
+  - RNFBDatabase (14.5.1):
+    - Firebase/Database (= 8.12.1)
     - React-Core
     - RNFBApp
   - RNGestureHandler (1.10.3):
@@ -696,12 +696,12 @@ SPEC CHECKSUMS:
   EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157
   EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 24e0916407ef32f7148f278dca0c50ee9a253262
-  Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
-  FirebaseAuth: d96d73aba85d192d7a7aa0b86dd6d7f8ec170b4b
-  FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
+  FBReactNativeSpec: 157eee0a35278e807aa4e69be88f528133497a9b
+  Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
+  FirebaseAuth: 5250d7bdba35e57cc34ec7ddc525f82b2757f2a0
+  FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
   FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
-  FirebaseDatabase: ff9b4c7bee14d9f561f26c64a28ac083989f03d5
+  FirebaseDatabase: f130b3d45b2a7a0b86059734d5bd67353df8d32f
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
@@ -747,9 +747,9 @@ SPEC CHECKSUMS:
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNCMaskedView: b7a3b119b1d738734a9d761e4220c6850bb248a3
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
-  RNFBApp: 16bdf8b75b84631513da3d5f5e2520a436ec9b29
-  RNFBAuth: 7eb50d60c82b4a59018b0c7a1d4afdd1250eff74
-  RNFBDatabase: 225f0ac57d2aedfec3221d8751b49670bc779b16
+  RNFBApp: 5bae3002117e55f3c9aa0fb38175dd16c8046c90
+  RNFBAuth: ed314ff1732011c23041570ac4a98bc6070f9f4d
+  RNFBDatabase: 3c0f5efe76714ca3a8838250fdefe26a85f3380e
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: c4381751eefd73c552b923ba347a9bfc6f18771c
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
