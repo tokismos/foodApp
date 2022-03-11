@@ -123,17 +123,15 @@ const TinderScreen = ({ navigation }) => {
   const sheetRef = React.useRef(null);
 
   const { matches } = useSelector((state) => state.matchStore);
+  const { activeFilters } = useSelector((state) => state.recipeStore);
 
   const bottomSheetRef = useRef();
 
   // variables
-  const snapPoints = useMemo(() => ["25%", "85%"], []);
 
-  // callbacks
-  const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
+  useEffect(() => {
+    console.log("HELOO FILTERS", activeFilters);
+  }, [activeFilters]);
   useEffect(() => {
     navigation.setOptions({
       tabBarStyle: { display: showButton ? "none" : "flex" },

@@ -12,6 +12,12 @@ import Livre from "../assets/livre.svg";
 import Slider from "@react-native-community/slider";
 import { ScrollView } from "react-native";
 import Modal from "react-native-modalbox";
+import {
+  addFilter,
+  changeTime,
+  removeFilter,
+} from "../redux/slicer/recipeSlicer";
+import { useDispatch, useSelector } from "react-redux";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -34,16 +40,18 @@ const materielsArray = [
   "Batteur ou fouet",
 ];
 
-const TypePlatsComponent = () => {
+const TypePlatsComponent = ({ activeFilters }) => {
   const [plats, setPlats] = useState([]);
-
+  const dispatch = useDispatch();
   return (
     <View
       style={{
         backgroundColor: "white",
         width: "90%",
+
         borderRadius: 10,
         alignItems: "center",
+
         paddingBottom: 20,
         marginVertical: 10,
       }}
@@ -56,7 +64,7 @@ const TypePlatsComponent = () => {
           margin: 10,
         }}
       >
-        <Text style={{ fontWeight: "bold", fontSize: 24 }}>Types plats </Text>
+        <Text style={{ fontWeight: "bold", fontSize: 24 }}> Types plats </Text>
         <Livre height={40} width={40} fill="black" />
       </View>
       <View
@@ -67,21 +75,24 @@ const TypePlatsComponent = () => {
         }}
       >
         {typesPlatArray.map((item, i) => {
+          const [selected, setSelected] = useState(
+            activeFilters.some((i) => Object.values(i) == item)
+          );
+
           return (
             <Pressable
               key={i}
               onPress={() => {
-                if (plats.includes(item)) {
-                  const filteredArray = plats.filter((elmt) => elmt != item);
-                  return setPlats(filteredArray);
+                if (selected) {
+                  dispatch(removeFilter(item));
+                  setSelected(false);
+                } else {
+                  dispatch(addFilter({ type: "typePlat", name: item }));
+                  setSelected(true);
                 }
-
-                setPlats((p) => [...p, item]);
               }}
               style={{
-                backgroundColor: plats.includes(item)
-                  ? COLORS.primary
-                  : "white",
+                backgroundColor: selected ? COLORS.primary : "white",
                 borderWidth: 3,
                 borderColor: COLORS.primary,
                 borderRadius: 5,
@@ -93,7 +104,7 @@ const TypePlatsComponent = () => {
             >
               <Text
                 style={{
-                  color: plats.includes(item) ? "white" : COLORS.primary,
+                  color: selected ? "white" : COLORS.primary,
                   fontWeight: "bold",
                   fontSize: 18,
                   textAlign: "center",
@@ -108,8 +119,9 @@ const TypePlatsComponent = () => {
     </View>
   );
 };
-const RegimeComponent = () => {
+const RegimeComponent = ({ activeFilters }) => {
   const [regimes, setRegimes] = useState([]);
+  const dispatch = useDispatch();
 
   return (
     <View
@@ -143,21 +155,24 @@ const RegimeComponent = () => {
         }}
       >
         {regimesArray.map((item, i) => {
+          const [selected, setSelected] = useState(
+            activeFilters.some((i) => Object.values(i) == item)
+          );
+
           return (
             <Pressable
               key={i}
               onPress={() => {
-                if (regimes.includes(item)) {
-                  const filteredArray = regimes.filter((elmt) => elmt != item);
-                  return setRegimes(filteredArray);
+                if (selected) {
+                  dispatch(removeFilter(item));
+                  setSelected(false);
+                } else {
+                  dispatch(addFilter({ type: "regimes", name: item }));
+                  setSelected(true);
                 }
-
-                setRegimes((p) => [...p, item]);
               }}
               style={{
-                backgroundColor: regimes.includes(item)
-                  ? COLORS.primary
-                  : "white",
+                backgroundColor: selected ? COLORS.primary : "white",
                 borderWidth: 3,
                 borderColor: COLORS.primary,
                 borderRadius: 5,
@@ -169,7 +184,7 @@ const RegimeComponent = () => {
             >
               <Text
                 style={{
-                  color: regimes.includes(item) ? "white" : COLORS.primary,
+                  color: selected ? "white" : COLORS.primary,
                   fontWeight: "bold",
                   fontSize: 18,
                   textAlign: "center",
@@ -184,8 +199,9 @@ const RegimeComponent = () => {
     </View>
   );
 };
-const MaterielsComponent = () => {
+const MaterielsComponent = ({ activeFilters }) => {
   const [materiels, setMateriels] = useState([]);
+  const dispatch = useDispatch();
 
   return (
     <View
@@ -217,23 +233,24 @@ const MaterielsComponent = () => {
         }}
       >
         {materielsArray.map((item, i) => {
+          const [selected, setSelected] = useState(
+            activeFilters.some((i) => Object.values(i) == item)
+          );
+
           return (
             <Pressable
               key={i}
               onPress={() => {
-                if (materiels.includes(item)) {
-                  const filteredArray = materiels.filter(
-                    (elmt) => elmt != item
-                  );
-                  return setMateriels(filteredArray);
+                if (selected) {
+                  dispatch(removeFilter(item));
+                  setSelected(false);
+                } else {
+                  dispatch(addFilter({ type: "material", name: item }));
+                  setSelected(true);
                 }
-
-                setMateriels((p) => [...p, item]);
               }}
               style={{
-                backgroundColor: materiels.includes(item)
-                  ? COLORS.primary
-                  : "white",
+                backgroundColor: selected ? COLORS.primary : "white",
                 borderWidth: 3,
                 borderColor: COLORS.primary,
                 borderRadius: 5,
@@ -246,7 +263,7 @@ const MaterielsComponent = () => {
             >
               <Text
                 style={{
-                  color: materiels.includes(item) ? "white" : COLORS.primary,
+                  color: selected ? "white" : COLORS.primary,
                   fontWeight: "bold",
                   fontSize: 18,
                   textAlign: "center",
@@ -263,6 +280,7 @@ const MaterielsComponent = () => {
 };
 const TempsComponent = () => {
   const [temps, setTemps] = useState(0);
+  const dispatch = useDispatch();
   return (
     <View
       style={{
@@ -299,9 +317,15 @@ const TempsComponent = () => {
       <Slider
         step={10}
         size={2}
-        onSlidingComplete={(i) => setTemps(i)}
+        onSlidingComplete={(i) => {
+          setTemps(i);
+
+          dispatch(changeTime(i));
+        }}
         thumbTintColor={COLORS.primary}
-        onValueChange={(i) => setTemps(i)}
+        onValueChange={(i) => {
+          setTemps(i);
+        }}
         style={{
           width: "90%",
           height: 40,
@@ -317,6 +341,12 @@ const TempsComponent = () => {
   );
 };
 const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("HOLA");
+  }, [activeFilters]);
+  const { activeFilters } = useSelector((state) => state.recipeStore);
+
   return (
     <Modal
       swipeThreshold={1}
@@ -361,10 +391,10 @@ const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
           backgroundColor: COLORS.lightGrey,
         }}
       >
-        <TypePlatsComponent />
-        <RegimeComponent />
+        <TypePlatsComponent activeFilters={activeFilters} />
+        <RegimeComponent activeFilters={activeFilters} />
         <TempsComponent />
-        <MaterielsComponent />
+        <MaterielsComponent activeFilters={activeFilters} />
       </ScrollView>
     </Modal>
   );
