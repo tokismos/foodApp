@@ -4,7 +4,7 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { forwardRef, useEffect, useState } from "react";
 import { COLORS } from "../consts/colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
 import Oven from "../assets/oven.svg";
 import Time from "../assets/time.svg";
@@ -16,6 +16,7 @@ import {
   addFilter,
   changeTime,
   removeFilter,
+  resetFilters,
 } from "../redux/slicer/recipeSlicer";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,9 +40,9 @@ const materielsArray = [
   "Poisson",
   "Batteur ou fouet",
 ];
+const difficultyArray = ["Facile", "Moyenne", "Difficile"];
 
 const TypePlatsComponent = ({ activeFilters }) => {
-  const [plats, setPlats] = useState([]);
   const dispatch = useDispatch();
   return (
     <View
@@ -75,24 +76,22 @@ const TypePlatsComponent = ({ activeFilters }) => {
         }}
       >
         {typesPlatArray.map((item, i) => {
-          const [selected, setSelected] = useState(
-            activeFilters.some((i) => Object.values(i) == item)
-          );
-
           return (
             <Pressable
               key={i}
               onPress={() => {
-                if (selected) {
+                if (activeFilters.some((i) => Object.values(i) == item)) {
                   dispatch(removeFilter(item));
-                  setSelected(false);
                 } else {
                   dispatch(addFilter({ type: "typePlat", name: item }));
-                  setSelected(true);
                 }
               }}
               style={{
-                backgroundColor: selected ? COLORS.primary : "white",
+                backgroundColor: activeFilters.some(
+                  (i) => Object.values(i) == item
+                )
+                  ? COLORS.primary
+                  : "white",
                 borderWidth: 3,
                 borderColor: COLORS.primary,
                 borderRadius: 5,
@@ -104,7 +103,9 @@ const TypePlatsComponent = ({ activeFilters }) => {
             >
               <Text
                 style={{
-                  color: selected ? "white" : COLORS.primary,
+                  color: activeFilters.some((i) => Object.values(i) == item)
+                    ? "white"
+                    : COLORS.primary,
                   fontWeight: "bold",
                   fontSize: 18,
                   textAlign: "center",
@@ -120,7 +121,6 @@ const TypePlatsComponent = ({ activeFilters }) => {
   );
 };
 const RegimeComponent = ({ activeFilters }) => {
-  const [regimes, setRegimes] = useState([]);
   const dispatch = useDispatch();
 
   return (
@@ -164,11 +164,46 @@ const RegimeComponent = ({ activeFilters }) => {
               key={i}
               onPress={() => {
                 if (selected) {
-                  dispatch(removeFilter(item));
+                  switch (item) {
+                    case "Viande":
+                      dispatch(removeFilter("viande"));
+
+                      break;
+                    case "Vegan":
+                      dispatch(removeFilter("vegan"));
+
+                      break;
+                    case "Poisson":
+                      dispatch(removeFilter("poisson"));
+
+                      break;
+                    case "Végétarien":
+                      dispatch(removeFilter("vegetarien"));
+
+                      break;
+                  }
                   setSelected(false);
                 } else {
-                  dispatch(addFilter({ type: "regimes", name: item }));
+                  switch (item) {
+                    case "Viande":
+                      dispatch(addFilter({ type: "category", name: "viande" }));
+                      break;
+                    case "Vegan":
+                      dispatch(addFilter({ type: "category", name: "vegan" }));
+                      break;
+                    case "Poisson":
+                      dispatch(
+                        addFilter({ type: "category", name: "poisson" })
+                      );
+                      break;
+                    case "Végétarien":
+                      dispatch(
+                        addFilter({ type: "category", name: "vegetarien" })
+                      );
+                      break;
+                  }
                   setSelected(true);
+                  console.log("CKLIKED");
                 }
               }}
               style={{
@@ -200,7 +235,6 @@ const RegimeComponent = ({ activeFilters }) => {
   );
 };
 const MaterielsComponent = ({ activeFilters }) => {
-  const [materiels, setMateriels] = useState([]);
   const dispatch = useDispatch();
 
   return (
@@ -233,24 +267,22 @@ const MaterielsComponent = ({ activeFilters }) => {
         }}
       >
         {materielsArray.map((item, i) => {
-          const [selected, setSelected] = useState(
-            activeFilters.some((i) => Object.values(i) == item)
-          );
-
           return (
             <Pressable
               key={i}
               onPress={() => {
-                if (selected) {
+                if (activeFilters.some((i) => Object.values(i) == item)) {
                   dispatch(removeFilter(item));
-                  setSelected(false);
                 } else {
                   dispatch(addFilter({ type: "material", name: item }));
-                  setSelected(true);
                 }
               }}
               style={{
-                backgroundColor: selected ? COLORS.primary : "white",
+                backgroundColor: activeFilters.some(
+                  (i) => Object.values(i) == item
+                )
+                  ? COLORS.primary
+                  : "white",
                 borderWidth: 3,
                 borderColor: COLORS.primary,
                 borderRadius: 5,
@@ -263,7 +295,87 @@ const MaterielsComponent = ({ activeFilters }) => {
             >
               <Text
                 style={{
-                  color: selected ? "white" : COLORS.primary,
+                  color: activeFilters.some((i) => Object.values(i) == item)
+                    ? "white"
+                    : COLORS.primary,
+                  fontWeight: "bold",
+                  fontSize: 18,
+                  textAlign: "center",
+                }}
+              >
+                {item}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+const DifficultyComponent = ({ activeFilters }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <View
+      style={{
+        backgroundColor: "white",
+        width: "90%",
+        borderRadius: 10,
+        alignItems: "center",
+        paddingBottom: 20,
+        marginVertical: 10,
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "95%",
+          margin: 10,
+        }}
+      >
+        <Text style={{ fontWeight: "bold", fontSize: 24 }}>Difficulté</Text>
+        <Feather name="bar-chart" size={35} color="black" />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {difficultyArray.map((item, i) => {
+          return (
+            <Pressable
+              key={i}
+              onPress={() => {
+                if (activeFilters.some((i) => Object.values(i) == item)) {
+                  dispatch(removeFilter(item));
+                } else {
+                  dispatch(addFilter({ type: "difficulty", name: item }));
+                }
+              }}
+              style={{
+                backgroundColor: activeFilters.some(
+                  (i) => Object.values(i) == item
+                )
+                  ? COLORS.primary
+                  : "white",
+                borderWidth: 3,
+                borderColor: COLORS.primary,
+                borderRadius: 5,
+                width: "45%",
+                marginHorizontal: 5,
+                marginVertical: 2,
+                padding: 5,
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: activeFilters.some((i) => Object.values(i) == item)
+                    ? "white"
+                    : COLORS.primary,
                   fontWeight: "bold",
                   fontSize: 18,
                   textAlign: "center",
@@ -340,13 +452,9 @@ const TempsComponent = () => {
     </View>
   );
 };
-const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    console.log("HOLA");
-  }, [activeFilters]);
+const FilterScreen = forwardRef(({}, ref) => {
   const { activeFilters } = useSelector((state) => state.recipeStore);
-
+  const dispatch = useDispatch();
   return (
     <Modal
       swipeThreshold={1}
@@ -381,7 +489,7 @@ const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
             width: 50,
             borderRadius: 10,
           }}
-        ></View>
+        />
       </View>
       <ScrollView
         style={{ flex: 1 }}
@@ -391,10 +499,11 @@ const FilterScreen = forwardRef(({ pressedFilter }, ref) => {
           backgroundColor: COLORS.lightGrey,
         }}
       >
-        <TypePlatsComponent activeFilters={activeFilters} />
+        <DifficultyComponent activeFilters={activeFilters} />
         <RegimeComponent activeFilters={activeFilters} />
         <TempsComponent />
         <MaterielsComponent activeFilters={activeFilters} />
+        <TypePlatsComponent activeFilters={activeFilters} />
       </ScrollView>
     </Modal>
   );

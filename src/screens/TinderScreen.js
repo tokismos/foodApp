@@ -62,7 +62,7 @@ const TinderScreen = ({ navigation }) => {
           }}
         >
           <Livre height={40} width={40} fill="white" />
-          <Text style={styles.categorieTitle}>Types de plats {"\n"} (2)</Text>
+          <Text style={styles.categorieTitle}>Types de plats</Text>
         </Pressable>
         <Pressable
           onPress={() => {
@@ -120,7 +120,6 @@ const TinderScreen = ({ navigation }) => {
   const [recipes, setRecipes] = useState([]);
   const [pressedFilter, setPressedFilter] = useState(null);
   const [showButton, setShowButton] = useState(false);
-  const sheetRef = React.useRef(null);
 
   const { matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
@@ -162,8 +161,13 @@ const TinderScreen = ({ navigation }) => {
     }
   }, []);
   useEffect(() => {
+    loadData(activeFilters);
+  }, [activeFilters]);
+  useEffect(() => {
+    console.log("kenght", recipes.length);
+  }, [recipes]);
+  useEffect(() => {
     getAndSetFavorites();
-    loadData();
   }, []);
   useEffect(() => {
     if (matches.length > 0) {
@@ -286,23 +290,7 @@ const TinderScreen = ({ navigation }) => {
             />
           </Animated.View>
         )}
-        <FilterScreen ref={bottomSheetRef} pressedFilter={pressedFilter} />
-
-        {/* <BottomSheet
-          ref={bottomSheetRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          handleStyle={{
-            backgroundColor: COLORS.secondary,
-            borderTopRightRadius: 15,
-            borderTopLeftRadius: 15,
-          }}
-        >
-          <View style={{ flex: 1, backgroundColor: "#c3c3c3" }}>
-            <Text>Awesome 🎉</Text>
-          </View>
-        </BottomSheet> */}
+        <FilterScreen ref={bottomSheetRef} />
       </>
     </SafeAreaView>
   );
