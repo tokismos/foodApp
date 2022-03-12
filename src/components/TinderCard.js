@@ -61,7 +61,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
 
   return (
     <>
-      <Pressable
+      <View
         style={{
           height: "100%",
           width: "100%",
@@ -136,7 +136,7 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Pressable>
+      </View>
     </>
   );
 };

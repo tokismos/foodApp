@@ -356,13 +356,17 @@ const LoggedStackScreen = () => {
         />
 
         <Stack.Screen
-          options={{}}
+          options={{ headerShown: false }}
           name="PanierScreen"
           component={PanierScreen}
         />
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            title: "Les Ingredients",
+            headerTitleAlign: "center",
+            headerTitleStyle: { fontWeight: "bold", fontSize: 22 },
+            headerBackTitle: "Back",
           }}
           name="IngredientsCartScreen"
           component={IngredientCartScreen}
@@ -591,6 +595,11 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
+            title: "Les Ingredients",
+            headerTitleAlign: "center",
+            headerTitleStyle: { fontWeight: "bold", fontSize: 22 },
+            headerBackTitle: "Back",
+            headerShown: true,
           }}
           name="IngredientsCartScreen"
           component={IngredientCartScreen}

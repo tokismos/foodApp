@@ -4,7 +4,7 @@
 // comme ca on a une impression de plusieurs cartes alors ce n'est que 2.
 
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, Text } from "react-native";
 
 import Animated, {
   useSharedValue,
@@ -18,6 +18,7 @@ import Animated, {
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Like from "../assets/LIKE.png";
 import Nope from "../assets/nope.png";
+import LottieView from "lottie-react-native";
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
@@ -53,7 +54,9 @@ const AnimatedStack = (props) => {
       },
     ],
   }));
-
+  useEffect(() => {
+    console.log("DATA LENGTH ", data.length, nextIndex);
+  }, [data, nextIndex]);
   const nextCardStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -146,7 +149,26 @@ const AnimatedStack = (props) => {
     }
   }, [data, currentIndex]);
 
-  return (
+  return data.length < nextIndex ? (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <LottieView
+        source={require("../assets/oops.json")}
+        autoPlay
+        loop={false}
+      />
+      <Text
+        style={{
+          fontSize: 20,
+          textAlign: "center",
+          width: "90%",
+          marginTop: 100,
+        }}
+      >
+        OOPS, plus de recettes disponibles ! Veuillez changer vos filtres si
+        activés !
+      </Text>
+    </View>
+  ) : (
     <View style={styles.root}>
       {nextProfile && (
         <View style={styles.nextCardContainer}>

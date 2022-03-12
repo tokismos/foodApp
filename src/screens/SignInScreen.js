@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import CustomButton from "../components/CustomButton";
 import TextInputColored from "../components/TextInputColored";
@@ -14,16 +15,18 @@ import useAuth from "../hooks/useAuth";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import GoogleIcon from "../assets/GoogleIcon.svg";
-import { AppleButton } from "@invertase/react-native-apple-authentication";
 
 const { height, width } = Dimensions.get("screen");
 
-const SignInScreen = () => {
+const SignInScreen = ({ route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const { signIn, signInWithGoogle, signInWithFb, onAppleButtonPress } =
     useAuth();
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2].name;
+  console.log("ROUTE", prevRoute);
   return (
     <>
       <View
@@ -41,13 +44,22 @@ const SignInScreen = () => {
       <View style={{ height }}>
         <View
           style={{
-            margin: 20,
+            margin: 10,
             padding: 10,
             borderColor: COLORS.primary,
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            Connectez vous à votre compte :
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              textAlign: "center",
+              marginBottom: 20,
+            }}
+          >
+            {prevRoute === "IngredientsCartScreen"
+              ? "Veuillez vous connecter pour poursuivre votre demande"
+              : "Connectez vous à votre compte :"}
           </Text>
           <TextInputColored label="E-mail" setChangeText={setEmail} />
           <TextInputColored
@@ -58,7 +70,7 @@ const SignInScreen = () => {
           <CustomButton
             onPress={() => signIn(email, password)}
             title="Se connecter"
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: "center", marginTop: 20 }}
             disabled={password.length == 0}
           />
         </View>
@@ -116,6 +128,21 @@ const SignInScreen = () => {
               </View>
             </View>
           </TouchableOpacity>
+          <Pressable
+            style={{ marginTop: 50 }}
+            onPress={() => navigation.navigate("SignUpScreen")}
+          >
+            {prevRoute === "IngredientsCartScreen" && (
+              <Text
+                style={{
+                  fontSize: 16,
+                  textAlign: "center",
+                }}
+              >
+                Toujours pas de compte ? {"\n"} Inscrivez Vous !
+              </Text>
+            )}
+          </Pressable>
           {/* <AppleButton
             buttonStyle={AppleButton.Style.WHITE}
             buttonType={AppleButton.Type.SIGN_IN}

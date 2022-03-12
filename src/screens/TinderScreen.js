@@ -10,6 +10,7 @@ import {
   Pressable,
   StatusBar,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import { AntDesign } from "@expo/vector-icons";
@@ -37,95 +38,93 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import FilterScreen from "./FilterScreen";
 
-const TinderScreen = ({ navigation }) => {
-  const Header = () => {
-    return (
-      <View
+const Header = ({ bottomSheetRef }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: COLORS.primary,
+        width,
+        height: height * 0.12,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      <Pressable
+        onPress={() => {
+          bottomSheetRef.current.open();
+        }}
         style={{
-          backgroundColor: COLORS.primary,
-          width,
-          height: height * 0.12,
-          flexDirection: "row",
+          justifyContent: "center",
           alignItems: "center",
-          justifyContent: "space-around",
+          height: "200%",
         }}
       >
-        <Pressable
-          onPress={() => {
-            setPressedFilter("types");
-            bottomSheetRef.current.open();
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            height: "200%",
-          }}
-        >
-          <Livre height={40} width={40} fill="white" />
-          <Text style={styles.categorieTitle}>Types de plats</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setPressedFilter("temps");
-            bottomSheetRef.current.open();
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
+        <Livre height={40} width={40} fill="white" />
+        <Text style={styles.categorieTitle}>Types de plats</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
+          bottomSheetRef.current.open();
+        }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
 
-            height: "200%",
-          }}
-        >
-          <Time height={40} width={40} fill="white" />
+          height: "200%",
+        }}
+      >
+        <Time height={40} width={40} fill="white" />
 
-          <Text style={styles.categorieTitle}>Temps </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setPressedFilter("regimes");
-            bottomSheetRef.current.open();
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
+        <Text style={styles.categorieTitle}>Temps </Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
+          bottomSheetRef.current.open();
+        }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
 
-            height: "200%",
-          }}
-        >
-          <MaterialCommunityIcons name="fish-off" size={40} color="white" />
+          height: "200%",
+        }}
+      >
+        <MaterialCommunityIcons name="fish-off" size={40} color="white" />
 
-          <Text style={styles.categorieTitle}>Régimes </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setPressedFilter("materiel");
-            bottomSheetRef.current.open();
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
+        <Text style={styles.categorieTitle}>Régimes </Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
+          bottomSheetRef.current.open();
+        }}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
 
-            height: "200%",
-          }}
-        >
-          <Oven height={40} width={40} fill="white" />
-          <Text style={styles.categorieTitle}>Materiel </Text>
-        </Pressable>
-      </View>
-    );
-  };
+          height: "200%",
+        }}
+      >
+        <Oven height={40} width={40} fill="white" />
+        <Text style={styles.categorieTitle}>Materiel </Text>
+      </Pressable>
+    </View>
+  );
+};
+const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userStore);
 
   const [recipes, setRecipes] = useState([]);
-  const [pressedFilter, setPressedFilter] = useState(null);
   const [showButton, setShowButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
 
   const bottomSheetRef = useRef();
-
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
+  console.log("ROUTE", routes);
   // variables
 
   useEffect(() => {
@@ -137,9 +136,11 @@ const TinderScreen = ({ navigation }) => {
     });
   }, [showButton]);
   const loadData = async (item) => {
+    setIsLoading(true);
     getAllRecipes(item)
       .then((result) => {
         setRecipes(result);
+        setIsLoading(false);
       })
       .catch((e) => console.log("HOOHOHOHOHOHHOHO", e));
   };
@@ -152,9 +153,9 @@ const TinderScreen = ({ navigation }) => {
     if (user != null) {
       getAdditionalInfo().then((e) => {
         console.log("W", e);
-        if (!e.phoneNumber) {
-          return navigation.navigate("PhoneScreen");
-        }
+        // if (!e.phoneNumber) {
+        //   return navigation.navigate("PhoneScreen");
+        // }
         dispatch(setUser({ ...user, phoneNumber: e.phoneNumber }));
       });
     } else {
@@ -194,7 +195,7 @@ const TinderScreen = ({ navigation }) => {
     <SafeAreaView style={styles.pageContainer}>
       <StatusBar translucent backgroundColor={COLORS.primary} />
 
-      <Header />
+      <Header bottomSheetRef={bottomSheetRef} />
 
       <>
         <View
@@ -214,20 +215,26 @@ const TinderScreen = ({ navigation }) => {
               paddingTop: 20,
             }}
           >
-            <AnimatedStack
-              data={recipes}
-              renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
-                <TinderCard
-                  height="100%"
-                  width="100%"
-                  recipe={item}
-                  onSwipeRight={onSwipeRight}
-                  onSwipeLeft={onSwipeLeft}
-                />
-              )}
-              onSwipeLeft={onSwipeLeft}
-              onSwipeRight={onSwipeRight}
-            />
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#0000ff" />
+            ) : recipes ? (
+              <AnimatedStack
+                data={recipes}
+                renderItem={({ item, onSwipeRight, onSwipeLeft }) => (
+                  <TinderCard
+                    height="100%"
+                    width="100%"
+                    recipe={item}
+                    onSwipeRight={onSwipeRight}
+                    onSwipeLeft={onSwipeLeft}
+                  />
+                )}
+                onSwipeLeft={onSwipeLeft}
+                onSwipeRight={onSwipeRight}
+              />
+            ) : (
+              <Text>Nothing to show</Text>
+            )}
           </View>
         </View>
         {showButton && (
