@@ -100,12 +100,13 @@ const TopTabScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <TopTab.Navigator
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
           tabBarStyle: {
-            backgroundColor: "white",
+            backgroundColor: COLORS.primary,
             marginTop: StatusBar.currentHeight,
           },
-          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
+          tabBarPressOpacity: 0.1,
+          tabBarIndicatorStyle: { backgroundColor: "white" },
           tabBarLabelStyle: { fontWeight: "bold", fontSize: 14 },
         }}
       >
@@ -157,6 +158,16 @@ const BottomTabScreen = () => {
             top: 0,
             transform: [{ scale: 0.5 }],
           },
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+          },
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: 20,
+            fontWeight: "bold",
+          },
+          title: "Mes listes de courses ❤️",
           tabBarIcon: ({ focused }) => (
             <Entypo
               name="list"
@@ -171,7 +182,7 @@ const BottomTabScreen = () => {
                 fontWeight: focused ? "bold" : null,
               }}
             >
-              Courses
+              Liste
             </Text>
           ),
         }}
