@@ -90,7 +90,7 @@ const SignInScreen = ({ route }) => {
                 textDecorationLine: "underline",
               }}
             >
-              Mot de passe oublié ?{"\n"} Cliquez ici !
+              Mot de passe oublié ?{"\n"}Cliquez ici !
             </Text>
           </Pressable>
         </View>
