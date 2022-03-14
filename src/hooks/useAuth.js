@@ -175,6 +175,27 @@ const signUp = async (email, password) => {
   }
 };
 
+const resetPassword = async (email, setMsg, setIsLoading) => {
+  try {
+    await auth().sendPasswordResetEmail(email);
+    setMsg("Un lien de reinitialisation a été envoyé à votre adresse email.");
+  } catch (e) {
+    console.log(e.code);
+    if (e.code === "auth/user-not-found") {
+      setMsg(
+        "Il semblerait que cette adresse e-mail n’a jamais été enregistrée !"
+      );
+    }
+    if (e.code === "auth/too-many-requests") {
+      setMsg(
+        "Vous avez envoyé plusieurs demandes. Veuillez réessayer plus tard!"
+      );
+    }
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 export default useAuth = () => {
   return {
     signIn,
@@ -184,6 +205,7 @@ export default useAuth = () => {
     verifyCode,
     signUp,
     onAppleButtonPress,
+    resetPassword,
   };
 };
 

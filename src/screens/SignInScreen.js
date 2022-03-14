@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Button,
 } from "react-native";
 import CustomButton from "../components/CustomButton";
 import TextInputColored from "../components/TextInputColored";
@@ -22,14 +23,19 @@ const SignInScreen = ({ route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  const { signIn, signInWithGoogle, signInWithFb, onAppleButtonPress } =
-    useAuth();
+  const {
+    signIn,
+    signInWithGoogle,
+    signInWithFb,
+    onAppleButtonPress,
+    resetPassword,
+  } = useAuth();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2].name;
   console.log("ROUTE", prevRoute);
   return (
     <>
-      <View
+      {/* <View
         style={{
           height: "10%",
           width: "10%",
@@ -40,7 +46,7 @@ const SignInScreen = ({ route }) => {
         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={40} color="black" />
         </TouchableOpacity>
-      </View>
+      </View> */}
       <View style={{ height }}>
         <View
           style={{
@@ -73,6 +79,20 @@ const SignInScreen = ({ route }) => {
             style={{ alignSelf: "center", marginTop: 20 }}
             disabled={password.length == 0}
           />
+
+          <Pressable
+            style={{ marginTop: 20 }}
+            onPress={() => navigation.navigate("ForgotPasswordScreen")}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+              }}
+            >
+              Mot de passe oublié ?{"\n"} Cliquez ici !
+            </Text>
+          </Pressable>
         </View>
         <View style={{ width: "100%", flex: 1 }}>
           <View
@@ -143,6 +163,7 @@ const SignInScreen = ({ route }) => {
               </Text>
             )}
           </Pressable>
+
           {/* <AppleButton
             buttonStyle={AppleButton.Style.WHITE}
             buttonType={AppleButton.Type.SIGN_IN}

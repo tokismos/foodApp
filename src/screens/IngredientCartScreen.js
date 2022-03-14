@@ -147,7 +147,6 @@ const IngredientCartScreen = ({ route, navigation }) => {
         alignItems: "center",
         flex: 1,
         backgroundColor: "white",
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
       <ScrollView style={{ flex: 1 }}>
@@ -171,8 +170,8 @@ const IngredientCartScreen = ({ route, navigation }) => {
               return console.log("waloooo");
             }
             if (!auth().currentUser) {
-              navigation.navigate("SignInScreen");
-            } else console.log("Not connect");
+              return navigation.navigate("SignInScreen");
+            }
             let arr = [];
             Object.entries(finalCart).forEach(([key, value]) => {
               arr.push({ _id: key, ...value });

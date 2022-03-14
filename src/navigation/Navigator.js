@@ -44,6 +44,7 @@ import CommandesScreen from "../screens/CommandesScreen";
 import InfoCommandeScreen from "../screens/InfoCommandeScreen";
 import FilterScreen from "../screens/FilterScreen";
 import RateScreen from "../screens/RateScreen";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -469,6 +470,25 @@ const LoginStackScreen = () => {
         />
         <Stack.Screen
           options={{
+            ...horizontalAnimation,
+            headerShown: true,
+            headerTitleAlign: "center",
+            title: "Reinitialiser mot de passe",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "white",
+            headerBackTitle: null,
+            headerTitleStyle: {
+              fontSize: 18,
+              color: "white",
+            },
+          }}
+          name="ForgotPasswordScreen"
+          component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          options={{
             headerShown: false,
           }}
           name="TinderScreen"
@@ -534,7 +554,18 @@ const LoginStackScreen = () => {
         <Stack.Screen
           options={{
             ...horizontalAnimation,
-            headerShown: false,
+            headerShown: true,
+            headerTitleAlign: "center",
+            title: "Se connecter",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "white",
+            headerBackTitle: null,
+            headerTitleStyle: {
+              fontSize: 22,
+              color: "white",
+            },
           }}
           name="SignInScreen"
           component={SignInScreen}
