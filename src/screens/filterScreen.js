@@ -390,7 +390,7 @@ const DifficultyComponent = ({ activeFilters }) => {
     </View>
   );
 };
-const TempsComponent = () => {
+const TempsComponent = ({ setTempsHeader }) => {
   const [temps, setTemps] = useState(0);
   const dispatch = useDispatch();
   return (
@@ -429,9 +429,10 @@ const TempsComponent = () => {
       <Slider
         step={10}
         size={2}
+        value={40}
         onSlidingComplete={(i) => {
           setTemps(i);
-
+          setTempsHeader(i);
           dispatch(changeTime(i));
         }}
         thumbTintColor={COLORS.primary}
@@ -452,9 +453,63 @@ const TempsComponent = () => {
     </View>
   );
 };
-const FilterScreen = forwardRef(({}, ref) => {
+const FilterScreen = forwardRef(({ pressedFilter, setTemps }, ref) => {
   const { activeFilters } = useSelector((state) => state.recipeStore);
   const dispatch = useDispatch();
+  const [array, setArray] = useState([
+    <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+    <RegimeComponent key={2} activeFilters={activeFilters} />,
+    <TempsComponent key={4} activeFilters={activeFilters} />,
+    <MaterielsComponent key={3} activeFilters={activeFilters} />,
+  ]);
+
+  useEffect(() => {
+    console.log("THOS ASE ACTIVE", activeFilters.tempsCuisson);
+    let arr = [];
+    activeFilters.forEach((i) => {
+      const counts = {};
+
+      console.log("THIS IS FOREACH I", Object.keys(i));
+      arr.push(...Object.keys(i));
+      arr.forEach((x) => {
+        counts[x] = (counts[x] || 0) + 1;
+      });
+      console.log("AAAAAAAAAARTRRR", arr);
+      console.log("counts", counts);
+    });
+  }, [activeFilters]);
+
+  useEffect(() => {
+    if (pressedFilter === "types") {
+      setArray([
+        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+        <RegimeComponent key={2} activeFilters={activeFilters} />,
+        <TempsComponent key={4} activeFilters={activeFilters} />,
+        <MaterielsComponent key={3} activeFilters={activeFilters} />,
+      ]);
+    } else if (pressedFilter === "temps") {
+      setArray([
+        <TempsComponent key={4} activeFilters={activeFilters} />,
+        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+        <RegimeComponent key={2} activeFilters={activeFilters} />,
+        <MaterielsComponent key={3} activeFilters={activeFilters} />,
+      ]);
+    } else if (pressedFilter === "regimes") {
+      setArray([
+        <RegimeComponent key={2} activeFilters={activeFilters} />,
+        <TempsComponent key={4} activeFilters={activeFilters} />,
+        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+        <MaterielsComponent key={3} activeFilters={activeFilters} />,
+      ]);
+    } else if (pressedFilter === "materiel") {
+      setArray([
+        <MaterielsComponent key={3} activeFilters={activeFilters} />,
+        <RegimeComponent key={2} activeFilters={activeFilters} />,
+        <TempsComponent key={4} activeFilters={activeFilters} />,
+        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+      ]);
+    }
+  }, [pressedFilter]);
   return (
     <Modal
       swipeThreshold={1}
@@ -501,7 +556,7 @@ const FilterScreen = forwardRef(({}, ref) => {
       >
         <DifficultyComponent activeFilters={activeFilters} />
         <RegimeComponent activeFilters={activeFilters} />
-        <TempsComponent />
+        <TempsComponent setTempsHeader={setTemps} />
         <MaterielsComponent activeFilters={activeFilters} />
         <TypePlatsComponent activeFilters={activeFilters} />
       </ScrollView>

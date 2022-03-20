@@ -38,7 +38,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import FilterScreen from "./FilterScreen";
 
-const Header = ({ bottomSheetRef }) => {
+const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
   return (
     <View
       style={{
@@ -52,6 +52,7 @@ const Header = ({ bottomSheetRef }) => {
     >
       <Pressable
         onPress={() => {
+          setPressedFilter("types");
           bottomSheetRef.current.open();
         }}
         style={{
@@ -65,6 +66,8 @@ const Header = ({ bottomSheetRef }) => {
       </Pressable>
       <Pressable
         onPress={() => {
+          setPressedFilter("temps");
+
           bottomSheetRef.current.open();
         }}
         style={{
@@ -76,10 +79,14 @@ const Header = ({ bottomSheetRef }) => {
       >
         <Time height={40} width={40} fill="white" />
 
-        <Text style={styles.categorieTitle}>Temps </Text>
+        <Text style={styles.categorieTitle}>
+          Temps{"\n"}({temps} min)
+        </Text>
       </Pressable>
       <Pressable
         onPress={() => {
+          setPressedFilter("regimes");
+
           bottomSheetRef.current.open();
         }}
         style={{
@@ -95,6 +102,8 @@ const Header = ({ bottomSheetRef }) => {
       </Pressable>
       <Pressable
         onPress={() => {
+          setPressedFilter("materiel");
+
           bottomSheetRef.current.open();
         }}
         style={{
@@ -114,9 +123,11 @@ const TinderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userStore);
 
+  const [pressedFilter, setPressedFilter] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [temps, setTemps] = useState(true);
 
   const { matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
@@ -124,7 +135,7 @@ const TinderScreen = ({ navigation }) => {
   const bottomSheetRef = useRef();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
-  console.log("ROUTE", routes);
+
   // variables
 
   useEffect(() => {
@@ -180,7 +191,7 @@ const TinderScreen = ({ navigation }) => {
     console.log("swiped left", item);
     await incrementLeft(item._id);
   };
-
+  console.log("recipees", recipes);
   const onSwipeRight = async (item) => {
     setShowButton(true);
     item.defaultNbrPersonne = item.nbrPersonne;
@@ -195,7 +206,12 @@ const TinderScreen = ({ navigation }) => {
     <SafeAreaView style={styles.pageContainer}>
       <StatusBar translucent backgroundColor={COLORS.primary} />
 
-      <Header bottomSheetRef={bottomSheetRef} />
+      <Header
+        bottomSheetRef={bottomSheetRef}
+        pressedFilter={pressedFilter}
+        setPressedFilter={setPressedFilter}
+        temps={temps}
+      />
 
       <>
         <View
@@ -297,7 +313,11 @@ const TinderScreen = ({ navigation }) => {
             />
           </Animated.View>
         )}
-        <FilterScreen ref={bottomSheetRef} />
+        <FilterScreen
+          ref={bottomSheetRef}
+          pressedFilter={pressedFilter}
+          setTemps={setTemps}
+        />
       </>
     </SafeAreaView>
   );

@@ -64,7 +64,7 @@ const SignInScreen = ({ route }) => {
             }}
           >
             {prevRoute === "IngredientsCartScreen"
-              ? "Veuillez vous connecter pour poursuivre votre demande"
+              ? "Connectez vous pour pouvoir enregistrer vos recettes"
               : "Connectez vous à votre compte :"}
           </Text>
           <TextInputColored label="E-mail" setChangeText={setEmail} />
@@ -156,10 +156,13 @@ const SignInScreen = ({ route }) => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: COLORS.primary,
+                  fontWeight: "bold",
                   textAlign: "center",
                 }}
               >
-                Toujours pas de compte ? {"\n"} Inscrivez Vous !
+                Toujours pas de compte ? {"\n"}
+                Inscrivez-vous !
               </Text>
             )}
           </Pressable>

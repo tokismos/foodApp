@@ -19,6 +19,9 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import Like from "../assets/LIKE.png";
 import Nope from "../assets/nope.png";
 import LottieView from "lottie-react-native";
+import CustomButton from "./CustomButton";
+import { resetFilters } from "../redux/slicer/recipeSlicer";
+import { useDispatch } from "react-redux";
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
@@ -29,7 +32,7 @@ const AnimatedStack = (props) => {
   const [swiped, setSwipe] = useState();
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
   const [show, setShow] = useState(false);
-
+  const dispatch = useDispatch();
   const currentProfile = data[currentIndex];
   const nextProfile = data[nextIndex];
 
@@ -161,12 +164,19 @@ const AnimatedStack = (props) => {
           fontSize: 20,
           textAlign: "center",
           width: "90%",
-          marginTop: 100,
+          marginTop: 150,
         }}
       >
-        OOPS, plus de recettes disponibles ! Veuillez changer vos filtres si
-        activés !
+        Les filtres réduisent le choix des recettes que vous pouvez swiper .
       </Text>
+      <CustomButton
+        title={"Réinitialiser tous les filtres"}
+        textStyle={{ textAlign: "center" }}
+        style={{ padding: 5, marginTop: 10 }}
+        onPress={() => {
+          dispatch(resetFilters());
+        }}
+      />
     </View>
   ) : (
     <View style={styles.root}>
