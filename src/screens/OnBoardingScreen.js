@@ -14,6 +14,8 @@ import LottieView from "lottie-react-native";
 
 import Onboarding from "react-native-onboarding-swiper";
 
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { MaterialIcons, FontAwesome, Feather } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
 
@@ -86,8 +88,9 @@ const OnBoardingScreen = ({ navigation }) => {
       onSkip={() => {
         navigation.replace("LoginScreen");
       }}
-      onDone={() => {
-        navigation.replace("IntroScreen");
+      onDone={async () => {
+        navigation.replace("LoginStackScreen");
+        await AsyncStorage.setItem("isNotFirstTime", JSON.stringify(true));
       }}
       DotComponent={Square}
       NextButtonComponent={Next}
