@@ -453,116 +453,121 @@ const TempsComponent = ({ setTempsHeader }) => {
     </View>
   );
 };
-const FilterScreen = forwardRef(({ pressedFilter, setTemps }, ref) => {
-  const { activeFilters } = useSelector((state) => state.recipeStore);
-  const dispatch = useDispatch();
-  const [array, setArray] = useState([
-    <TypePlatsComponent key={1} activeFilters={activeFilters} />,
-    <RegimeComponent key={2} activeFilters={activeFilters} />,
-    <TempsComponent key={4} activeFilters={activeFilters} />,
-    <MaterielsComponent key={3} activeFilters={activeFilters} />,
-  ]);
+const FilterScreen = forwardRef(
+  ({ pressedFilter, setTemps, setCount }, ref) => {
+    const { activeFilters } = useSelector((state) => state.recipeStore);
+    const dispatch = useDispatch();
+    const [array, setArray] = useState([
+      <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+      <RegimeComponent key={2} activeFilters={activeFilters} />,
+      <TempsComponent key={4} activeFilters={activeFilters} />,
+      <MaterielsComponent key={3} activeFilters={activeFilters} />,
+    ]);
 
-  useEffect(() => {
-    console.log("THOS ASE ACTIVE", activeFilters.tempsCuisson);
-    let arr = [];
-    activeFilters.forEach((i) => {
-      const counts = {};
+    // useEffect(() => {
+    //   console.log("THOS ASE ACTIVE", activeFilters.tempsCuisson);
+    //   let arr = [];
 
-      console.log("THIS IS FOREACH I", Object.keys(i));
-      arr.push(...Object.keys(i));
-      arr.forEach((x) => {
-        counts[x] = (counts[x] || 0) + 1;
-      });
-      console.log("AAAAAAAAAARTRRR", arr);
-      console.log("counts", counts);
-    });
-  }, [activeFilters]);
+    //   setCount((p) => p);
+    //   activeFilters.forEach((i) => {
+    //     const counts = {};
 
-  useEffect(() => {
-    if (pressedFilter === "types") {
-      setArray([
-        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
-        <RegimeComponent key={2} activeFilters={activeFilters} />,
-        <TempsComponent key={4} activeFilters={activeFilters} />,
-        <MaterielsComponent key={3} activeFilters={activeFilters} />,
-      ]);
-    } else if (pressedFilter === "temps") {
-      setArray([
-        <TempsComponent key={4} activeFilters={activeFilters} />,
-        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
-        <RegimeComponent key={2} activeFilters={activeFilters} />,
-        <MaterielsComponent key={3} activeFilters={activeFilters} />,
-      ]);
-    } else if (pressedFilter === "regimes") {
-      setArray([
-        <RegimeComponent key={2} activeFilters={activeFilters} />,
-        <TempsComponent key={4} activeFilters={activeFilters} />,
-        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
-        <MaterielsComponent key={3} activeFilters={activeFilters} />,
-      ]);
-    } else if (pressedFilter === "materiel") {
-      setArray([
-        <MaterielsComponent key={3} activeFilters={activeFilters} />,
-        <RegimeComponent key={2} activeFilters={activeFilters} />,
-        <TempsComponent key={4} activeFilters={activeFilters} />,
-        <TypePlatsComponent key={1} activeFilters={activeFilters} />,
-      ]);
-    }
-  }, [pressedFilter]);
-  return (
-    <Modal
-      swipeThreshold={1}
-      style={{
-        width: "100%",
-        height: Platform.OS === "ios" ? height * 0.74 : height * 0.78,
-        justifyContent: "center",
+    //     console.log("THIS IS FOREACH I", Object.keys(i));
+    //     arr.push(...Object.keys(i));
+    //     arr.forEach((x) => {
+    //       counts[x] = (counts[x] || 0) + 1;
+    //     });
+    //     console.log("AAAAAAAAAARTRRR", arr);
+    //     setCount(counts);
+    //     console.log("counts", counts);
+    //   });
+    // }, [activeFilters]);
 
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 15,
-      }}
-      position="bottom"
-      backdrop={true}
-      ref={ref}
-      isOpen={false}
-      backdropOpacity={0}
-    >
-      <View
+    useEffect(() => {
+      if (pressedFilter === "types") {
+        setArray([
+          <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+          <RegimeComponent key={2} activeFilters={activeFilters} />,
+          <TempsComponent key={4} activeFilters={activeFilters} />,
+          <MaterielsComponent key={3} activeFilters={activeFilters} />,
+        ]);
+      } else if (pressedFilter === "temps") {
+        setArray([
+          <TempsComponent key={4} activeFilters={activeFilters} />,
+          <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+          <RegimeComponent key={2} activeFilters={activeFilters} />,
+          <MaterielsComponent key={3} activeFilters={activeFilters} />,
+        ]);
+      } else if (pressedFilter === "regimes") {
+        setArray([
+          <RegimeComponent key={2} activeFilters={activeFilters} />,
+          <TempsComponent key={4} activeFilters={activeFilters} />,
+          <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+          <MaterielsComponent key={3} activeFilters={activeFilters} />,
+        ]);
+      } else if (pressedFilter === "materiel") {
+        setArray([
+          <MaterielsComponent key={3} activeFilters={activeFilters} />,
+          <RegimeComponent key={2} activeFilters={activeFilters} />,
+          <TempsComponent key={4} activeFilters={activeFilters} />,
+          <TypePlatsComponent key={1} activeFilters={activeFilters} />,
+        ]);
+      }
+    }, [pressedFilter]);
+    return (
+      <Modal
+        swipeThreshold={1}
         style={{
-          backgroundColor: COLORS.primary,
-          height: 40,
+          width: "100%",
+          height: Platform.OS === "ios" ? height * 0.74 : height * 0.78,
+          justifyContent: "center",
+
           borderTopRightRadius: 15,
           borderTopLeftRadius: 15,
-          justifyContent: "center",
-          alignItems: "center",
         }}
+        position="bottom"
+        backdrop={true}
+        ref={ref}
+        isOpen={false}
+        backdropOpacity={0}
       >
         <View
           style={{
-            backgroundColor: "white",
-            height: 5,
-            width: 50,
-            borderRadius: 10,
+            backgroundColor: COLORS.primary,
+            height: 40,
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-      </View>
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: COLORS.lightGrey,
-        }}
-      >
-        <DifficultyComponent activeFilters={activeFilters} />
-        <RegimeComponent activeFilters={activeFilters} />
-        <TempsComponent setTempsHeader={setTemps} />
-        <MaterielsComponent activeFilters={activeFilters} />
-        <TypePlatsComponent activeFilters={activeFilters} />
-      </ScrollView>
-    </Modal>
-  );
-});
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              height: 5,
+              width: 50,
+              borderRadius: 10,
+            }}
+          />
+        </View>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: COLORS.lightGrey,
+          }}
+        >
+          <DifficultyComponent activeFilters={activeFilters} />
+          <RegimeComponent activeFilters={activeFilters} />
+          <TempsComponent setTempsHeader={setTemps} />
+          <MaterielsComponent activeFilters={activeFilters} />
+          <TypePlatsComponent activeFilters={activeFilters} />
+        </ScrollView>
+      </Modal>
+    );
+  }
+);
 
 export default FilterScreen;
 

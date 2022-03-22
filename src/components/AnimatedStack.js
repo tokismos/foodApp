@@ -57,9 +57,7 @@ const AnimatedStack = (props) => {
       },
     ],
   }));
-  useEffect(() => {
-    console.log("DATA LENGTH ", data.length, nextIndex);
-  }, [data, nextIndex]);
+
   const nextCardStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -120,7 +118,6 @@ const AnimatedStack = (props) => {
   });
 
   useEffect(() => {
-    console.log("set to 0");
     setCurrentIndex(0);
   }, [data]);
 

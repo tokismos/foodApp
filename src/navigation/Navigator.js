@@ -45,6 +45,7 @@ import InfoCommandeScreen from "../screens/InfoCommandeScreen";
 import FilterScreen from "../screens/FilterScreen";
 import RateScreen from "../screens/RateScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
+import OnBoardingScreen from "../screens/OnBoardingScreen";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -454,6 +455,13 @@ const LoginStackScreen = () => {
       <Stack.Navigator
         screenOptions={{ headerShown: false, tabBarStyle: { height: 120 } }}
       >
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="OnBoardingScreen"
+          component={OnBoardingScreen}
+        />
         <Stack.Screen
           options={{
             headerShown: false,

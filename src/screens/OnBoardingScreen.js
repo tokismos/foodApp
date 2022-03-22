@@ -14,8 +14,8 @@ import LottieView from "lottie-react-native";
 
 import Onboarding from "react-native-onboarding-swiper";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { MaterialIcons, FontAwesome, Feather } from "@expo/vector-icons";
+import { COLORS } from "../consts/colors";
 
 const Square = ({ isLight, selected }) => {
   let backgroundColor;
@@ -80,7 +80,6 @@ const Done = ({ isLight, ...props }) => {
     </TouchableOpacity>
   );
 };
-const ref = React.createRef();
 const OnBoardingScreen = ({ navigation }) => {
   return (
     <Onboarding
@@ -88,29 +87,45 @@ const OnBoardingScreen = ({ navigation }) => {
         navigation.replace("LoginScreen");
       }}
       onDone={() => {
-        navigation.replace("LoginScreen");
+        navigation.replace("IntroScreen");
       }}
       DotComponent={Square}
       NextButtonComponent={Next}
+      showSkip={false}
       SkipButtonComponent={Skip}
       DoneButtonComponent={Done}
       bottomBarColor="#ffc700"
+      imageContainerStyles={{
+        paddingBottom: 0,
+        justifyContent: "center",
+      }}
       pages={[
         {
           backgroundColor: "white",
           image: (
-            <LottieView
-              autoPlay
-              resizeMode="cover"
-              speed={0.5}
-              style={{
-                width: 300,
-                height: 300,
-              }}
-              source={require("../assets/imgOnboard1.json")}
-            />
+            <>
+              <View style={styles.card}>
+                <LottieView
+                  autoPlay
+                  loop={true}
+                  resizeMode="cover"
+                  style={{
+                    marginTop: 20,
+                    height: 200,
+                  }}
+                  speed={0.8}
+                  source={require("../assets/SwipeLeft.json")}
+                />
+                <FontAwesome
+                  name="close"
+                  size={80}
+                  color="white"
+                  style={{ margin: 20 }}
+                />
+              </View>
+            </>
           ),
-          title: "Découvrez tous les jours de délicieuses recettes",
+          title: "Swipes à gauche si tu n'aimes pas la recette",
           titleStyles: {
             fontWeight: "bold",
           },
@@ -119,18 +134,35 @@ const OnBoardingScreen = ({ navigation }) => {
         {
           backgroundColor: "white",
           image: (
-            <LottieView
-              autoPlay
-              resizeMode="cover"
-              speed={0.5}
-              style={{
-                width: 300,
-                height: 300,
-              }}
-              source={require("../assets/imgOnboard2.json")}
-            />
+            <>
+              <View
+                style={{
+                  ...styles.card,
+                  ...COLORS.shadow,
+                  transform: [{ scaleX: -1 }],
+                }}
+              >
+                <LottieView
+                  autoPlay
+                  loop={true}
+                  resizeMode="cover"
+                  style={{
+                    marginTop: 20,
+                    height: 200,
+                  }}
+                  speed={0.8}
+                  source={require("../assets/SwipeLeft.json")}
+                />
+                <FontAwesome
+                  name="heart"
+                  size={60}
+                  color="white"
+                  style={{ margin: 20 }}
+                />
+              </View>
+            </>
           ),
-          title: "Choisissez votre repas pour la semaine",
+          title: "à droite si tu veux l'ajouter à ton panier",
           titleStyles: {
             fontWeight: "bold",
           },
@@ -139,20 +171,44 @@ const OnBoardingScreen = ({ navigation }) => {
         {
           backgroundColor: "white",
           image: (
-            <LottieView
-              autoPlay
-              resizeMode="cover"
-              speed={1}
+            <View
               style={{
-                width: 300,
-                height: 300,
+                backgroundColor: COLORS.primary,
+                elevation: 10,
+                height: "70%",
+                width: "80%",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                ...COLORS.shadow,
               }}
-              source={require("../assets/imgOnboard3.json")}
-            />
+            >
+              <View style={{}}>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Feather name="info" size={60} color="white" />
+                  <MaterialIcons
+                    name="keyboard-arrow-down"
+                    size={50}
+                    color="white"
+                  />
+                </View>
+                <LottieView
+                  autoPlay
+                  loop={true}
+                  resizeMode="cover"
+                  style={{
+                    height: 160,
+                  }}
+                  speed={0.8}
+                  source={require("../assets/Click.json")}
+                />
+              </View>
+            </View>
           ),
-          title:
-            "Vous pouvez vous faire livrer tous les ingrédients en un clic",
+          title: "Cliques sur le bouton i pour avoir plus d'informations",
           titleStyles: {
+            color: "#000",
             fontWeight: "bold",
           },
           subtitle: "",
@@ -160,18 +216,128 @@ const OnBoardingScreen = ({ navigation }) => {
         {
           backgroundColor: "white",
           image: (
-            <LottieView
-              autoPlay
-              resizeMode="cover"
-              speed={0.7}
+            <View
               style={{
-                width: 300,
-                height: 300,
+                height: "60%",
+                width: "80%",
+                alignItems: "center",
               }}
-              source={require("../assets/imgOnboard4.json")}
-            />
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 24,
+                  margin: 20,
+                  textAlign: "center",
+                }}
+              >
+                Comment utiliser Yuzu ?
+              </Text>
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.primary,
+                      borderRadius: 12.5,
+                      height: 25,
+                      width: 25,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold", color: "white" }}>
+                      1
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 16 }}>Choisissez vos recettes</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 20,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.primary,
+                      borderRadius: 12.5,
+                      height: 25,
+                      width: 25,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold", color: "white" }}>
+                      2
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 16 }}>
+                    Créez automatiquement votre liste de course
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 20,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.primary,
+                      borderRadius: 12.5,
+                      height: 25,
+                      width: 25,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold", color: "white" }}>
+                      3
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 16 }}>Faites vos courses</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 20,
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: COLORS.primary,
+                      borderRadius: 12.5,
+                      height: 25,
+                      width: 25,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold", color: "white" }}>
+                      4
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 16, flex: 1 }}>
+                    Cuisinez et profitez de petits plats fait maison, plein de
+                    goût et d'énergie! 😍
+                  </Text>
+                </View>
+              </View>
+            </View>
           ),
-          title: "Cuisinez et partagez vos meilleurs repas avec vos proches !",
+          title: "",
           titleStyles: {
             color: "#000",
             fontWeight: "bold",
@@ -185,4 +351,11 @@ const OnBoardingScreen = ({ navigation }) => {
 
 export default OnBoardingScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: COLORS.primary,
+    height: "70%",
+    justifyContent: "space-between",
+    ...COLORS.shadow,
+  },
+});

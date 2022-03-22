@@ -38,7 +38,7 @@ import { useRef } from "react";
 import { useCallback } from "react";
 import FilterScreen from "./FilterScreen";
 
-const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
+const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
   return (
     <View
       style={{
@@ -62,7 +62,10 @@ const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
         }}
       >
         <Livre height={40} width={40} fill="white" />
-        <Text style={styles.categorieTitle}>Types de plats</Text>
+        <Text style={styles.categorieTitle}>
+          Types de plats{"\n"}
+          {count?.category != undefined && `(${count?.category})`}
+        </Text>
       </Pressable>
       <Pressable
         onPress={() => {
@@ -80,7 +83,8 @@ const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
         <Time height={40} width={40} fill="white" />
 
         <Text style={styles.categorieTitle}>
-          Temps{"\n"}({temps} min)
+          Temps{"\n"}
+          <Text style={{ fontSize: 12 }}>{temps != 0 && `(${temps} min)`}</Text>
         </Text>
       </Pressable>
       <Pressable
@@ -98,7 +102,10 @@ const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
       >
         <MaterialCommunityIcons name="fish-off" size={40} color="white" />
 
-        <Text style={styles.categorieTitle}>Régimes </Text>
+        <Text style={styles.categorieTitle}>
+          Régimes{"\n"}
+          {count?.category != undefined && `(${count?.category})`}
+        </Text>
       </Pressable>
       <Pressable
         onPress={() => {
@@ -114,7 +121,10 @@ const Header = ({ bottomSheetRef, pressedFilter, setPressedFilter, temps }) => {
         }}
       >
         <Oven height={40} width={40} fill="white" />
-        <Text style={styles.categorieTitle}>Materiel </Text>
+        <Text style={styles.categorieTitle}>
+          Materiel{"\n"}
+          {count?.material != undefined && `(${count?.material})`}{" "}
+        </Text>
       </Pressable>
     </View>
   );
@@ -135,12 +145,16 @@ const TinderScreen = ({ navigation }) => {
   const bottomSheetRef = useRef();
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
-
+  const [count, setCount] = useState();
   // variables
-
   useEffect(() => {
-    console.log("HELOO FILTERS", activeFilters);
-  }, [activeFilters]);
+    console.log("ERF COUNANNNNNNNNNNNNNNTL", count);
+  }, [count]);
+
+  // useEffect(() => {
+  //   console.log("HELOO FILTERS", activeFilters);
+  //   activeFilters.forEach((v) => console.log("KOKOKKOKOK", ...Object.keys(v)));
+  // }, [activeFilters]);
   useEffect(() => {
     navigation.setOptions({
       tabBarStyle: { display: showButton ? "none" : "flex" },
@@ -175,9 +189,7 @@ const TinderScreen = ({ navigation }) => {
   useEffect(() => {
     loadData(activeFilters);
   }, [activeFilters]);
-  useEffect(() => {
-    console.log("kenght", recipes.length);
-  }, [recipes]);
+
   useEffect(() => {
     getAndSetFavorites();
   }, []);
@@ -191,7 +203,6 @@ const TinderScreen = ({ navigation }) => {
     console.log("swiped left", item);
     await incrementLeft(item._id);
   };
-  console.log("recipees", recipes);
   const onSwipeRight = async (item) => {
     setShowButton(true);
     item.defaultNbrPersonne = item.nbrPersonne;
@@ -211,6 +222,8 @@ const TinderScreen = ({ navigation }) => {
         pressedFilter={pressedFilter}
         setPressedFilter={setPressedFilter}
         temps={temps}
+        activeFilters={activeFilters}
+        count={count}
       />
 
       <>
@@ -317,6 +330,7 @@ const TinderScreen = ({ navigation }) => {
           ref={bottomSheetRef}
           pressedFilter={pressedFilter}
           setTemps={setTemps}
+          setCount={setCount}
         />
       </>
     </SafeAreaView>
