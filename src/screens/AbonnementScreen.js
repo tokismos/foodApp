@@ -6,13 +6,15 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CommunitySVG from "../assets/Community.svg";
 import { Entypo } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../components/CustomButton";
+import { useStripe } from "@stripe/stripe-react-native";
 
 const { height, width } = Dimensions.get("screen");
 const ItemList = ({ title, description, children }) => {
@@ -151,6 +153,52 @@ const AvantagesSuperYuzu = () => {
 };
 
 const AbonnementScreen = () => {
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const [loading, setLoading] = useState(false);
+  const fetchPaymentSheetParams = async () => {
+    const response = await fetch(`https://backend-yuzi.herokuapp.com/pay`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const { paymentIntent, ephemeralKey, customer } = await response.json();
+
+    return {
+      paymentIntent,
+      ephemeralKey,
+      customer,
+    };
+  };
+  const initializePaymentSheet = async () => {
+    const { paymentIntent, ephemeralKey, customer, publishableKey } =
+      await fetchPaymentSheetParams();
+
+    const { error } = await initPaymentSheet({
+      customerId: customer,
+      customerEphemeralKeySecret: ephemeralKey,
+      paymentIntentClientSecret: paymentIntent,
+      // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+      //methods that complete payment after a delay, like SEPA Debit and Sofort.
+      allowsDelayedPaymentMethods: true,
+    });
+    if (!error) {
+      setLoading(true);
+    }
+  };
+  const openPaymentSheet = async () => {
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Alert.alert("Success", "Your order is confirmed!");
+    }
+  };
+
+  useEffect(() => {
+    initializePaymentSheet();
+  }, []);
   return (
     <ScrollView
       style={{ flex: 1 }}
@@ -189,7 +237,12 @@ const AbonnementScreen = () => {
           <ItemList
             title="Avant-premières"
             description="Découvre avant tout le monde nos nouvelles recettes en exclusivité"
-          ></ItemList>
+          >
+            <Image
+              style={{ height: 50, width: 50 }}
+              source={require("../assets/NoAds.jpg")}
+            />
+          </ItemList>
           <ItemList
             title="Pas de publicités"
             description="Fini les publicités ininteressante."
@@ -218,8 +271,8 @@ const AbonnementScreen = () => {
             <LottieView source={require("../assets/earth.json")} autoPlay />
           </View>
           <Text style={{ textAlign: "center", width: width * 0.9 }}>
-            Grâce à toi, des centaines de personnes vont pouvoir améliorer leurs
-            santés gratuitement et réduire leurs impacts grâce à leur
+            Grâce à toi, des centaines de personnes vont pouvoir améliorer leur
+            santé gratuitement et réduire leurs impacts grâce à leur
             alimentation
           </Text>
         </View>
@@ -228,6 +281,7 @@ const AbonnementScreen = () => {
 
       <CustomButton
         title="2 semaines offertes !"
+        onPress={openPaymentSheet}
         style={{
           width: width * 0.7,
           backgroundColor: GREEN,
@@ -237,7 +291,9 @@ const AbonnementScreen = () => {
         textStyle={{ fontSize: 20 }}
       />
       <Pressable>
-        <Text style={{ fontSize: 20 }}>Non,merci</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 70 }}>
+          Non,merci
+        </Text>
       </Pressable>
     </ScrollView>
   );

@@ -24,12 +24,12 @@ export default function App() {
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
       merchantIdentifier="com.yuzu.itten" // required for Apple Pay
     >
-      <AbonnementScreen />
-      {/* 
+      {/* <AbonnementScreen /> */}
+
       <Provider store={store}>
         <StatusBar translucent backgroundColor="transparent" />
         <RootNavigation />
-      </Provider> */}
+      </Provider>
     </StripeProvider>
   );
 }

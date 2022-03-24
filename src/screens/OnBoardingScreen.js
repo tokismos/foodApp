@@ -4,6 +4,7 @@
 import React, { useEffect } from "react";
 import {
   Button,
+  Dimensions,
   Image,
   StyleSheet,
   Text,
@@ -11,6 +12,8 @@ import {
   View,
 } from "react-native";
 import LottieView from "lottie-react-native";
+// import YouTube from "react-native-youtube";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 import Onboarding from "react-native-onboarding-swiper";
 
@@ -18,7 +21,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import { MaterialIcons, FontAwesome, Feather } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
-
+const { width, height } = Dimensions.get("screen");
 const Square = ({ isLight, selected }) => {
   let backgroundColor;
   if (isLight) {
@@ -338,6 +341,41 @@ const OnBoardingScreen = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
+            </View>
+          ),
+          title: "",
+          titleStyles: {
+            color: "#000",
+            fontWeight: "bold",
+          },
+          subtitle: "",
+        },
+        {
+          backgroundColor: "white",
+          image: (
+            <View
+              style={{
+                height: "60%",
+                width: "80%",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  marginBottom: 50,
+                }}
+              >
+                Un petit mot par ❤️
+              </Text>
+              <YoutubePlayer
+                height={"100%"}
+                width={width * 0.95}
+                videoId={"K-UNzBNSznU"}
+                // onChangeState={onStateChange}
+              />
             </View>
           ),
           title: "",
