@@ -8,6 +8,8 @@ import SplashScreen from "react-native-splash-screen";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import PaymentScreen from "./src/screens/PaymentScreen";
 import OnBoardingScreen from "./src/screens/OnBoardingScreen";
+import MaintenanceScreen from "./src/screens/MaintenanceScreen";
+import AbonnementScreen from "./src/screens/AbonnementScreen";
 
 require("./src/helpers/db");
 
@@ -22,12 +24,12 @@ export default function App() {
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
       merchantIdentifier="com.yuzu.itten" // required for Apple Pay
     >
-      {/* <OnBoardingScreen /> */}
-
+      <AbonnementScreen />
+      {/* 
       <Provider store={store}>
         <StatusBar translucent backgroundColor="transparent" />
         <RootNavigation />
-      </Provider>
+      </Provider> */}
     </StripeProvider>
   );
 }
