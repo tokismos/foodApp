@@ -143,6 +143,7 @@ const TinderScreen = ({ navigation, route }) => {
 
   const { matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
+  const { isFirstTime } = useSelector((state) => state.userStore);
 
   const bottomSheetRef = useRef();
   const routes = navigation.getState()?.routes;
@@ -152,17 +153,24 @@ const TinderScreen = ({ navigation, route }) => {
   // variables
 
   const [isNotFirstTime, setIsNotFirstTime] = useState(false);
+  console.log("ROUUUUUUUUUUIITEEEEEEEEEEEEEEEEEEEEEE", routes);
+  // useEffect(() => {
+  //   console.log("ROUUUUUUUUUUUUUUUUUUUtes", routes);
+  //   (async () => {
+  //     const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
+  //     if (!isNotFirstTime) {
+  //       navigation.navigate("OnBoardingScreen");
+  //     } else {
+  //       setIsNotFirstTime(true);
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
-    console.log("ROUUUUUUUUUUUUUUUUUUUtes", routes);
-    (async () => {
-      const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
-      if (!isNotFirstTime) {
-        navigation.navigate("OnBoardingScreen");
-      } else {
-        setIsNotFirstTime(true);
-      }
-    })();
+    if (isFirstTime) {
+      console.log("WAAAAAAAAAA#", isFirstTime);
+      navigation.navigate("OnBoardingScreen");
+    }
   }, []);
   // useEffect(() => {
   //   console.log("HELOO FILTERS", activeFilters);

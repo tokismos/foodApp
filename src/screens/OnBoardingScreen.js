@@ -26,69 +26,6 @@ import { intervalToDuration } from "date-fns";
 import CustomButton from "../components/CustomButton";
 
 const { width, height } = Dimensions.get("screen");
-const Square = ({ isLight, selected }) => {
-  let backgroundColor;
-  if (isLight) {
-    backgroundColor = selected ? "white" : "rgba(0, 0, 0, 0.3)";
-  } else {
-    backgroundColor = selected ? "#fff" : "rgba(255, 255, 255, 0.5)";
-  }
-  return (
-    <View
-      style={{
-        width: 6,
-        height: 6,
-        marginHorizontal: 3,
-        backgroundColor,
-      }}
-    />
-  );
-};
-
-const Next = ({ isLight, ...props }) => {
-  return (
-    <TouchableOpacity {...props}>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 20,
-          marginRight: 15,
-          alignSelf: "center",
-        }}
-      >
-        Suivant
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
-const Skip = ({ isLight, ...props }) => {
-  return (
-    <TouchableOpacity {...props}>
-      <Text style={{ color: "white", fontSize: 20, marginLeft: 15 }}>
-        Passer
-      </Text>
-    </TouchableOpacity>
-  );
-};
-const Done = ({ isLight, ...props }) => {
-  return (
-    <TouchableOpacity
-      {...props}
-      style={{
-        height: 45,
-        width: 45,
-        borderRadius: 25,
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-        marginRight: 15,
-      }}
-    >
-      <MaterialIcons name="done" size={40} color="#ffc700" />
-    </TouchableOpacity>
-  );
-};
 
 const Row = ({ title, num }) => {
   return (
@@ -96,6 +33,7 @@ const Row = ({ title, num }) => {
       style={{
         flexDirection: "row",
         marginBottom: 20,
+        width: "90%",
       }}
     >
       <View
@@ -118,9 +56,7 @@ const Row = ({ title, num }) => {
 const OnBoardingScreen = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const ref = createRef();
-  useEffect(() => {
-    setIndex;
-  }, [index]);
+
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <PagerView
@@ -128,7 +64,6 @@ const OnBoardingScreen = ({ navigation }) => {
         style={{ height: "95%" }}
         initialPage={0}
         ref={ref}
-        // onPageScroll={(ev) => ref.current.setPage(3)}
       >
         <View
           key="1"
@@ -356,9 +291,10 @@ const OnBoardingScreen = ({ navigation }) => {
               width: "70%",
             }}
             textStyle={{ fontSize: 20 }}
-            onPress={() => {
-              ref.current.setPage(index + 1);
-              setIndex(index + 1);
+            onPress={async () => {
+              await AsyncStorage.setItem("isFirstTime", "false");
+
+              navigation.navigate("TinderScreen");
             }}
           />
         </View>

@@ -20,6 +20,8 @@ import CodeVerificationComponent from "../../components/CodeVerificationComponen
 import CustomButton from "../../components/CustomButton";
 import { setAdditionalInfo } from "../../helpers/db";
 import { useNavigation } from "@react-navigation/core";
+import { setIsFirstTime } from "../../redux/slicer/userSlicer";
+import { useDispatch } from "react-redux";
 
 const { height, width } = Dimensions.get("screen");
 const EmailComponent = ({ setEmail, refe, email }) => {
@@ -109,6 +111,8 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
   const [verificationCode, setCode] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -131,14 +135,12 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
               setIsLoading(true);
               const status = await verifyCode(fullNumber, verificationCode);
               if (status == 200) {
+                dispatch(setIsFirstTime());
                 await signUp(email, password);
                 await setAdditionalInfo({
                   phoneNumber: fullNumber,
                 });
-                navigation.navigate("OnBoardingScreen");
-                console.log(
-                  "approoveWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWd"
-                );
+
                 setIsLoading(false);
               } else {
                 setIsLoading(false);

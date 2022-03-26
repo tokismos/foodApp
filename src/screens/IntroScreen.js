@@ -3,23 +3,26 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../consts/colors";
-// import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import CustomButton from "../components/CustomButton";
+import { setIsFirstTime } from "../redux/slicer/userSlicer";
+import { useDispatch } from "react-redux";
 
 const IntroScreen = ({ navigation }) => {
-  // const [isNotFirstTime, setIsNotFirstTime] = useState(false);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
-  //     if (!isNotFirstTime) {
-  //       setIsNotFirstTime(false);
-  //     } else {
-  //       setIsNotFirstTime(true);
-  //     }
-  //   })();
-  // }, []);
+  const [isFirstTime, setIsFirstTime] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (async () => {
+      const isFirstTimeStorage = await AsyncStorage.getItem("isFirstTime");
+      console.log("THIIIIISI IS FIRSTIME", isFirstTime);
+      if (isFirstTimeStorage == "false") {
+        setIsFirstTime(false);
+      }
+      console.log("HAAAHWA HNA");
+      // dispatch(setIsFirstTime());
+    })();
+  }, []);
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <Image
@@ -59,12 +62,12 @@ const IntroScreen = ({ navigation }) => {
           />
           {/* Sign In from Google */}
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("TinderScreen", {
-                screen: "Recettes",
-                params: { user: "jane" },
-              })
-            }
+            onPress={() => {
+              // dispatch(setIsFirstTime());
+              navigation.navigate(
+                isFirstTime ? "OnBoardingScreen" : "TinderScreen"
+              );
+            }}
           >
             <Text
               style={{
