@@ -10,6 +10,7 @@ import {
   Pressable,
   StatusBar,
   SafeAreaView,
+  Button,
   ActivityIndicator,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
@@ -37,6 +38,7 @@ import { useMemo } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import FilterScreen from "./FilterScreen";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
   return (
@@ -129,7 +131,7 @@ const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
     </View>
   );
 };
-const TinderScreen = ({ navigation }) => {
+const TinderScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userStore);
 
@@ -146,11 +148,22 @@ const TinderScreen = ({ navigation }) => {
   const routes = navigation.getState()?.routes;
   const prevRoute = routes[routes.length - 2];
   const [count, setCount] = useState();
+  // const { openIntro } = route?.params;
   // variables
-  useEffect(() => {
-    console.log("ERF COUNANNNNNNNNNNNNNNTL", count);
-  }, [count]);
 
+  const [isNotFirstTime, setIsNotFirstTime] = useState(false);
+
+  useEffect(() => {
+    console.log("ROUUUUUUUUUUUUUUUUUUUtes", routes);
+    (async () => {
+      const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
+      if (!isNotFirstTime) {
+        navigation.navigate("OnBoardingScreen");
+      } else {
+        setIsNotFirstTime(true);
+      }
+    })();
+  }, []);
   // useEffect(() => {
   //   console.log("HELOO FILTERS", activeFilters);
   //   activeFilters.forEach((v) => console.log("KOKOKKOKOK", ...Object.keys(v)));
@@ -236,6 +249,12 @@ const TinderScreen = ({ navigation }) => {
             borderTopLeftRadius: 15,
           }}
         >
+          <View style={{ position: "absolute", height: 100, zIndex: 100 }}>
+            <Button
+              title="CLIIIICK HERE TO SUBSCRIBE"
+              onPress={() => navigation.navigate("AbonnementScreen")}
+            />
+          </View>
           <View
             style={{
               height: "90%",

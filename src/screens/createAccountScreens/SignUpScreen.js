@@ -19,6 +19,7 @@ import PhoneInputComponent from "../../components/PhoneInputComponent";
 import CodeVerificationComponent from "../../components/CodeVerificationComponent";
 import CustomButton from "../../components/CustomButton";
 import { setAdditionalInfo } from "../../helpers/db";
+import { useNavigation } from "@react-navigation/core";
 
 const { height, width } = Dimensions.get("screen");
 const EmailComponent = ({ setEmail, refe, email }) => {
@@ -107,7 +108,7 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
   const { verifyCode, signUp } = useAuth();
   const [verificationCode, setCode] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigation = useNavigation();
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -134,12 +135,14 @@ const VerificationPhoneComponent = ({ fullNumber, email, password, refe }) => {
                 await setAdditionalInfo({
                   phoneNumber: fullNumber,
                 });
-                console.log("approoved");
+                navigation.navigate("OnBoardingScreen");
+                console.log(
+                  "approoveWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWd"
+                );
                 setIsLoading(false);
               } else {
                 setIsLoading(false);
               }
-              console.log("wa8WWWWWWWWW", auth()?.currentUser);
             }}
           />
         </View>

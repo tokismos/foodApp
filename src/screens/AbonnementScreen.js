@@ -15,6 +15,7 @@ import LottieView from "lottie-react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../components/CustomButton";
 import { useStripe } from "@stripe/stripe-react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("screen");
 const ItemList = ({ title, description, children }) => {
@@ -31,6 +32,7 @@ const ItemList = ({ title, description, children }) => {
         style={{
           width: "20%",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
         {children}
@@ -155,6 +157,7 @@ const AvantagesSuperYuzu = () => {
 const AbonnementScreen = () => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
   const fetchPaymentSheetParams = async () => {
     const response = await fetch(`https://backend-yuzi.herokuapp.com/pay`, {
       method: "POST",
@@ -202,7 +205,7 @@ const AbonnementScreen = () => {
   return (
     <ScrollView
       style={{ flex: 1 }}
-      contentContainerStyle={{ alignItems: "center" }}
+      contentContainerStyle={{ alignItems: "center", backgroundColor: "white" }}
     >
       <View style={{ width: "100%", alignItems: "center", marginTop: 40 }}>
         <Image
@@ -237,16 +240,16 @@ const AbonnementScreen = () => {
           <ItemList
             title="Avant-premières"
             description="Découvre avant tout le monde nos nouvelles recettes en exclusivité"
+          ></ItemList>
+          <ItemList
+            title="Pas de publicités"
+            description="Fini les publicités ininteressante."
           >
             <Image
               style={{ height: 50, width: 50 }}
               source={require("../assets/NoAds.jpg")}
             />
           </ItemList>
-          <ItemList
-            title="Pas de publicités"
-            description="Fini les publicités ininteressante."
-          />
           <ItemList
             title="Rejoint notre communauté"
             description="Rejoins notre groupe de 
@@ -290,7 +293,7 @@ const AbonnementScreen = () => {
         }}
         textStyle={{ fontSize: 20 }}
       />
-      <Pressable>
+      <Pressable onPress={() => navigation.pop()}>
         <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 70 }}>
           Non,merci
         </Text>

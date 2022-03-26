@@ -1,12 +1,25 @@
 //Le tout premier ecran d'acceuil , qui nous donne le choix de sois s'inscrire,sois se connecter ou d'accepter sans insription
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../consts/colors";
+// import AsyncStorage from "@react-native-community/async-storage";
 
 import CustomButton from "../components/CustomButton";
 
 const IntroScreen = ({ navigation }) => {
+  // const [isNotFirstTime, setIsNotFirstTime] = useState(false);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
+  //     if (!isNotFirstTime) {
+  //       setIsNotFirstTime(false);
+  //     } else {
+  //       setIsNotFirstTime(true);
+  //     }
+  //   })();
+  // }, []);
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <Image
@@ -45,7 +58,14 @@ const IntroScreen = ({ navigation }) => {
             textStyle={{ ...styles.text, color: COLORS.primary }}
           />
           {/* Sign In from Google */}
-          <TouchableOpacity onPress={() => navigation.navigate("TinderScreen")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("TinderScreen", {
+                screen: "Recettes",
+                params: { user: "jane" },
+              })
+            }
+          >
             <Text
               style={{
                 fontSize: 18,

@@ -161,7 +161,6 @@ const verifyCode = async (phoneNumber, verificationCode) => {
     if (e.response.status == 429) {
       return Alert.alert(`429,Max attempts reached,please try later !`);
     }
-    console.log("SMS NOT SENT ", e.response);
     Alert.alert(`${e.response.status}, ${e.response.data.error}`);
   }
 };

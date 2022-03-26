@@ -49,6 +49,7 @@ import FilterScreen from "../screens/FilterScreen";
 import RateScreen from "../screens/RateScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
+import AbonnementScreen from "../screens/AbonnementScreen";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -306,6 +307,20 @@ const LoggedStackScreen = () => {
           options={{
             headerShown: false,
           }}
+          name="OnBoardingScreen"
+          component={OnBoardingScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="AbonnementScreen"
+          component={AbonnementScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
           name="RateScreen"
           component={RateScreen}
         />
@@ -359,7 +374,6 @@ const LoggedStackScreen = () => {
           name="CommandesScreen"
           component={CommandesScreen}
         />
-
         <Stack.Screen
           options={{ headerShown: false }}
           name="PanierScreen"
@@ -397,7 +411,6 @@ const LoggedStackScreen = () => {
           name="IngredientScreen"
           component={IngredientScreen}
         />
-
         <Stack.Screen
           options={{
             headerShown: false,
@@ -412,7 +425,6 @@ const LoggedStackScreen = () => {
           name="FilterScreen"
           component={FilterScreen}
         />
-
         <Stack.Screen
           options={{
             headerShown: true,
@@ -454,222 +466,238 @@ const LoggedStackScreen = () => {
 
 const LoginStackScreen = ({ isNotFirstTime }) => {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, tabBarStyle: { height: 120 } }}
-    >
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="IntroScreen"
-        component={IntroScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="RateScreen"
-        component={RateScreen}
-      />
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          headerShown: true,
-          headerTitleAlign: "center",
-          title: "Reinitialiser mot de passe",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTintColor: "white",
-          headerBackTitle: null,
-          headerTitleStyle: {
-            fontSize: 18,
-            color: "white",
-          },
-        }}
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="TinderScreen"
-        component={BottomTabScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: "Modifier mon numéro",
-          headerTitleAlign: "center",
-          headerTintColor: "white",
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false, tabBarStyle: { height: 120 } }}
+      >
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="IntroScreen"
+          component={IntroScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="OnBoardingScreen"
+          component={OnBoardingScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="RateScreen"
+          component={RateScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            headerShown: true,
+            headerTitleAlign: "center",
+            title: "Reinitialiser mot de passe",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "white",
+            headerBackTitle: null,
+            headerTitleStyle: {
+              fontSize: 18,
+              color: "white",
+            },
+          }}
+          name="ForgotPasswordScreen"
+          component={ForgotPasswordScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="TinderScreen"
+          component={BottomTabScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Modifier mon numéro",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
 
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: 22,
-          },
-        }}
-        name="PhoneScreen"
-        component={PhoneScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="FilterScreen"
-        component={FilterScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTintColor: "white",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="PhoneScreen"
+          component={PhoneScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="FilterScreen"
+          component={FilterScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitleAlign: "center",
+            headerTintColor: "white",
 
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: 22,
-          },
-        }}
-        name="InfoCommandeScreen"
-        component={InfoCommandeScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: "Mes recettes",
-          headerTitleAlign: "center",
-          headerTintColor: "white",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="InfoCommandeScreen"
+          component={InfoCommandeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mes recettes",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
 
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: 22,
-          },
-        }}
-        name="MyRecipesScreen"
-        component={MyRecipesTabScreen}
-      />
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          headerShown: true,
-          headerTitleAlign: "center",
-          title: "Se connecter",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTintColor: "white",
-          headerBackTitle: null,
-          headerTitleStyle: {
-            fontSize: 22,
-            color: "white",
-          },
-        }}
-        name="SignInScreen"
-        component={SignInScreen}
-      />
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="MyRecipesScreen"
+          component={MyRecipesTabScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            headerShown: true,
+            headerTitleAlign: "center",
+            title: "Se connecter",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "white",
+            headerBackTitle: null,
+            headerTitleStyle: {
+              fontSize: 22,
+              color: "white",
+            },
+          }}
+          name="SignInScreen"
+          component={SignInScreen}
+        />
 
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: "Mon profile",
-          headerTitleAlign: "center",
-          headerTintColor: "white",
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Mon profile",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
 
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: 22,
-          },
-        }}
-        name="Mon profile"
-        component={ProfileScreen}
-      />
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="Mon profile"
+          component={ProfileScreen}
+        />
 
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          headerShown: false,
-        }}
-        name="SignUpScreen"
-        component={SignUpScreen}
-      />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            headerShown: false,
+          }}
+          name="SignUpScreen"
+          component={SignUpScreen}
+        />
 
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          headerShown: false,
-        }}
-        name="TinderScreen2"
-        component={TinderScreen}
-      />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            headerShown: false,
+          }}
+          name="TinderScreen2"
+          component={TinderScreen}
+        />
 
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          headerShown: false,
-        }}
-        name="IngredientScreen"
-        component={IngredientScreen}
-      />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            headerShown: false,
+          }}
+          name="IngredientScreen"
+          component={IngredientScreen}
+        />
 
-      <Stack.Screen
-        options={{
-          headerLeft: null,
-        }}
-        name="PanierScreen"
-        component={PanierScreen}
-      />
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-          title: "Les Ingredients",
-          headerTitleAlign: "center",
-          headerTitleStyle: { fontWeight: "bold", fontSize: 22 },
-          headerBackTitle: "Back",
-          headerShown: true,
-        }}
-        name="IngredientsCartScreen"
-        component={IngredientCartScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="FeedBackScreen"
-        component={FeedBackScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: "Liste de courses",
-          headerTitleAlign: "center",
-          headerTintColor: "white",
+        <Stack.Screen
+          options={{
+            headerLeft: null,
+          }}
+          name="PanierScreen"
+          component={PanierScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+            title: "Les Ingredients",
+            headerTitleAlign: "center",
+            headerTitleStyle: { fontWeight: "bold", fontSize: 22 },
+            headerBackTitle: "Back",
+            headerShown: true,
+          }}
+          name="IngredientsCartScreen"
+          component={IngredientCartScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="AbonnementScreen"
+          component={AbonnementScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="FeedBackScreen"
+          component={FeedBackScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerTitle: "Liste de courses",
+            headerTitleAlign: "center",
+            headerTintColor: "white",
 
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: 22,
-          },
-        }}
-        name="CommandesScreen"
-        component={CommandesScreen}
-      />
-      <Stack.Screen
-        options={{
-          ...horizontalAnimation,
-        }}
-        name="SummarizeScreen"
-        component={SummarizeScreen}
-      />
-    </Stack.Navigator>
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+            },
+          }}
+          name="CommandesScreen"
+          component={CommandesScreen}
+        />
+        <Stack.Screen
+          options={{
+            ...horizontalAnimation,
+          }}
+          name="SummarizeScreen"
+          component={SummarizeScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -758,12 +786,8 @@ const RootNavigation = () => {
         </>
       ) : user ? (
         <LoggedStackScreen />
-      ) : isNotFirstTime ? (
-        <NavigationContainer>
-          <LoginStackScreen />
-        </NavigationContainer>
       ) : (
-        <OnBoardScreen />
+        <LoginStackScreen />
       )}
     </>
   );
