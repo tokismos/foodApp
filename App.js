@@ -11,6 +11,7 @@ import OnBoardingScreen from "./src/screens/OnBoardingScreen";
 import MaintenanceScreen from "./src/screens/MaintenanceScreen";
 import AbonnementScreen from "./src/screens/AbonnementScreen";
 import Onboarding from "react-native-onboarding-swiper";
+import AbonnementSecondScreen from "./src/screens/AbonnementSecondScreen";
 
 require("./src/helpers/db");
 
@@ -25,7 +26,7 @@ export default function App() {
       urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
       merchantIdentifier="com.yuzu.itten" // required for Apple Pay
     >
-      {/* <OnBoardingScreen /> */}
+      {/* <AbonnementSecondScreen /> */}
 
       <Provider store={store}>
         <StatusBar translucent backgroundColor="transparent" />

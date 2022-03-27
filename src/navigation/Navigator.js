@@ -50,6 +50,7 @@ import RateScreen from "../screens/RateScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import AbonnementScreen from "../screens/AbonnementScreen";
+import AbonnementSecondScreen from "../screens/AbonnementSecondScreen";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -307,6 +308,14 @@ const LoggedStackScreen = () => {
           options={{
             headerShown: false,
           }}
+          name="AbonnementSecondScreen"
+          component={AbonnementSecondScreen}
+        />
+
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
           name="OnBoardingScreen"
           component={OnBoardingScreen}
         />
@@ -476,6 +485,13 @@ const LoginStackScreen = ({ isNotFirstTime }) => {
           }}
           name="IntroScreen"
           component={IntroScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="AbonnementSecondScreen"
+          component={AbonnementSecondScreen}
         />
         <Stack.Screen
           options={{

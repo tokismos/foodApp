@@ -11,12 +11,14 @@ import {
 import React, { useState, useEffect } from "react";
 import CommunitySVG from "../assets/Community.svg";
 import { Entypo } from "@expo/vector-icons";
-import LottieView from "lottie-react-native";
-import { FontAwesome } from "@expo/vector-icons";
+
 import CustomButton from "../components/CustomButton";
 import { useStripe } from "@stripe/stripe-react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import AvantPremiereSVG from "../assets/avantPremiere.svg";
+import PeopleSVG from "../assets/people.svg";
+import ManOnPlanet from "../assets/manOnPlanet.svg";
+import SaladSVG from "../assets/salad.svg";
 const { height, width } = Dimensions.get("screen");
 const ItemList = ({ title, description, children }) => {
   return (
@@ -32,7 +34,6 @@ const ItemList = ({ title, description, children }) => {
         style={{
           width: "20%",
           alignItems: "center",
-          justifyContent: "center",
         }}
       >
         {children}
@@ -47,112 +48,6 @@ const ItemList = ({ title, description, children }) => {
   );
 };
 const GREEN = "#3d741c";
-const Row = ({ title, first, last }) => {
-  return (
-    <View
-      style={{
-        width: "100%",
-        flexDirection: "row",
-      }}
-    >
-      <View
-        style={{
-          width: "50%",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{}}>{title}</Text>
-      </View>
-      <View
-        style={{
-          width: "25%",
-          alignSelf: "center",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {first && <FontAwesome name="check" size={35} color="#3d741c" />}
-      </View>
-      <View
-        style={{
-          width: "25%",
-          alignSelf: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#e8f4e1",
-          flex: 1,
-          borderBottomLeftRadius: last ? 15 : 0,
-          borderBottomRightRadius: last ? 15 : 0,
-        }}
-      >
-        <FontAwesome name="check" size={35} color="#3d741c" />
-      </View>
-    </View>
-  );
-};
-
-const AvantagesSuperYuzu = () => {
-  return (
-    <View
-      style={{
-        width: width * 0.9,
-        marginVertical: 20,
-      }}
-    >
-      <Text
-        style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          textAlign: "center",
-          marginVertical: 40,
-        }}
-      >
-        Libère encore plus de temps en devenant un super yuzer
-      </Text>
-      <View style={{ width: width * 0.9 }}>
-        <View style={{ width: "100%", flexDirection: "row" }}>
-          <View style={{ width: "50%" }}></View>
-          <Text
-            style={{
-              width: "25%",
-              textAlign: "center",
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "#3d741c",
-            }}
-          >
-            Yuzu Super
-          </Text>
-          <View
-            style={{
-              width: "25%",
-              borderTopRightRadius: 15,
-              borderTopLeftRadius: 15,
-              backgroundColor: "#e8f4e1",
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#3d741c",
-              }}
-            >
-              Yuzu Gratuit
-            </Text>
-          </View>
-        </View>
-        <Row title="Recettes et listes" first />
-        <Row title="Accès illimité" />
-        <Row title="Avant-premières" />
-        <Row title="Pas de publicités" />
-        <Row title="Rejoins notre communauté" />
-        <Row title="Soutenir notre mission" last />
-      </View>
-    </View>
-  );
-};
 
 const AbonnementScreen = () => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -209,13 +104,14 @@ const AbonnementScreen = () => {
     >
       <View style={{ width: "100%", alignItems: "center", marginTop: 40 }}>
         <Image
-          style={{ height: 300, width: 200 }}
-          source={require("../assets/vegetable.jpeg")}
+          style={{ height: 300, width: 300 }}
+          source={require("../assets/salad.png")}
         />
         <View
           style={{
             justifyContent: "center",
             alignItems: "center",
+            marginTop: 20,
           }}
         >
           <Text
@@ -240,7 +136,9 @@ const AbonnementScreen = () => {
           <ItemList
             title="Avant-premières"
             description="Découvre avant tout le monde nos nouvelles recettes en exclusivité"
-          ></ItemList>
+          >
+            <AvantPremiereSVG height="50" width="50" fill="black" />
+          </ItemList>
           <ItemList
             title="Pas de publicités"
             description="Fini les publicités ininteressante."
@@ -255,11 +153,20 @@ const AbonnementScreen = () => {
             description="Rejoins notre groupe de 
         super-yuzers et donne ton avis pour notre avenir."
           >
-            <CommunitySVG height="40" width="40" fill="black" />
+            <PeopleSVG height="50" width="50" fill="black" />
           </ItemList>
         </View>
 
         <View style={{}}>
+          <View
+            style={{
+              height: 200,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ManOnPlanet height="150" width="150" fill="black" />
+          </View>
           <Text
             style={{
               fontWeight: "bold",
@@ -270,9 +177,6 @@ const AbonnementScreen = () => {
           >
             Soutiens notre misson
           </Text>
-          <View style={{ height: 200 }}>
-            <LottieView source={require("../assets/earth.json")} autoPlay />
-          </View>
           <Text style={{ textAlign: "center", width: width * 0.9 }}>
             Grâce à toi, des centaines de personnes vont pouvoir améliorer leur
             santé gratuitement et réduire leurs impacts grâce à leur
@@ -280,11 +184,10 @@ const AbonnementScreen = () => {
           </Text>
         </View>
       </View>
-      <AvantagesSuperYuzu />
 
       <CustomButton
         title="2 semaines offertes !"
-        onPress={openPaymentSheet}
+        onPress={() => navigation.navigate("AbonnementSecondScreen")}
         style={{
           width: width * 0.7,
           backgroundColor: GREEN,

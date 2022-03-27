@@ -11,4 +11,6 @@ export const COLORS = {
     shadowRadius: 10,
     elevation: 2,
   },
+  green: "#3d741c",
+  lightGreen: "#e8f4e1",
 };
