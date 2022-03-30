@@ -47,7 +47,7 @@ const AvantagesScreen = ({ refe }) => {
         <Text style={styles.titleAvantage}>
           Libère encore plus de temps en devenant un super yuzer
         </Text>
-        <View style={{ width: width * 0.9, marginTop: 50 }}>
+        <View style={{ width: width * 0.9 }}>
           <View style={{ width: "100%", flexDirection: "row" }}>
             <View style={{ width: "50%" }}></View>
             <Text style={styles.titleColumn}>Yuzer Gratuit</Text>
@@ -115,7 +115,13 @@ const OffreAbonnement = ({ onPress }) => {
   const [selected, setSelected] = useState();
   const navigation = useNavigation();
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "20%",
+      }}
+    >
       <View style={styles.firstContainer}>
         <Text style={styles.titleText}>Offre de lancement</Text>
         <View style={styles.listView}>
@@ -207,7 +213,6 @@ const AbonnementSecondScreen = () => {
         style={{ height: "100%" }}
         initialPage={0}
         ref={ref}
-        // onPageScroll={(ev) => setIndex(ev.nativeEvent.position)}
       >
         <View key="1">
           <AvantagesScreen refe={ref} />

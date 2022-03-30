@@ -429,7 +429,7 @@ const TempsComponent = ({ setTempsHeader }) => {
       <Slider
         step={10}
         size={2}
-        value={40}
+        // value={40}
         onSlidingComplete={(i) => {
           setTemps(i);
           setTempsHeader(i);

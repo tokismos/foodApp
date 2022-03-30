@@ -29,7 +29,12 @@ import IngredientCartScreen from "../screens/IngredientCartScreen";
 import SummarizeScreen from "../screens/SummarizeScreen";
 import IntroScreen from "../screens/IntroScreen";
 const Stack = createStackNavigator();
+import ListeC from "../assets/listeColored.svg";
+import Cuisine from "../assets/cuisine.svg";
+import Liste from "../assets/liste.svg";
 import Recipe from "../assets/recipe.svg";
+import RecipeC from "../assets/recipeColored.svg";
+import CuisineC from "../assets/cuisineColored.svg";
 import ProfileIcon from "../assets/profile.svg";
 import MyRecipes from "../assets/MyRecipes.svg";
 const Tab = createBottomTabNavigator();
@@ -112,12 +117,23 @@ const TopTabScreen = () => {
             backgroundColor: COLORS.primary,
             marginTop: StatusBar.currentHeight,
           },
+          headerTitleStyle: {
+            color: "white",
+          },
           tabBarPressOpacity: 0.1,
           tabBarIndicatorStyle: { backgroundColor: "white" },
           tabBarLabelStyle: { fontWeight: "bold", fontSize: 14 },
         }}
       >
-        <TopTab.Screen name="Mes recettes" component={MyRecipesScreen} />
+        <TopTab.Screen
+          options={{
+            headerTitleStyle: {
+              color: "white",
+            },
+          }}
+          name="Mes recettes"
+          component={MyRecipesScreen}
+        />
         <TopTab.Screen name="Recettes favories" component={MyRecipesScreen} />
       </TopTab.Navigator>
     </SafeAreaView>
@@ -136,13 +152,12 @@ const BottomTabScreen = () => {
     >
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused }) => (
-            <Recipe
-              width={"100%"}
-              height={"100%"}
-              fill={focused ? COLORS.primary : "gray"}
-            />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <RecipeC width={"120%"} height={"120%"} />
+            ) : (
+              <Recipe width={"120%"} height={"120%"} />
+            ),
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
@@ -173,20 +188,22 @@ const BottomTabScreen = () => {
           headerTitleStyle: {
             fontSize: 20,
             fontWeight: "bold",
+            color: "white",
           },
           title: "Mes listes de courses ❤️",
-          tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="list"
-              size={30}
-              color={focused ? COLORS.primary : "gray"}
-            />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <ListeC width={"100%"} height={"100%"} />
+            ) : (
+              <Liste width={"100%"} height={"100%"} />
+            ),
           tabBarLabel: ({ focused, color, size }) => (
             <Text
               style={{
                 color: focused ? COLORS.primary : "gray",
                 fontWeight: focused ? "bold" : null,
+                marginTop: -5,
+                marginLeft: 5,
               }}
             >
               Liste
@@ -205,13 +222,12 @@ const BottomTabScreen = () => {
             top: 0,
             transform: [{ scale: 0.5 }],
           },
-          tabBarIcon: ({ focused }) => (
-            <MyRecipes
-              width={"90%"}
-              height={"90%"}
-              fill={focused ? COLORS.primary : "gray"}
-            />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <CuisineC width={"120%"} height={"120%"} />
+            ) : (
+              <Cuisine width={"120%"} height={"120%"} />
+            ),
           tabBarLabel: ({ focused, color, size }) => (
             <Text
               style={{
@@ -233,7 +249,7 @@ const BottomTabScreen = () => {
               <ProfileIcon
                 width={"90%"}
                 height={"90%"}
-                fill={focused ? COLORS.primary : "gray"}
+                fill={focused ? COLORS.primary : "black"}
               />
             ),
             tabBarLabel: ({ focused, color, size }) => (

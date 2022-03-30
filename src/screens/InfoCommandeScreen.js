@@ -173,7 +173,7 @@ const InfoCommandeScreen = ({ navigation, route }) => {
             style={{
               padding: 5,
               borderRadius: 5,
-              width: "10%",
+              width: "13%",
               alignItems: "center",
             }}
           >

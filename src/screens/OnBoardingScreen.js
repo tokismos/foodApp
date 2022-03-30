@@ -17,6 +17,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import PaginationDot from "react-native-animated-pagination-dot";
 
 import AsyncStorage from "@react-native-community/async-storage";
+// import Video from "react-native-af-video-player";
 
 import { MaterialIcons, FontAwesome, Feather } from "@expo/vector-icons";
 import { COLORS } from "../consts/colors";
@@ -24,6 +25,7 @@ import PagerView from "react-native-pager-view";
 import AnimatedIntroCard from "../components/AnimatedIntroCard";
 import { intervalToDuration } from "date-fns";
 import CustomButton from "../components/CustomButton";
+import { Video } from "expo-av";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -45,6 +47,7 @@ const Row = ({ title, num }) => {
           justifyContent: "center",
           alignItems: "center",
           marginRight: 10,
+          marginTop: 3,
         }}
       >
         <Text style={{ fontWeight: "bold", color: "white" }}>{num}</Text>
@@ -56,6 +59,7 @@ const Row = ({ title, num }) => {
 const OnBoardingScreen = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const ref = createRef();
+  const videoRef = React.useRef(null);
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -250,6 +254,7 @@ const OnBoardingScreen = ({ navigation }) => {
               onPress={() => {
                 ref.current.setPage(index + 1);
                 setIndex(index + 1);
+                videoRef.current.playAsync();
               }}
             />
           </View>
@@ -278,12 +283,28 @@ const OnBoardingScreen = ({ navigation }) => {
             >
               Un petit mot par ❤️
             </Text>
-            <YoutubePlayer
-              height={"100%"}
-              width={width * 0.95}
-              videoId={"K-UNzBNSznU"}
-              // onChangeState={onStateChange}
-            />
+            <View
+              style={{
+                height: "70%",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Video
+                ref={videoRef}
+                resizeMode="contain"
+                style={{
+                  height: "100%",
+                  width: "60%",
+                }}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/yuzu-a0d71.appspot.com/o/recettes%2FWhatsApp%20Video%202022-03-22%20at%2015.33.56.mp4?alt=media&token=9faa5236-1545-467f-a222-3b8b2fd50f0d",
+                }}
+                useNativeControls
+                // onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              />
+            </View>
           </View>
           <CustomButton
             title="Start !"
@@ -294,7 +315,7 @@ const OnBoardingScreen = ({ navigation }) => {
             onPress={async () => {
               await AsyncStorage.setItem("isFirstTime", "false");
 
-              navigation.navigate("TinderScreen");
+              navigation.replace("TinderScreen");
             }}
           />
         </View>

@@ -10,8 +10,8 @@ import {
   Pressable,
   StatusBar,
   SafeAreaView,
-  Button,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import { AntDesign } from "@expo/vector-icons";
@@ -34,11 +34,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { setFavorites } from "../redux/slicer/favoritesSlicer";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { useMemo } from "react";
 import { useRef } from "react";
-import { useCallback } from "react";
 import FilterScreen from "./FilterScreen";
-import AsyncStorage from "@react-native-community/async-storage";
 
 const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
   return (
@@ -139,43 +136,21 @@ const TinderScreen = ({ navigation, route }) => {
   const [recipes, setRecipes] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [temps, setTemps] = useState(true);
+  const [temps, setTemps] = useState("");
 
   const { matches } = useSelector((state) => state.matchStore);
   const { activeFilters } = useSelector((state) => state.recipeStore);
   const { isFirstTime } = useSelector((state) => state.userStore);
 
   const bottomSheetRef = useRef();
-  const routes = navigation.getState()?.routes;
-  const prevRoute = routes[routes.length - 2];
   const [count, setCount] = useState();
-  // const { openIntro } = route?.params;
-  // variables
-
-  const [isNotFirstTime, setIsNotFirstTime] = useState(false);
-  console.log("ROUUUUUUUUUUIITEEEEEEEEEEEEEEEEEEEEEE", routes);
-  // useEffect(() => {
-  //   console.log("ROUUUUUUUUUUUUUUUUUUUtes", routes);
-  //   (async () => {
-  //     const isNotFirstTime = await AsyncStorage.getItem("isNotFirstTime");
-  //     if (!isNotFirstTime) {
-  //       navigation.navigate("OnBoardingScreen");
-  //     } else {
-  //       setIsNotFirstTime(true);
-  //     }
-  //   })();
-  // }, []);
 
   useEffect(() => {
     if (isFirstTime) {
-      console.log("WAAAAAAAAAA#", isFirstTime);
       navigation.navigate("OnBoardingScreen");
     }
   }, []);
-  // useEffect(() => {
-  //   console.log("HELOO FILTERS", activeFilters);
-  //   activeFilters.forEach((v) => console.log("KOKOKKOKOK", ...Object.keys(v)));
-  // }, [activeFilters]);
+
   useEffect(() => {
     navigation.setOptions({
       tabBarStyle: { display: showButton ? "none" : "flex" },
@@ -257,12 +232,12 @@ const TinderScreen = ({ navigation, route }) => {
             borderTopLeftRadius: 15,
           }}
         >
-          <View style={{ position: "absolute", height: 100, zIndex: 100 }}>
+          {/* <View style={{ position: "absolute", height: 100, zIndex: 100 }}>
             <Button
               title="CLIIIICK HERE TO SUBSCRIBE"
               onPress={() => navigation.navigate("AbonnementScreen")}
             />
-          </View>
+          </View> */}
           <View
             style={{
               height: "90%",
