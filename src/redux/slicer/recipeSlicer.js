@@ -6,6 +6,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   activeFilters: [],
   recipes: null,
+  time: null,
 };
 
 export const recipeSlice = createSlice({
@@ -24,6 +25,7 @@ export const recipeSlice = createSlice({
     },
     resetFilters: (state, action) => {
       state.activeFilters = [];
+      state.time = null;
     },
     changeTime: (state, action) => {
       const filteredState = state.activeFilters.filter(
@@ -37,6 +39,7 @@ export const recipeSlice = createSlice({
         ...filteredState,
         { tempsCuisson: action.payload },
       ];
+      state.time = action.payload;
     },
     addFilter: (state, action) => {
       state.activeFilters = [

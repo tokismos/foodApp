@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -44,7 +44,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>593620908653647</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -69,6 +69,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>The device needs access to the camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Yuzu</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Yuzu</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Yuzu</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need microphone access for uploading videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Library Access is needed</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

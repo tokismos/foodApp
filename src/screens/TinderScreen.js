@@ -11,7 +11,6 @@ import {
   StatusBar,
   SafeAreaView,
   ActivityIndicator,
-  Button,
 } from "react-native";
 import TinderCard from "../components/TinderCard";
 import { AntDesign } from "@expo/vector-icons";
@@ -37,7 +36,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { useRef } from "react";
 import FilterScreen from "./FilterScreen";
 
-const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
+const Header = ({ bottomSheetRef, count, setPressedFilter, time }) => {
   return (
     <View
       style={{
@@ -83,7 +82,7 @@ const Header = ({ bottomSheetRef, count, setPressedFilter, temps }) => {
 
         <Text style={styles.categorieTitle}>
           Temps{"\n"}
-          <Text style={{ fontSize: 12 }}>{temps != 0 && `(${temps} min)`}</Text>
+          <Text style={{ fontSize: 12 }}>{time && `(${time} min)`}</Text>
         </Text>
       </Pressable>
       <Pressable
@@ -136,10 +135,10 @@ const TinderScreen = ({ navigation, route }) => {
   const [recipes, setRecipes] = useState([]);
   const [showButton, setShowButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [temps, setTemps] = useState("");
+  // const [temps, setTemps] = useState("");
 
   const { matches } = useSelector((state) => state.matchStore);
-  const { activeFilters } = useSelector((state) => state.recipeStore);
+  const { activeFilters, time } = useSelector((state) => state.recipeStore);
   const { isFirstTime } = useSelector((state) => state.userStore);
 
   const bottomSheetRef = useRef();
@@ -150,6 +149,9 @@ const TinderScreen = ({ navigation, route }) => {
       navigation.navigate("OnBoardingScreen");
     }
   }, []);
+  useEffect(() => {
+    console.log("ACTIIIVE", activeFilters);
+  }, [activeFilters]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -217,7 +219,7 @@ const TinderScreen = ({ navigation, route }) => {
         bottomSheetRef={bottomSheetRef}
         pressedFilter={pressedFilter}
         setPressedFilter={setPressedFilter}
-        temps={temps}
+        time={time}
         activeFilters={activeFilters}
         count={count}
       />
@@ -331,7 +333,8 @@ const TinderScreen = ({ navigation, route }) => {
         <FilterScreen
           ref={bottomSheetRef}
           pressedFilter={pressedFilter}
-          setTemps={setTemps}
+          time={time}
+          // setTemps=\{setTemps}
           setCount={setCount}
         />
       </>

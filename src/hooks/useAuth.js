@@ -15,8 +15,28 @@ const signIn = async (email, password) => {
     const res = await auth().signInWithEmailAndPassword(email, password);
     console.log("signed with email", res);
   } catch (e) {
-    console.log(e);
-    alert(e);
+    console.log(e.message);
+    if (
+      e.message === "[auth/invalid-email] The email address is badly formatted."
+    ) {
+      alert("Veuillez introduire une adresse email valide !");
+    }
+    if (
+      e.message ===
+      "[auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted."
+    ) {
+      alert(
+        "Il semblerait que cette adresse e-mail n’a jamais été enregistrée!"
+      );
+    }
+    if (
+      e.message ===
+      "[auth/wrong-password] The password is invalid or the user does not have a password."
+    ) {
+      alert(
+        "Il semblerait que vous n’ayez pas rentré le bon mdp ou le bon identifiant !"
+      );
+    }
   }
 };
 

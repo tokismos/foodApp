@@ -64,7 +64,7 @@ const OnBoardingScreen = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <PagerView
-        scrollEnabled={false}
+        scrollEnabled={true}
         style={{ height: "95%" }}
         initialPage={0}
         ref={ref}
@@ -275,13 +275,13 @@ const OnBoardingScreen = ({ navigation }) => {
           >
             <Text
               style={{
-                fontSize: 30,
+                fontSize: 22,
                 fontWeight: "bold",
                 textAlign: "center",
                 marginBottom: 50,
               }}
             >
-              Un petit mot par ❤️
+              Bienvenue sur Yuzu 🤗🍋
             </Text>
             <View
               style={{
@@ -306,6 +306,9 @@ const OnBoardingScreen = ({ navigation }) => {
               />
             </View>
           </View>
+          <Text style={{ marginVertical: 10 }}>
+            Yuzu c’est un petit agrume japonais trop bon 😍
+          </Text>
           <CustomButton
             title="Start !"
             style={{

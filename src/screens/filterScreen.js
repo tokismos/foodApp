@@ -393,6 +393,9 @@ const DifficultyComponent = ({ activeFilters }) => {
 const TempsComponent = ({ setTempsHeader }) => {
   const [temps, setTemps] = useState(0);
   const dispatch = useDispatch();
+  const { time } = useSelector((state) => state.recipeStore);
+
+  console.log("HONAAA", time);
   return (
     <View
       style={{
@@ -413,7 +416,7 @@ const TempsComponent = ({ setTempsHeader }) => {
         }}
       >
         <Text style={{ fontWeight: "bold", fontSize: 24 }}>Temps max </Text>
-        {temps !== 0 && (
+        {time && (
           <Text
             style={{
               fontWeight: "bold",
@@ -421,23 +424,25 @@ const TempsComponent = ({ setTempsHeader }) => {
               color: COLORS.primary,
             }}
           >
-            {parseInt(temps)} min
+            {parseInt(time)} min
           </Text>
         )}
         <Time height={40} width={40} fill="black" />
       </View>
       <Slider
+        tapToSeek={true}
         step={10}
         size={2}
-        // value={40}
+        value={time}
         onSlidingComplete={(i) => {
-          setTemps(i);
-          setTempsHeader(i);
+          // setTemps(i);
+          // setTempsHeader(i);
           dispatch(changeTime(i));
         }}
         thumbTintColor={COLORS.primary}
         onValueChange={(i) => {
           setTemps(i);
+          dispatch(changeTime(i));
         }}
         style={{
           width: "90%",
@@ -455,12 +460,12 @@ const TempsComponent = ({ setTempsHeader }) => {
 };
 const FilterScreen = forwardRef(
   ({ pressedFilter, setTemps, setCount }, ref) => {
-    const { activeFilters } = useSelector((state) => state.recipeStore);
+    const { activeFilters, time } = useSelector((state) => state.recipeStore);
     const dispatch = useDispatch();
     const [array, setArray] = useState([
       <TypePlatsComponent key={1} activeFilters={activeFilters} />,
       <RegimeComponent key={2} activeFilters={activeFilters} />,
-      <TempsComponent key={4} activeFilters={activeFilters} />,
+      <TempsComponent key={4} activeFilters={activeFilters} time={time} />,
       <MaterielsComponent key={3} activeFilters={activeFilters} />,
     ]);
 

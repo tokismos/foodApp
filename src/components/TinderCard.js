@@ -24,7 +24,7 @@ const ImageFast = ({ uri }) => {
   );
 };
 
-const HeadComponent = ({ name, like }) => {
+const HeadComponent = ({ name, like, chefName }) => {
   return (
     <View style={styles.headComponent}>
       <View style={styles.leftHeaderComponent}>
@@ -37,9 +37,11 @@ const HeadComponent = ({ name, like }) => {
           <Text numberOfLines={2} style={styles.titleName}>
             {name}
           </Text>
-          <Text style={{ color: "gray", marginLeft: 5, fontSize: 12 }}>
-            Créé par Yuzu
-          </Text>
+          {chefName && (
+            <Text style={{ color: "gray", marginLeft: 5, fontSize: 12 }}>
+              Créé par {chefName}
+            </Text>
+          )}
         </View>
       </View>
       <View style={styles.rightHeaderComponent}>
@@ -67,7 +69,11 @@ const TinderCard = ({ recipe, onSwipeRight, onSwipeLeft }) => {
           width: "100%",
         }}
       >
-        <HeadComponent name={recipe.name} like={recipe.stats?.nbrRight} />
+        <HeadComponent
+          name={recipe.name}
+          like={recipe.stats?.nbrRight}
+          chefName={recipe.chefName}
+        />
 
         <ImageFast uri={recipe?.imgURL} />
         <View style={styles.bottomContainer}>

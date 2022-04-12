@@ -147,16 +147,15 @@ const BottomTabScreen = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {},
       }}
     >
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <RecipeC width={"120%"} height={"120%"} />
+              <RecipeC width={"100%"} height={"100%"} />
             ) : (
-              <Recipe width={"120%"} height={"120%"} />
+              <Recipe width={"100%"} height={"100%"} />
             ),
           tabBarLabel: ({ focused }) => (
             <Text
@@ -193,9 +192,9 @@ const BottomTabScreen = () => {
           title: "Mes listes de courses ❤️",
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <ListeC width={"100%"} height={"100%"} />
+              <ListeC width={"80%"} height={"80%"} />
             ) : (
-              <Liste width={"100%"} height={"100%"} />
+              <Liste width={"80%"} height={"80%"} />
             ),
           tabBarLabel: ({ focused, color, size }) => (
             <Text
@@ -224,9 +223,9 @@ const BottomTabScreen = () => {
           },
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <CuisineC width={"120%"} height={"120%"} />
+              <CuisineC width={"100%"} height={"100%"} />
             ) : (
-              <Cuisine width={"120%"} height={"120%"} />
+              <Cuisine width={"100%"} height={"100%"} />
             ),
           tabBarLabel: ({ focused, color, size }) => (
             <Text
@@ -247,8 +246,8 @@ const BottomTabScreen = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <ProfileIcon
-                width={"90%"}
-                height={"90%"}
+                width={"80%"}
+                height={"80%"}
                 fill={focused ? COLORS.primary : "black"}
               />
             ),
