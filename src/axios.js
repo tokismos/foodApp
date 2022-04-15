@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "http://9a9b-50-100-167-5.ngrok.io",
+  // baseURL: "http://6c5c-142-184-84-68.ngrok.io",
   baseURL: "https://backend-yuzi.herokuapp.com/",
 });
 

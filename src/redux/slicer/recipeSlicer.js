@@ -29,16 +29,13 @@ export const recipeSlice = createSlice({
     },
     changeTime: (state, action) => {
       const filteredState = state.activeFilters.filter(
-        (i) => Object.keys(i) != "tempsCuisson"
+        (i) => Object.keys(i) != "tempsTotal"
       );
       if (action.payload == 0) {
         state.activeFilters = [...filteredState];
         return;
       }
-      state.activeFilters = [
-        ...filteredState,
-        { tempsCuisson: action.payload },
-      ];
+      state.activeFilters = [...filteredState, { tempsTotal: action.payload }];
       state.time = action.payload;
     },
     addFilter: (state, action) => {

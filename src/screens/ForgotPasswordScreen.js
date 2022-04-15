@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInputColored from "../components/TextInputColored";
 import CustomButton from "../components/CustomButton";
 import useAuth from "../hooks/useAuth";
@@ -8,11 +8,30 @@ const { height, width } = Dimensions.get("screen");
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
+  const [emailIsCorrect, setIsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState(
     "Vous receverez un email pour reinitialiser votre mot de passe"
   );
   const { resetPassword } = useAuth();
+
+  const validate = (text) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false) {
+      if (email !== "")
+        setMsg("Veuillez entrer un email valide s'il vous plait !");
+      setIsCorrect(false);
+    } else {
+      console.log("YEEEEEEEAHHHHHHHH TREU");
+      setIsCorrect(true);
+      setMsg("");
+    }
+  };
+
+  useEffect(() => {
+    validate(email);
+  }, [email]);
+
   return (
     <View style={{ width, height }}>
       <View style={{ padding: 20 }}>
@@ -41,7 +60,7 @@ const ForgotPasswordScreen = () => {
         </Text>
       </View>
       <CustomButton
-        disabled={email === ""}
+        disabled={!emailIsCorrect}
         title="Envoyer"
         isLoading={isLoading}
         onPress={async () => {

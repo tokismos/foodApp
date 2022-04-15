@@ -433,15 +433,24 @@ const TempsComponent = ({ setTempsHeader }) => {
         tapToSeek={true}
         step={10}
         size={2}
-        value={time}
+        value={time == null ? 0 : time}
         onSlidingComplete={(i) => {
           // setTemps(i);
           // setTempsHeader(i);
+          if (i == 0) {
+            console.log("HAHIYA )))))))))))))))))))))))))))))");
+            dispatch(changeTime(null));
+          }
+          console.log(
+            "CHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHANGED",
+            i,
+            time
+          );
           dispatch(changeTime(i));
         }}
         thumbTintColor={COLORS.primary}
         onValueChange={(i) => {
-          setTemps(i);
+          // setTemps(i);
           dispatch(changeTime(i));
         }}
         style={{

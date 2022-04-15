@@ -64,7 +64,7 @@ const SignInScreen = ({ route }) => {
             }}
           >
             {prevRoute === "IngredientsCartScreen"
-              ? "Connectez vous pour pouvoir enregistrer vos recettes"
+              ? "Il vous faut un compte pour qu'on puisse enregistrer les recettes quelque part ❤️"
               : "Connectez vous à votre compte :"}
           </Text>
           <TextInputColored label="E-mail" setChangeText={setEmail} />
